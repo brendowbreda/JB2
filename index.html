@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Palpite Club — Jogo social de palpites</title>
+<meta name="theme-color" content="#22C08C">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+  <div class="frame" id="frame">
+
+    <!-- ======================= LANDING ======================= -->
+    <section class="screen active" id="s-landing">
+      <div class="landing-sticky" id="landingSticky" hidden>
+        <span class="landing-sticky-brand">🦉 <b>Palpite Club</b></span>
+        <button class="landing-sticky-btn" onclick="go('s-register')">COMEÇAR AGORA</button>
+      </div>
+
+      <div class="landing-hero">
+        <div class="landing-art">
+          <img src="celular.png" alt="Bichos do jogo" class="landing-hero-img">
+        </div>
+        <h1 class="landing-h1">O jeito <b>mais fácil</b> e <b>rápido</b> de<br>apostar no <b>Jogo do Bicho</b></h1>
+        <div class="landing-ctas" id="landingCtas">
+          <button class="landing-btn-green" onclick="go('s-register')">COMEÇAR AGORA</button>
+          <button class="landing-btn-ghost" onclick="go('s-login')">JÁ TENHO UMA CONTA</button>
+        </div>
+      </div>
+
+      <div class="landing-section">
+        <h2 class="landing-section-title">Jogo do Bicho <em class="landing-green-italic">Online</em></h2>
+        <p class="landing-section-sub">Apostou, ganhou, recebeu. Simples assim.</p>
+        <button class="landing-btn-green" onclick="go('s-register')">JOGAR AGORA</button>
+        <div class="landing-cotacao">
+          <h3 class="landing-cotacao-title">Cotação <em class="landing-green-italic blink">ao vivo</em></h3>
+          <p class="landing-section-sub">Multiplicadores do 1º prêmio por modalidade</p>
+          <button class="landing-btn-green" onclick="toast('Cotação em breve!')">VER COTAÇÃO</button>
+        </div>
+      </div>
+
+      <div class="landing-section landing-roleta">
+        <h3 class="landing-section-title">Roletinha</h3>
+        <p class="landing-section-sub">Gire e ganhe prêmios incríveis</p>
+        <div class="roleta-track-wrap">
+          <div class="roleta-track">
+            <img src="bichos/01-avestruz.png" alt="Avestruz"><img src="bichos/02-aguia.png" alt="Águia"><img src="bichos/03-burro.png" alt="Burro"><img src="bichos/04-borboleta.png" alt="Borboleta"><img src="bichos/05-cachorro.png" alt="Cachorro"><img src="bichos/06-cabra.png" alt="Cabra"><img src="bichos/07-carneiro.png" alt="Carneiro"><img src="bichos/08-camelo.png" alt="Camelo"><img src="bichos/09-cobra.png" alt="Cobra"><img src="bichos/10-coelho.png" alt="Coelho"><img src="bichos/11-cavalo.png" alt="Cavalo"><img src="bichos/12-elefante.png" alt="Elefante"><img src="bichos/13-galo.png" alt="Galo"><img src="bichos/14-gato.png" alt="Gato"><img src="bichos/15-jacare.png" alt="Jacaré"><img src="bichos/16-leao.png" alt="Leão"><img src="bichos/17-macaco.png" alt="Macaco"><img src="bichos/18-porco.png" alt="Porco"><img src="bichos/19-pavao.png" alt="Pavão"><img src="bichos/20-peru.png" alt="Peru"><img src="bichos/21-touro.png" alt="Touro"><img src="bichos/22-tigre.png" alt="Tigre"><img src="bichos/23-urso.png" alt="Urso"><img src="bichos/24-veado.png" alt="Veado"><img src="bichos/25-vaca.png" alt="Vaca"><img src="bichos/01-avestruz.png" alt="Avestruz"><img src="bichos/02-aguia.png" alt="Águia"><img src="bichos/03-burro.png" alt="Burro"><img src="bichos/04-borboleta.png" alt="Borboleta"><img src="bichos/05-cachorro.png" alt="Cachorro"><img src="bichos/06-cabra.png" alt="Cabra"><img src="bichos/07-carneiro.png" alt="Carneiro"><img src="bichos/08-camelo.png" alt="Camelo"><img src="bichos/09-cobra.png" alt="Cobra"><img src="bichos/10-coelho.png" alt="Coelho"><img src="bichos/11-cavalo.png" alt="Cavalo"><img src="bichos/12-elefante.png" alt="Elefante"><img src="bichos/13-galo.png" alt="Galo"><img src="bichos/14-gato.png" alt="Gato"><img src="bichos/15-jacare.png" alt="Jacaré"><img src="bichos/16-leao.png" alt="Leão"><img src="bichos/17-macaco.png" alt="Macaco"><img src="bichos/18-porco.png" alt="Porco"><img src="bichos/19-pavao.png" alt="Pavão"><img src="bichos/20-peru.png" alt="Peru"><img src="bichos/21-touro.png" alt="Touro"><img src="bichos/22-tigre.png" alt="Tigre"><img src="bichos/23-urso.png" alt="Urso"><img src="bichos/24-veado.png" alt="Veado"><img src="bichos/25-vaca.png" alt="Vaca">
+          </div>
+        </div>
+        <div class="roleta-track-wrap reverse">
+          <div class="roleta-track">
+            <img src="bichos/25-vaca.png" alt="Vaca"><img src="bichos/24-veado.png" alt="Veado"><img src="bichos/23-urso.png" alt="Urso"><img src="bichos/22-tigre.png" alt="Tigre"><img src="bichos/21-touro.png" alt="Touro"><img src="bichos/20-peru.png" alt="Peru"><img src="bichos/19-pavao.png" alt="Pavão"><img src="bichos/18-porco.png" alt="Porco"><img src="bichos/17-macaco.png" alt="Macaco"><img src="bichos/16-leao.png" alt="Leão"><img src="bichos/15-jacare.png" alt="Jacaré"><img src="bichos/14-gato.png" alt="Gato"><img src="bichos/13-galo.png" alt="Galo"><img src="bichos/12-elefante.png" alt="Elefante"><img src="bichos/11-cavalo.png" alt="Cavalo"><img src="bichos/10-coelho.png" alt="Coelho"><img src="bichos/09-cobra.png" alt="Cobra"><img src="bichos/08-camelo.png" alt="Camelo"><img src="bichos/07-carneiro.png" alt="Carneiro"><img src="bichos/06-cabra.png" alt="Cabra"><img src="bichos/05-cachorro.png" alt="Cachorro"><img src="bichos/04-borboleta.png" alt="Borboleta"><img src="bichos/03-burro.png" alt="Burro"><img src="bichos/02-aguia.png" alt="Águia"><img src="bichos/01-avestruz.png" alt="Avestruz"><img src="bichos/25-vaca.png" alt="Vaca"><img src="bichos/24-veado.png" alt="Veado"><img src="bichos/23-urso.png" alt="Urso"><img src="bichos/22-tigre.png" alt="Tigre"><img src="bichos/21-touro.png" alt="Touro"><img src="bichos/20-peru.png" alt="Peru"><img src="bichos/19-pavao.png" alt="Pavão"><img src="bichos/18-porco.png" alt="Porco"><img src="bichos/17-macaco.png" alt="Macaco"><img src="bichos/16-leao.png" alt="Leão"><img src="bichos/15-jacare.png" alt="Jacaré"><img src="bichos/14-gato.png" alt="Gato"><img src="bichos/13-galo.png" alt="Galo"><img src="bichos/12-elefante.png" alt="Elefante"><img src="bichos/11-cavalo.png" alt="Cavalo"><img src="bichos/10-coelho.png" alt="Coelho"><img src="bichos/09-cobra.png" alt="Cobra"><img src="bichos/08-camelo.png" alt="Camelo"><img src="bichos/07-carneiro.png" alt="Carneiro"><img src="bichos/06-cabra.png" alt="Cabra"><img src="bichos/05-cachorro.png" alt="Cachorro"><img src="bichos/04-borboleta.png" alt="Borboleta"><img src="bichos/03-burro.png" alt="Burro"><img src="bichos/02-aguia.png" alt="Águia"><img src="bichos/01-avestruz.png" alt="Avestruz">
+          </div>
+        </div>
+        <button class="landing-btn-green" onclick="go('s-register')" style="margin-top:20px">GIRAR AGORA</button>
+      </div>
+
+      <div class="landing-section landing-dark landing-suporte">
+        <div class="suporte-row">
+          <div class="suporte-text">
+            <h3 class="landing-dark-title" style="text-align:left">Suporte</h3>
+            <p class="landing-dark-sub" style="text-align:left">Suporte <b>todos os dias</b><br>das 8h00 às 18h00</p>
+            <a class="btn-suporte" href="https://wa.me/5511999999999?text=Oi!%20Preciso%20de%20ajuda%20no%20Palpite%20Club." target="_blank" rel="noopener">SUPORTE</a>
+          </div>
+          <img src="suporte-celular.png" alt="Suporte" class="suporte-img">
+        </div>
+      </div>
+
+      <div class="landing-section landing-dark-alt landing-grupo">
+        <img src="celular.png" alt="Grupo WhatsApp" class="grupo-img">
+        <h3 class="landing-dark-title">Grupo <span class="landing-green-text">WhatsApp</span></h3>
+        <p class="landing-dark-sub">Receba diariamente <b>Palpites</b> e <b>Resultados</b>.</p>
+        <a class="btn-whatsapp landing-wa-btn" href="https://wa.me/5511999999999" target="_blank" rel="noopener">ENTRAR NO GRUPO</a>
+        <p class="grupo-vagas">Vagas limitadas — entre antes que lote <span class="landing-green-text">(grupo #06)</span></p>
+      </div>
+
+      <div class="landing-footer">
+        <p class="landing-footer-aviso">Proibido para menores de 18 anos. Aposte com responsabilidade.</p>
+      </div>
+    </section>
+
+    <!-- ======================= LOGIN ======================= -->
+    <section class="screen" id="s-login">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-landing')">←</button>
+        <h2>Entrar</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="card auth-card">
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="loginEmail" placeholder="voce@email.com" autocomplete="username">
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <p class="field-error" id="loginError" hidden></p>
+        <button class="btn-primary" onclick="Auth.login()">Entrar</button>
+        <button class="btn-outline" onclick="Auth.demoLogin()">Entrar com conta demo</button>
+      </div>
+      <p class="auth-switch">Ainda não tem conta? <a href="#" onclick="go('s-register');return false;">Cadastre-se</a></p>
+    </section>
+
+    <section class="screen reg-screen" id="s-register">
+      <div class="reg-card" id="regStep1">
+        <div class="reg-progress"><div class="reg-progress-fill" style="width:25%"></div></div>
+        <p class="reg-step-label">PASSO 1 DE 4</p>
+        <h2 class="reg-title">Vamos começar?</h2>
+        <p class="reg-subtitle">Primeiro, precisamos validar seu CPF.</p>
+        <div class="reg-field">
+          <span class="reg-field-icon">📋</span>
+          <input type="tel" id="regCpf" placeholder="Digite seu CPF" maxlength="14" oninput="RegWizard.maskCpf(this)">
+        </div>
+        <p class="field-error" id="regError1" hidden></p>
+        <button class="reg-btn" onclick="RegWizard.next(1)">Continuar</button>
+      </div>
+
+      <div class="reg-card" id="regStep2" hidden>
+        <div class="reg-progress"><div class="reg-progress-fill" style="width:50%"></div></div>
+        <p class="reg-step-label">PASSO 2 DE 4</p>
+        <h2 class="reg-title">Seus dados pessoais</h2>
+        <div class="reg-field">
+          <span class="reg-field-icon">👤</span>
+          <input type="text" id="regName" placeholder="Nome completo">
+        </div>
+        <div class="reg-field">
+          <span class="reg-field-icon">📅</span>
+          <input type="text" id="regBirth" placeholder="Data de nascimento" maxlength="10" oninput="RegWizard.maskDate(this)">
+        </div>
+        <p class="reg-hint">Precisamos confirmar que você tem 18 anos ou mais</p>
+        <p class="field-error" id="regError2" hidden></p>
+        <button class="reg-btn" onclick="RegWizard.next(2)">Continuar</button>
+      </div>
+
+      <div class="reg-card" id="regStep3" hidden>
+        <div class="reg-progress"><div class="reg-progress-fill" style="width:75%"></div></div>
+        <p class="reg-step-label">PASSO 3 DE 4</p>
+        <h2 class="reg-title">Informações de contato</h2>
+        <p class="reg-subtitle">Como podemos entrar em contato com você?</p>
+        <div class="reg-field">
+          <span class="reg-field-icon">📞</span>
+          <input type="tel" id="regPhone" placeholder="Digite seu número de WhatsApp" maxlength="15" oninput="RegWizard.maskPhone(this)">
+        </div>
+        <div class="reg-field">
+          <span class="reg-field-icon">✉️</span>
+          <input type="email" id="regEmail" placeholder="Digite seu email">
+        </div>
+        <p class="reg-hint">Opcional — você pode pular esta etapa</p>
+        <p class="field-error" id="regError3" hidden></p>
+        <button class="reg-btn" onclick="RegWizard.next(3)">Continuar</button>
+        <button class="reg-btn-skip" onclick="RegWizard.skip(3)">Pular</button>
+      </div>
+
+      <div class="reg-card" id="regStep4" hidden>
+        <div class="reg-progress"><div class="reg-progress-fill" style="width:100%"></div></div>
+        <p class="reg-step-label">PASSO 4 DE 4</p>
+        <h2 class="reg-title">Crie uma senha segura</h2>
+        <div class="reg-field">
+          <span class="reg-field-icon">🔒</span>
+          <input type="password" id="regPassword" placeholder="Crie uma senha">
+          <button type="button" class="reg-eye" onclick="RegWizard.toggleEye('regPassword',this)">👁️</button>
+        </div>
+        <p class="reg-hint" style="margin-top:-8px">Mínimo 6 caracteres</p>
+        <div class="reg-field">
+          <span class="reg-field-icon">🔒</span>
+          <input type="password" id="regPasswordConfirm" placeholder="Confirme sua senha">
+          <button type="button" class="reg-eye" onclick="RegWizard.toggleEye('regPasswordConfirm',this)">👁️</button>
+        </div>
+        <p class="reg-lgpd">Seus dados são protegidos conforme a LGPD. Ao tocar em "Cadastre-se", você confirma que tem 18 anos ou mais e concorda com os <b>Termos de Uso</b> e a <b>Política de Privacidade</b>.</p>
+        <p class="field-error" id="regError4" hidden></p>
+        <button class="reg-btn" onclick="RegWizard.finish()">Cadastre-se</button>
+      </div>
+    </section>
+
+    <!-- ======================= HOME ======================= -->
+    <section class="screen" id="s-home">
+      <div class="topbar">
+        <div class="topbar-user" onclick="go('s-perfil')">
+          <div class="avatar" id="homeAvatar">🦊</div>
+          <div class="topbar-user-text">
+            <strong id="homeName">—</strong>
+            <span class="balance-pill">🪙 <span id="homeBalance">0</span> pts</span>
+          </div>
+        </div>
+        <button class="icon-btn" onclick="Menu.open()" aria-label="Configurações">⚙️</button>
+      </div>
+
+      <div class="card streak-card">
+        <div class="streak-head">
+          <div class="streak-flame" id="streakFlame">🔥</div>
+          <div>
+            <strong id="streakCount">0 semanas</strong>
+            <p>de ofensiva de apostas</p>
+          </div>
+          <div class="tier-chip" id="homeTierChip">🤍 Quartzo</div>
+        </div>
+        <div class="week-dots" id="weekDots"></div>
+        <p class="streak-hint" id="streakHint"></p>
+      </div>
+
+      <div id="cashbackBanner" class="card cashback-banner" hidden>
+        🎁 <strong>Cashback de 4 semanas ativo!</strong> Seus próximos depósitos ganham +10% de pontos bônus.
+      </div>
+
+      <div class="cta-row">
+        <button class="cta-btn cta-play" onclick="Bet.start()">
+          <span class="cta-icon">🎯</span>
+          <span>Jogar</span>
+        </button>
+        <button class="cta-btn cta-deposit" onclick="go('s-depositar')">
+          <span class="cta-icon">➕</span>
+          <span>Depositar</span>
+        </button>
+        <button class="cta-btn cta-withdraw" onclick="go('s-sacar')">
+          <span class="cta-icon">💸</span>
+          <span>Sacar</span>
+        </button>
+      </div>
+
+      <button class="row-link" onclick="go('s-apostas')">
+        <span>☰ Minhas apostas</span>
+        <span class="row-link-arrow">›</span>
+      </button>
+
+      <div class="section-head">
+        <h3>Resultados recentes</h3>
+        <a href="#" onclick="go('s-resultados');return false;">ver tudo</a>
+      </div>
+      <div class="card" id="homeResultsPreview"></div>
+
+      <div class="section-head">
+        <h3>Amigos apostando</h3>
+        <a href="#" onclick="go('s-amigos');return false;">ver tudo</a>
+      </div>
+      <div class="card feed-preview" id="homeFeedPreview"></div>
+    </section>
+
+    <!-- ======================= NOTIFICAÇÕES ======================= -->
+    <section class="screen" id="s-notificacoes">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Notificações</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="list" id="notifList"></div>
+    </section>
+
+    <!-- ======================= MINHA CONTA ======================= -->
+    <section class="screen" id="s-conta">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Minha conta</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="card">
+        <div class="field">
+          <label>Nome completo</label>
+          <input type="text" id="contaNome">
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="contaEmail" disabled>
+        </div>
+        <div class="field">
+          <label>Telefone</label>
+          <input type="tel" id="contaTelefone">
+        </div>
+        <button class="btn-primary" onclick="Account.save()">Salvar alterações</button>
+      </div>
+      <button class="btn-danger-outline" onclick="Account.confirmDelete()">Encerrar minha conta</button>
+    </section>
+
+    <!-- ======================= CARTEIRA ======================= -->
+    <section class="screen" id="s-carteira">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Minha carteira</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="card wallet-balance">
+        <span>Saldo disponível</span>
+        <strong>🪙 <span id="carteiraSaldo">0</span> pts</strong>
+      </div>
+      <div class="cta-row two">
+        <button class="cta-btn cta-deposit" onclick="go('s-depositar')">
+          <span class="cta-icon">➕</span><span>Depositar</span>
+        </button>
+        <button class="cta-btn cta-withdraw" onclick="go('s-sacar')">
+          <span class="cta-icon">💸</span><span>Sacar</span>
+        </button>
+      </div>
+      <div class="section-head"><h3>Extrato</h3></div>
+      <div class="list" id="extratoList"></div>
+    </section>
+
+    <section class="screen" id="s-depositar">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-carteira')">←</button>
+        <h2>Depositar pontos</h2>
+        <span class="spacer"></span>
+      </div>
+      <p class="muted-note">🪙 Pontos Palpite não têm valor monetário — são a moeda do jogo, usada só pra apostar e subir de nível.</p>
+      <div class="card">
+        <label class="field-label">Escolha um pacote</label>
+        <div class="amount-grid" id="depositAmounts"></div>
+        <div class="field">
+          <label>Ou digite um valor</label>
+          <input type="number" id="depositCustom" placeholder="Ex: 250" min="1">
+        </div>
+        <button class="btn-primary" onclick="Wallet.deposit()">Depositar</button>
+      </div>
+    </section>
+
+    <section class="screen" id="s-sacar">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-carteira')">←</button>
+        <h2>Sacar pontos</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="card wallet-balance">
+        <span>Saldo disponível</span>
+        <strong>🪙 <span id="sacarSaldo">0</span> pts</strong>
+      </div>
+      <div class="card">
+        <div class="field">
+          <label>Quantos pontos deseja sacar?</label>
+          <input type="number" id="sacarValor" placeholder="Ex: 100" min="1">
+        </div>
+        <button class="btn-primary" onclick="Wallet.withdraw()">Confirmar saque</button>
+      </div>
+    </section>
+
+    <!-- ======================= RESULTADOS ======================= -->
+    <section class="screen" id="s-resultados">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Resultados</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="list" id="resultadosList"></div>
+    </section>
+
+    <!-- ======================= MINHAS APOSTAS ======================= -->
+    <section class="screen" id="s-apostas">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Minhas apostas</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="aguardando" onclick="Apostas.showTab('aguardando')">Aguardando</button>
+        <button class="tab" data-tab="ganhou" onclick="Apostas.showTab('ganhou')">Ganhou</button>
+        <button class="tab" data-tab="perdeu" onclick="Apostas.showTab('perdeu')">Perdeu</button>
+      </div>
+      <div class="list" id="apostasList"></div>
+    </section>
+
+    <!-- ======================= JOGAR (wizard) ======================= -->
+    <section class="screen" id="s-jogar-bicho">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Escolha seu bicho</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="animal-grid" id="animalGrid"></div>
+    </section>
+
+    <section class="screen" id="s-jogar-modalidade">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-jogar-bicho')">←</button>
+        <h2>Modalidade</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="pick-list">
+        <button class="pick-row" onclick="Bet.pickModalidade('grupo')">
+          <div><strong>Grupo</strong><p>Aposte só no bicho. Prêmio x18.</p></div>
+          <span class="row-link-arrow">›</span>
+        </button>
+        <button class="pick-row" onclick="Bet.pickModalidade('dezena')">
+          <div><strong>Dezena</strong><p>Escolha um dos 4 números do bicho. Prêmio x60.</p></div>
+          <span class="row-link-arrow">›</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="screen" id="s-jogar-dezena">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-jogar-modalidade')">←</button>
+        <h2>Escolha a dezena</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="dezena-grid" id="dezenaGrid"></div>
+    </section>
+
+    <section class="screen" id="s-jogar-horario">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-jogar-modalidade')">←</button>
+        <h2>Escolha o sorteio</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="pick-list" id="horarioList"></div>
+    </section>
+
+    <section class="screen" id="s-jogar-valor">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-jogar-horario')">←</button>
+        <h2>Valor da aposta</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="card bet-summary" id="betSummaryCard"></div>
+      <div class="card">
+        <label class="field-label">Quantos pontos?</label>
+        <div class="amount-grid" id="betAmounts"></div>
+        <div class="field">
+          <label>Ou digite um valor</label>
+          <input type="number" id="betCustomAmount" min="1">
+        </div>
+        <button class="btn-primary" onclick="Bet.review()">Continuar</button>
+      </div>
+    </section>
+
+    <section class="screen" id="s-jogar-confirmar">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-jogar-valor')">←</button>
+        <h2>Confirmar aposta</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="card bet-summary" id="betConfirmCard"></div>
+      <button class="btn-primary" onclick="Bet.confirm()">Confirmar aposta</button>
+    </section>
+
+    <section class="screen" id="s-jogar-sucesso">
+      <div class="success-screen">
+        <div class="mascot">🎉</div>
+        <h2>Aposta confirmada!</h2>
+        <p id="successText"></p>
+        <button class="btn-outline" onclick="Bet.shareLast()">Compartilhar palpite com amigos</button>
+        <button class="btn-primary" onclick="go('s-home')">Voltar para o início</button>
+      </div>
+    </section>
+
+    <!-- ======================= PERFIL ======================= -->
+    <section class="screen" id="s-perfil">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Meu perfil</h2>
+        <button class="icon-btn" onclick="go('s-conta')">✏️</button>
+      </div>
+      <div class="card profile-head">
+        <div class="avatar avatar-lg" id="perfilAvatar">🦊</div>
+        <strong id="perfilNome">—</strong>
+        <div class="tier-chip lg" id="perfilTierChip">🤍 Quartzo</div>
+        <div class="tier-progress"><div class="tier-progress-bar" id="tierProgressBar"></div></div>
+        <p class="tier-progress-label" id="tierProgressLabel"></p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box"><strong id="statSemanas">0</strong><span>semanas seguidas</span></div>
+        <div class="stat-box"><strong id="statApostas">0</strong><span>apostas feitas</span></div>
+        <div class="stat-box"><strong id="statSeguindo">0</strong><span>seguindo</span></div>
+        <div class="stat-box"><strong id="statSeguidores">0</strong><span>seguidores</span></div>
+      </div>
+      <div class="section-head">
+        <h3>Conquistas</h3>
+        <a href="#" onclick="go('s-conquistas');return false;">ver todas</a>
+      </div>
+      <div class="achv-grid preview" id="perfilAchvPreview"></div>
+    </section>
+
+    <section class="screen" id="s-conquistas">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-perfil')">←</button>
+        <h2>Conquistas</h2>
+        <span class="spacer"></span>
+      </div>
+      <p class="muted-note" id="conquistasProgress"></p>
+      <div class="achv-grid" id="achvGrid"></div>
+    </section>
+
+    <!-- ======================= AMIGOS ======================= -->
+    <section class="screen" id="s-amigos">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Amigos</h2>
+        <button class="icon-btn" onclick="go('s-adicionar-amigos')">➕</button>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="feed" onclick="Amigos.showTab('feed')">Feed</button>
+        <button class="tab" data-tab="amigos" onclick="Amigos.showTab('amigos')">Meus amigos</button>
+      </div>
+      <div id="amigosFeedPane" class="list"></div>
+      <div id="amigosListPane" class="list" hidden></div>
+    </section>
+
+    <section class="screen" id="s-adicionar-amigos">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-amigos')">←</button>
+        <h2>Adicionar amigos</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="field">
+        <input type="text" id="buscaAmigos" placeholder="Buscar por nome" oninput="Amigos.search()">
+      </div>
+      <div class="list" id="buscaAmigosList"></div>
+    </section>
+
+    <!-- ======================= SUPORTE / ESTÁTICAS ======================= -->
+    <section class="screen" id="s-suporte">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Falar com suporte</h2>
+        <span class="spacer"></span>
+      </div>
+      <a class="btn-whatsapp" id="whatsappBtn" href="#" target="_blank" rel="noopener">
+        <span>💬</span> Chamar no WhatsApp
+      </a>
+      <div class="section-head"><h3>Perguntas frequentes</h3></div>
+      <div class="pick-list">
+        <button class="pick-row"><div><strong>Como funcionam os pontos?</strong><p>Pontos são virtuais, sem valor monetário.</p></div></button>
+        <button class="pick-row"><div><strong>Como funciona a ofensiva?</strong><p>Aposte ao menos 1x por semana para mantê-la.</p></div></button>
+        <button class="pick-row"><div><strong>Como sobe de pedra?</strong><p>Acumule volume apostado ao longo do tempo.</p></div></button>
+      </div>
+    </section>
+
+    <section class="screen" id="s-termos">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="Menu.backToPrevious()">←</button>
+        <h2>Termos de uso</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="doc-text">
+        <p><strong>1. O que é o Palpite Club.</strong> O Palpite Club é um jogo social e de entretenimento baseado em palpites, ofensivas semanais e conquistas. Não é uma casa de apostas.</p>
+        <p><strong>2. Moeda virtual.</strong> Os "Pontos" usados no app são uma moeda virtual de entretenimento, sem qualquer valor monetário, não conversível em dinheiro real e sem possibilidade de saque em espécie.</p>
+        <p><strong>3. Idade mínima.</strong> O uso é destinado a maiores de 18 anos.</p>
+        <p><strong>4. Uso responsável.</strong> O app é uma experiência social e gamificada. Reservamo-nos o direito de suspender contas que violem estes termos.</p>
+        <p><strong>5. Alterações.</strong> Estes termos podem ser atualizados periodicamente.</p>
+      </div>
+    </section>
+
+    <section class="screen" id="s-privacidade">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="Menu.backToPrevious()">←</button>
+        <h2>Política de privacidade</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="doc-text">
+        <p><strong>Dados coletados.</strong> Nome, e-mail e telefone informados no cadastro, além do histórico de uso dentro do app (apostas, conquistas, amigos).</p>
+        <p><strong>Uso dos dados.</strong> Usamos seus dados apenas para operar sua conta, personalizar sua experiência e social features (amigos, feed de palpites).</p>
+        <p><strong>Armazenamento.</strong> Nesta versão de demonstração, os dados ficam salvos localmente no seu navegador.</p>
+        <p><strong>Seus direitos.</strong> Você pode encerrar sua conta a qualquer momento em Minha Conta.</p>
+      </div>
+    </section>
+
+    <section class="screen" id="s-transparencia">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="Menu.backToPrevious()">←</button>
+        <h2>Portal da transparência</h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="doc-text">
+        <p><strong>Sem dinheiro real.</strong> O Palpite Club opera 100% com pontos virtuais de entretenimento. Não há compra com dinheiro real, não há saque em espécie.</p>
+        <p><strong>Probabilidades.</strong> Nesta versão de demonstração as chances de acerto são simplificadas (~30–35% por aposta) para tornar a experiência mais dinâmica — não refletem odds de jogos de azar reais.</p>
+        <p><strong>Ofensiva e cashback.</strong> Após 4 semanas seguidas apostando, seus depósitos passam a ganhar +10% de pontos bônus, automaticamente.</p>
+        <p><strong>Pedras (níveis).</strong> Sua pedra é calculada pelo volume total de pontos apostados ao longo do tempo, não por saldo.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ======================= DRAWER MENU ======================= -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="Menu.close()"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="avatar" id="drawerAvatar">🦊</div>
+      <div>
+        <strong id="drawerName">—</strong>
+        <span class="balance-pill">🪙 <span id="drawerBalance">0</span> pts</span>
+      </div>
+      <button class="icon-btn" onclick="Menu.close()">✕</button>
+    </div>
+
+    <button class="menu-item highlight" onclick="Menu.downloadApp()">
+      <span class="menu-icon">📲</span> Baixar aplicativo
+    </button>
+
+    <button class="menu-item" onclick="Menu.goTo('s-notificacoes')">
+      <span class="menu-icon">🔔</span> Notificações
+      <span class="menu-badge" id="menuNotifBadge" hidden></span>
+    </button>
+
+    <div class="menu-section">
+      <button class="menu-item" onclick="Menu.goTo('s-conta')"><span class="menu-icon">⚙️</span> Minha conta</button>
+      <button class="menu-item" onclick="Menu.goTo('s-carteira')"><span class="menu-icon">👛</span> Minha carteira</button>
+      <button class="menu-item" onclick="Menu.goTo('s-resultados')"><span class="menu-icon">🎲</span> Resultados</button>
+      <button class="menu-item" onclick="Menu.openMinhasApostas()"><span class="menu-icon">📋</span> Minhas apostas</button>
+    </div>
+
+    <button class="menu-item support-highlight" onclick="Menu.goTo('s-suporte')">
+      <span class="menu-icon">💬</span> Falar com suporte
+    </button>
+
+    <div class="menu-section text-links">
+      <a href="#" onclick="Menu.goTo('s-termos');return false;">Termos de uso</a>
+      <a href="#" onclick="Menu.goTo('s-privacidade');return false;">Política de privacidade</a>
+      <a href="#" onclick="Menu.goTo('s-transparencia');return false;">Portal da transparência</a>
+    </div>
+
+    <button class="btn-logout" onclick="Auth.logout()">Sair</button>
+  </aside>
+
+  <!-- App download modal -->
+  <div class="modal-backdrop" id="appModalBackdrop" onclick="Modal.close('appModal')"></div>
+  <div class="modal-card" id="appModal">
+    <div class="mascot">📲</div>
+    <h3>Instale o Palpite Club</h3>
+    <p>No seu celular, abra o menu do navegador e toque em "Adicionar à tela de início" para instalar como app.</p>
+    <button class="btn-primary" onclick="Modal.close('appModal')">Entendi</button>
+  </div>
+
+  <!-- Achievement unlock modal -->
+  <div class="modal-backdrop" id="achvModalBackdrop" onclick="Modal.close('achvModal')"></div>
+  <div class="modal-card" id="achvModal">
+    <div class="mascot" id="achvModalIcon">🏅</div>
+    <h3>Conquista desbloqueada!</h3>
+    <strong id="achvModalName"></strong>
+    <p id="achvModalDesc"></p>
+    <button class="btn-primary" onclick="Modal.close('achvModal')">Show de bola!</button>
+  </div>
+
+  <!-- Delete account confirm -->
+  <div class="modal-backdrop" id="deleteModalBackdrop" onclick="Modal.close('deleteModal')"></div>
+  <div class="modal-card" id="deleteModal">
+    <div class="mascot">😢</div>
+    <h3>Encerrar sua conta?</h3>
+    <p>Você vai perder sua ofensiva, pontos e conquistas nesta versão de demonstração.</p>
+    <button class="btn-danger-outline" onclick="Account.deleteConfirmed()">Sim, encerrar conta</button>
+    <button class="btn-outline" onclick="Modal.close('deleteModal')">Cancelar</button>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+</div>
+
+<script src="app.js?v=2"></script>
+</body>
+</html>
