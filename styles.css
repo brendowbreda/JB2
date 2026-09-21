@@ -585,14 +585,14 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 .landing-hero {
   text-align: center;
-  padding: 20px 24px 44px;
+  padding: 60px 24px 44px;
   background: #fff;
 }
 
-.landing-art { margin-bottom: 24px; }
+.landing-art { margin-bottom: 28px; }
 .landing-hero-img {
-  width: 80%;
-  max-width: 320px;
+  width: 70%;
+  max-width: 280px;
   height: auto;
   display: block;
   margin: 0 auto;
