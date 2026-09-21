@@ -679,9 +679,9 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   line-height: 1.4;
 }
 .landing-cotacao {
-  margin-top: 32px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
+  margin-top: 28px;
+  padding-top: 0;
+  border-top: none;
 }
 .landing-cotacao-title {
   font-size: 19px;
