@@ -873,7 +873,6 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 /* Register wizard */
 .reg-screen {
   background: #1A1535 !important;
-  display: flex !important;
   align-items: center;
   justify-content: center;
   padding: 20px 16px !important;
