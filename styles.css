@@ -861,10 +861,11 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .landing-footer-dark {
   text-align: center;
   padding: 24px 24px 36px;
-  background: #1A1535;
+  background: #fff;
+  border-top: 1px solid var(--border);
 }
 .landing-footer-aviso-dark {
-  color: rgba(255,255,255,0.35);
+  color: var(--ink-faint);
   font-size: 12px;
   margin: 0 0 4px;
   line-height: 1.5;
