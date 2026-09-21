@@ -201,6 +201,7 @@ let CURRENT_EMAIL = null;
 let STATE = null;
 
 var RegWizard = {
+  currentStep: 1,
   maskCpf(el) {
     var v = el.value.replace(/\D/g, '').slice(0, 11);
     if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
@@ -232,7 +233,12 @@ var RegWizard = {
     return true;
   },
   showStep(n) {
+    this.currentStep = n;
     for (var i = 1; i <= 4; i++) document.getElementById('regStep' + i).hidden = (i !== n);
+  },
+  back() {
+    if (this.currentStep <= 1) go('s-landing');
+    else this.showStep(this.currentStep - 1);
   },
   next(step) {
     var err = document.getElementById('regError' + step);
@@ -252,16 +258,16 @@ var RegWizard = {
       if (age < 18) { err.textContent = 'Você precisa ter 18 anos ou mais.'; err.hidden = false; return; }
       this.showStep(3);
     } else if (step === 3) {
+      var phone = (document.getElementById('regPhone').value || '').replace(/\D/g, '');
+      var email = (document.getElementById('regEmail').value || '').trim();
+      if (!phone && !email) { err.textContent = 'Informe pelo menos um contato (WhatsApp ou e-mail).'; err.hidden = false; return; }
       this.showStep(4);
     }
   },
-  skip(step) {
-    this.showStep(step + 1);
-  },
   toggleEye(id, btn) {
     var inp = document.getElementById(id);
-    if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
-    else { inp.type = 'password'; btn.textContent = '👁️'; }
+    if (inp.type === 'password') { inp.type = 'text'; btn.textContent = 'Ocultar'; }
+    else { inp.type = 'password'; btn.textContent = 'Mostrar'; }
   },
   finish() {
     var pw = document.getElementById('regPassword').value;
@@ -300,17 +306,25 @@ const Auth = {
     RegWizard.finish();
   },
   login() {
-    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const input = document.getElementById('loginEmail').value.trim().toLowerCase();
     const password = document.getElementById('loginPassword').value;
     const err = document.getElementById('loginError');
     err.hidden = true;
     const users = loadUsers();
-    const u = users[email];
-    if (!u || u.password !== password) { err.textContent = 'E-mail ou senha incorretos.'; err.hidden = false; return; }
-    CURRENT_EMAIL = email;
-    STATE = loadState(email) || freshState();
+    let key = input;
+    let u = users[key];
+    if (!u) {
+      const cpfDigits = input.replace(/\D/g, '');
+      if (cpfDigits.length === 11) {
+        const found = Object.entries(users).find(([k, v]) => v.cpf === cpfDigits);
+        if (found) { key = found[0]; u = found[1]; }
+      }
+    }
+    if (!u || u.password !== password) { err.textContent = 'E-mail/CPF ou senha incorretos.'; err.hidden = false; return; }
+    CURRENT_EMAIL = key;
+    STATE = loadState(key) || freshState();
     saveState();
-    setSession(email);
+    setSession(key);
     App.enter();
   },
   demoLogin() {

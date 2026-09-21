@@ -84,15 +84,15 @@
 
     <!-- ======================= LOGIN ======================= -->
     <section class="screen" id="s-login">
-      <div class="topbar-simple">
+      <div class="login-topbar">
         <button class="icon-btn" onclick="go('s-landing')">←</button>
         <h2>Entrar</h2>
-        <span class="spacer"></span>
+        <button class="icon-btn" onclick="go('s-landing')">✕</button>
       </div>
       <div class="card auth-card">
         <div class="field">
-          <label>E-mail</label>
-          <input type="email" id="loginEmail" placeholder="voce@email.com" autocomplete="username">
+          <label>E-mail ou CPF</label>
+          <input type="text" id="loginEmail" placeholder="voce@email.com ou 000.000.000-00" autocomplete="username">
         </div>
         <div class="field">
           <label>Senha</label>
@@ -106,13 +106,16 @@
     </section>
 
     <section class="screen reg-screen" id="s-register">
+      <div class="reg-topbar">
+        <button class="icon-btn" onclick="RegWizard.back()">←</button>
+        <button class="icon-btn" onclick="go('s-landing')">✕</button>
+      </div>
+
       <div class="reg-card" id="regStep1">
         <div class="reg-progress"><div class="reg-progress-fill" style="width:25%"></div></div>
         <p class="reg-step-label">PASSO 1 DE 4</p>
         <h2 class="reg-title">Vamos começar?</h2>
-        <p class="reg-subtitle">Primeiro, precisamos validar seu CPF.</p>
         <div class="reg-field">
-          <span class="reg-field-icon">📋</span>
           <input type="tel" id="regCpf" placeholder="Digite seu CPF" maxlength="14" oninput="RegWizard.maskCpf(this)">
         </div>
         <p class="field-error" id="regError1" hidden></p>
@@ -124,14 +127,11 @@
         <p class="reg-step-label">PASSO 2 DE 4</p>
         <h2 class="reg-title">Seus dados pessoais</h2>
         <div class="reg-field">
-          <span class="reg-field-icon">👤</span>
           <input type="text" id="regName" placeholder="Nome completo">
         </div>
         <div class="reg-field">
-          <span class="reg-field-icon">📅</span>
           <input type="text" id="regBirth" placeholder="Data de nascimento" maxlength="10" oninput="RegWizard.maskDate(this)">
         </div>
-        <p class="reg-hint">Precisamos confirmar que você tem 18 anos ou mais</p>
         <p class="field-error" id="regError2" hidden></p>
         <button class="reg-btn" onclick="RegWizard.next(2)">Continuar</button>
       </div>
@@ -142,17 +142,13 @@
         <h2 class="reg-title">Informações de contato</h2>
         <p class="reg-subtitle">Como podemos entrar em contato com você?</p>
         <div class="reg-field">
-          <span class="reg-field-icon">📞</span>
           <input type="tel" id="regPhone" placeholder="Digite seu número de WhatsApp" maxlength="15" oninput="RegWizard.maskPhone(this)">
         </div>
         <div class="reg-field">
-          <span class="reg-field-icon">✉️</span>
           <input type="email" id="regEmail" placeholder="Digite seu email">
         </div>
-        <p class="reg-hint">Opcional — você pode pular esta etapa</p>
         <p class="field-error" id="regError3" hidden></p>
         <button class="reg-btn" onclick="RegWizard.next(3)">Continuar</button>
-        <button class="reg-btn-skip" onclick="RegWizard.skip(3)">Pular</button>
       </div>
 
       <div class="reg-card" id="regStep4" hidden>
@@ -160,15 +156,12 @@
         <p class="reg-step-label">PASSO 4 DE 4</p>
         <h2 class="reg-title">Crie uma senha segura</h2>
         <div class="reg-field">
-          <span class="reg-field-icon">🔒</span>
           <input type="password" id="regPassword" placeholder="Crie uma senha">
-          <button type="button" class="reg-eye" onclick="RegWizard.toggleEye('regPassword',this)">👁️</button>
+          <button type="button" class="reg-eye" onclick="RegWizard.toggleEye('regPassword',this)">Mostrar</button>
         </div>
-        <p class="reg-hint" style="margin-top:-8px">Mínimo 6 caracteres</p>
         <div class="reg-field">
-          <span class="reg-field-icon">🔒</span>
           <input type="password" id="regPasswordConfirm" placeholder="Confirme sua senha">
-          <button type="button" class="reg-eye" onclick="RegWizard.toggleEye('regPasswordConfirm',this)">👁️</button>
+          <button type="button" class="reg-eye" onclick="RegWizard.toggleEye('regPasswordConfirm',this)">Mostrar</button>
         </div>
         <p class="reg-lgpd">Seus dados são protegidos conforme a LGPD. Ao tocar em "Cadastre-se", você confirma que tem 18 anos ou mais e concorda com os <b>Termos de Uso</b> e a <b>Política de Privacidade</b>.</p>
         <p class="field-error" id="regError4" hidden></p>
@@ -643,6 +636,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
