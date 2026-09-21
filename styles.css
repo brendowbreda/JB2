@@ -781,6 +781,28 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   color: #6FBE2A;
 }
 
+.landing-light {
+  background: #fff;
+  color: var(--ink);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.landing-light-title {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.landing-light-sub {
+  color: var(--ink-dim);
+  font-size: 14.5px;
+  margin: 0 0 20px;
+  line-height: 1.4;
+}
+.landing-light-sub b {
+  color: var(--ink);
+}
+
 .landing-suporte {
   padding: 36px 24px !important;
 }
@@ -792,11 +814,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .suporte-text {
   flex: 1;
 }
-.suporte-text .landing-dark-sub {
+.suporte-text .landing-light-sub {
   margin-bottom: 16px;
-}
-.suporte-text .landing-dark-sub b {
-  color: #fff;
 }
 .suporte-img {
   width: 140px;
@@ -825,13 +844,13 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   margin: 0 auto 20px;
   display: block;
 }
-.grupo-vagas {
-  color: rgba(255,255,255,0.5);
+.grupo-vagas-light {
+  color: var(--ink-faint);
   font-size: 13px;
   margin: 16px 0 0;
   line-height: 1.4;
 }
-.grupo-vagas .landing-green-text {
+.grupo-vagas-light .landing-green-text {
   font-weight: 700;
 }
 
@@ -839,13 +858,13 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   max-width: 100%;
 }
 
-.landing-footer {
+.landing-footer-light {
   text-align: center;
   padding: 24px 24px 36px;
-  background: #1A1535;
+  background: #f5f4fc;
 }
-.landing-footer-aviso {
-  color: rgba(255,255,255,0.4);
+.landing-footer-aviso-light {
+  color: var(--ink-faint);
   font-size: 12px;
   margin: 0;
   line-height: 1.5;
