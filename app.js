@@ -961,12 +961,16 @@ const App = {
 window.addEventListener('scroll', function() {
   var landing = document.getElementById('s-landing');
   var sticky = document.getElementById('landingSticky');
+  var topbar = document.getElementById('landingTopbar');
   var ctas = document.getElementById('landingCtas');
   if (!landing || !landing.classList.contains('active') || !ctas || !sticky) {
     if (sticky) sticky.hidden = true;
+    if (topbar) topbar.hidden = false;
     return;
   }
-  sticky.hidden = ctas.getBoundingClientRect().bottom > 0;
+  var scrolled = ctas.getBoundingClientRect().bottom <= 0;
+  sticky.hidden = !scrolled;
+  if (topbar) topbar.hidden = scrolled;
 }, { passive: true });
 
 document.addEventListener('DOMContentLoaded', () => App.init());
