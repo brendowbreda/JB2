@@ -1115,6 +1115,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   line-height: 1.5;
   margin: 0 0 18px;
 }
+.cot-card.gold .cot-toggle { color: var(--gold-deep); }
 .cot-card.gold .cot-example { color: var(--gold-deep); }
 .cot-tiers {
   border-left: 2px solid var(--border);
