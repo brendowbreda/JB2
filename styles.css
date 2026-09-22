@@ -633,10 +633,10 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .landing-btn-green {
   display: block;
   width: 100%;
-  padding: 16px;
+  padding: 13px;
   background: linear-gradient(180deg, #8CD73E, #6FBE2A);
   color: #fff;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 999px;
   font-weight: 800;
   font-size: 15px;
@@ -648,7 +648,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .landing-btn-ghost {
   display: block;
   width: 100%;
-  padding: 16px;
+  padding: 13px;
   background: transparent;
   color: #6FBE2A;
   border: 2px solid var(--border);
