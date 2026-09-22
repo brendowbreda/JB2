@@ -720,6 +720,13 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   50% { opacity: .4; }
 }
 
+.landing-bichos-track {
+  background: #1A1535;
+  border-top: none;
+  overflow: hidden;
+  padding: 40px 0 !important;
+}
+
 .landing-roleta {
   text-align: center;
   background: #1A1535;
