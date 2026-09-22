@@ -962,13 +962,13 @@ window.addEventListener('scroll', function() {
   var landing = document.getElementById('s-landing');
   var sticky = document.getElementById('landingSticky');
   var topbar = document.getElementById('landingTopbar');
-  var trigger = document.getElementById('landingSectionBicho');
-  if (!landing || !landing.classList.contains('active') || !trigger || !sticky) {
+  var ctas = document.getElementById('landingCtas');
+  if (!landing || !landing.classList.contains('active') || !ctas || !sticky) {
     if (sticky) sticky.hidden = true;
     if (topbar) topbar.hidden = false;
     return;
   }
-  var scrolled = trigger.getBoundingClientRect().top <= 0;
+  var scrolled = ctas.getBoundingClientRect().bottom <= 0;
   sticky.hidden = !scrolled;
   if (topbar) topbar.hidden = scrolled;
 }, { passive: true });
