@@ -1090,7 +1090,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   border: none;
   color: var(--primary-deep);
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 400;
   font-family: var(--font);
   cursor: pointer;
   padding: 12px 0 0;
