@@ -581,11 +581,6 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  animation: stickyIn .25s ease;
-}
-@keyframes stickyIn {
-  from { transform: translateX(-50%) translateY(-100%); }
-  to { transform: translateX(-50%) translateY(0); }
 }
 .landing-sticky-brand { font-size: 15px; color: var(--ink); }
 .landing-sticky-brand b { font-weight: 900; }
