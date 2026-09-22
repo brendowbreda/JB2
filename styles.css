@@ -599,9 +599,9 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 .landing-hero {
   text-align: center;
-  padding: 48px 24px 44px;
+  padding: 48px 24px 32px;
   background: #fff;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
