@@ -306,21 +306,16 @@ const Auth = {
     RegWizard.finish();
   },
   login() {
-    const input = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const cpfRaw = document.getElementById('loginCpf').value.replace(/\D/g, '');
     const password = document.getElementById('loginPassword').value;
     const err = document.getElementById('loginError');
     err.hidden = true;
+    if (cpfRaw.length !== 11) { err.textContent = 'Informe um CPF válido.'; err.hidden = false; return; }
     const users = loadUsers();
-    let key = input;
-    let u = users[key];
-    if (!u) {
-      const cpfDigits = input.replace(/\D/g, '');
-      if (cpfDigits.length === 11) {
-        const found = Object.entries(users).find(([k, v]) => v.cpf === cpfDigits);
-        if (found) { key = found[0]; u = found[1]; }
-      }
-    }
-    if (!u || u.password !== password) { err.textContent = 'E-mail/CPF ou senha incorretos.'; err.hidden = false; return; }
+    let key = null, u = null;
+    const found = Object.entries(users).find(([k, v]) => v.cpf === cpfRaw);
+    if (found) { key = found[0]; u = found[1]; }
+    if (!u || u.password !== password) { err.textContent = 'CPF ou senha incorretos.'; err.hidden = false; return; }
     CURRENT_EMAIL = key;
     STATE = loadState(key) || freshState();
     saveState();
