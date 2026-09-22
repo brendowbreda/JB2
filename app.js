@@ -1009,6 +1009,104 @@ const Render = {
   drawer() { this.topbars(); },
 };
 
+var ROLETA_ANIMALS = [
+  { file: '01-avestruz.png', name: 'Avestruz' },
+  { file: '02-aguia.png', name: 'Águia' },
+  { file: '03-burro.png', name: 'Burro' },
+  { file: '04-borboleta.png', name: 'Borboleta' },
+  { file: '05-cachorro.png', name: 'Cachorro' },
+  { file: '06-cabra.png', name: 'Cabra' },
+  { file: '07-carneiro.png', name: 'Carneiro' },
+  { file: '08-camelo.png', name: 'Camelo' },
+  { file: '09-cobra.png', name: 'Cobra' },
+  { file: '10-coelho.png', name: 'Coelho' },
+  { file: '11-cavalo.png', name: 'Cavalo' },
+  { file: '12-elefante.png', name: 'Elefante' },
+  { file: '13-galo.png', name: 'Galo' },
+  { file: '14-gato.png', name: 'Gato' },
+  { file: '15-jacare.png', name: 'Jacaré' },
+  { file: '16-leao.png', name: 'Leão' },
+  { file: '17-macaco.png', name: 'Macaco' },
+  { file: '18-porco.png', name: 'Porco' },
+  { file: '19-pavao.png', name: 'Pavão' },
+  { file: '20-peru.png', name: 'Peru' },
+  { file: '21-touro.png', name: 'Touro' },
+  { file: '22-tigre.png', name: 'Tigre' },
+  { file: '23-urso.png', name: 'Urso' },
+  { file: '24-veado.png', name: 'Veado' },
+  { file: '25-vaca.png', name: 'Vaca' },
+];
+
+var Roleta = {
+  selected: 1,
+  offset: 0,
+  valor: 10,
+  mult: 18,
+  visibleCount: 4,
+  init: function() {
+    this.renderStrip();
+    this.updatePreview();
+    this.updateValor();
+  },
+  renderStrip: function() {
+    var strip = document.getElementById('rbStrip');
+    if (!strip) return;
+    var html = '';
+    for (var i = 0; i < this.visibleCount; i++) {
+      var idx = (this.offset + i) % ROLETA_ANIMALS.length;
+      var a = ROLETA_ANIMALS[idx];
+      var sel = idx === this.selected ? ' selected' : '';
+      html += '<div class="rb-strip-item' + sel + '" onclick="Roleta.select(' + idx + ')">' +
+        '<img src="bichos/' + a.file + '" alt="' + a.name + '"></div>';
+    }
+    strip.innerHTML = html;
+  },
+  select: function(idx) {
+    this.selected = idx;
+    this.renderStrip();
+    this.updatePreview();
+  },
+  prev: function() {
+    this.offset = (this.offset - 1 + ROLETA_ANIMALS.length) % ROLETA_ANIMALS.length;
+    this.renderStrip();
+  },
+  next: function() {
+    this.offset = (this.offset + 1) % ROLETA_ANIMALS.length;
+    this.renderStrip();
+  },
+  updatePreview: function() {
+    var img = document.getElementById('rbPreviewImg');
+    if (!img) return;
+    var a = ROLETA_ANIMALS[this.selected];
+    img.src = 'bichos/' + a.file;
+    img.alt = a.name;
+  },
+  changeVal: function(dir) {
+    var steps = [5, 10, 20, 50, 100, 200, 500];
+    var cur = steps.indexOf(this.valor);
+    if (cur === -1) cur = 1;
+    cur += dir;
+    if (cur < 0) cur = 0;
+    if (cur >= steps.length) cur = steps.length - 1;
+    this.valor = steps[cur];
+    this.updateValor();
+  },
+  setVal: function(v) {
+    this.valor = v;
+    this.updateValor();
+  },
+  updateValor: function() {
+    var disp = document.getElementById('rbValDisplay');
+    var ganhos = document.getElementById('rbGanhos');
+    if (disp) disp.textContent = '🪙 ' + this.valor + ' pts';
+    if (ganhos) ganhos.textContent = '🪙 ' + (this.valor * this.mult) + ' pts';
+    document.querySelectorAll('.rb-preset').forEach(function(btn) {
+      var val = parseInt(btn.textContent.replace(/\D/g, ''));
+      btn.classList.toggle('selected', val === Roleta.valor);
+    });
+  }
+};
+
 var Cotacoes = {
   toggle: function(btn) {
     var details = btn.nextElementSibling;
@@ -1100,4 +1198,4 @@ window.addEventListener('scroll', function() {
   if (topbar) topbar.hidden = scrolled;
 }, { passive: true });
 
-document.addEventListener('DOMContentLoaded', () => App.init());
+document.addEventListener('DOMContentLoaded', function() { App.init(); Roleta.init(); });
