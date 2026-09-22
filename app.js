@@ -968,7 +968,7 @@ window.addEventListener('scroll', function() {
     if (topbar) topbar.hidden = false;
     return;
   }
-  var scrolled = hero.getBoundingClientRect().bottom <= 0;
+  var scrolled = hero.getBoundingClientRect().bottom <= 48;
   sticky.hidden = !scrolled;
   if (topbar) topbar.hidden = scrolled;
 }, { passive: true });
