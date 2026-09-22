@@ -72,6 +72,107 @@ const MODALITY = {
   dezena: { label: 'Dezena', mult: 60 },
 };
 
+const COTACOES = [
+  {
+    id: 'milhar', name: 'Milhar', mult: '8.000x', accent: 'green',
+    desc: 'Você escolhe 4 números seguidos, de 0000 a 9999. Se esses 4 números saírem exatamente iguais e na mesma ordem no sorteio, você ganha! É a aposta que mais paga, mas também a mais difícil de acertar.',
+    example: 'Exemplo: você joga no 3218. Você só ganha se sair 3218 certinho no sorteio — 3219 ou 8321 não valem, tem que ser exatamente 3218.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '8.000x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '2.666,67x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '1.600x' },
+    ]
+  },
+  {
+    id: 'milhar-centena', name: 'Milhar e Centena', mult: '4.400x', accent: 'green',
+    desc: 'É a Milhar e a Centena jogadas juntas, num bilhete só. Você escolhe 4 números, e sua aposta é dividida ao meio: metade tenta a milhar, metade tenta a centena.',
+    example: 'Exemplo: você joga no 3218. Se sair 3218 certinho, você ganha as duas: o prêmio da milhar E o da centena juntos. Se só os 3 últimos números baterem (sair algo terminando em 218), você ainda ganha o prêmio da centena.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '4.400x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '1.466,67x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '880x' },
+    ]
+  },
+  {
+    id: 'milhar-invertida', name: 'Milhar Invertida', mult: '333,33x', accent: 'green',
+    desc: 'É como a Milhar, mas aqui a ordem não importa! Você escolhe 4 números e ganha se eles saírem juntos no sorteio, em qualquer ordem — não precisa ser exatamente na sequência que você escolheu.',
+    example: 'Exemplo: você escolhe 3, 2, 1 e 8. Se sair 3218, 8321, 1832 ou qualquer outra ordem desses mesmos 4 números, você ganha.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '333,33x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '111,11x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '66,67x' },
+    ]
+  },
+  {
+    id: 'centena', name: 'Centena', mult: '800x', accent: 'green',
+    desc: 'Você escolhe 3 números seguidos, de 000 a 999. Você ganha se o sorteio terminar exatamente com esses 3 números, na mesma ordem.',
+    example: 'Exemplo: você joga no 482. Se sair 5.482 no sorteio, você ganha — porque termina em 482, do jeitinho que você escolheu.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '800x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '266,67x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '160x' },
+    ]
+  },
+  {
+    id: 'centena-invertida', name: 'Centena Invertida', mult: '66,67x', accent: 'green',
+    desc: 'É como a Centena, mas aqui a ordem não importa! Você escolhe 3 números e ganha se eles aparecerem juntos no final do sorteio, em qualquer ordem.',
+    example: 'Exemplo: você escolhe 4, 8 e 2. Se o sorteio terminar em 482, 824, 248 ou qualquer outra ordem desses 3 números, você ganha.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '66,67x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '22,22x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '13,33x' },
+    ]
+  },
+  {
+    id: 'dezena', name: 'Dezena', mult: '80x', accent: 'green',
+    desc: 'Você escolhe 2 números seguidos, de 00 a 99. Você ganha se o sorteio terminar exatamente com esses 2 números, na mesma ordem.',
+    example: 'Exemplo: você joga no 82. Se sair 5.482 no sorteio, você ganha — porque termina em 82, do jeitinho que você escolheu.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '80x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '26,67x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '16x' },
+    ]
+  },
+  {
+    id: 'dezena-invertida', name: 'Dezena Invertida', mult: '13,33x', accent: 'green',
+    desc: 'É como a Dezena, mas aqui a ordem não importa! Você escolhe 2 números e ganha se eles aparecerem juntos no final do sorteio, em qualquer ordem.',
+    example: 'Exemplo: você escolhe 8 e 2. Se o sorteio terminar em 82 ou em 28, você ganha do mesmo jeito.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '13,33x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '4,44x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '2,67x' },
+    ]
+  },
+  {
+    id: 'grupo', name: 'Grupo', mult: '20x', accent: 'gold',
+    desc: 'Existem 25 bichos (Avestruz, Águia, Burro, Borboleta, Cachorro...) e cada um deles "dono" de 4 dezenas. Você escolhe um bicho e torce pra uma dessas 4 dezenas aparecer no final do sorteio.',
+    example: 'Exemplo: o Cachorro é dono das dezenas 17, 18, 19 e 20. Se sair 5.418 no sorteio (termina em 18), você ganha, porque 18 é uma das dezenas do Cachorro.',
+    tiers: [
+      { label: '1º Prêmio', sub: 'Jogar na cabeça: vale só o primeiro resultado.', value: '20x' },
+      { label: '1º ao 3º', sub: 'Seu palpite vale do 1º ao 3º resultado.', value: '6,67x' },
+      { label: '1º ao 5º', sub: 'Seu palpite vale do 1º ao 5º resultado.', value: '4x' },
+    ]
+  },
+  {
+    id: 'duque-grupo', name: 'Duque de Grupo', mult: '66,66x', accent: 'green',
+    desc: 'Escolha 2 bichos diferentes. Você ganha se os dois aparecerem entre os prêmios sorteados, em qualquer ordem e em prêmios diferentes. Essa modalidade não tem 1º prêmio — só paga do 1º ao 3º ou do 1º ao 5º.',
+    example: 'Exemplo: você escolhe Cachorro e Leão. Se o Cachorro sair no 2º prêmio e o Leão no 5º, você ganha na faixa "1º ao 5º".',
+    tiers: [
+      { label: '1º ao 3º', sub: 'Seus 2 bichos precisam sair entre o 1º e o 3º prêmio.', value: '66,66x' },
+      { label: '1º ao 5º', sub: 'Seus 2 bichos precisam sair entre o 1º e o 5º prêmio.', value: '20x' },
+    ]
+  },
+  {
+    id: 'terno-grupo', name: 'Terno de Grupo', mult: '1.500x', accent: 'green',
+    desc: 'Escolha 3 bichos diferentes. Você ganha se os três aparecerem entre os prêmios sorteados, em qualquer ordem e em prêmios diferentes. Essa modalidade também não tem 1º prêmio — só paga do 1º ao 3º ou do 1º ao 5º.',
+    example: 'Exemplo: você escolhe Cachorro, Leão e Vaca. Se os três saírem entre o 1º e o 5º prêmio, você ganha na faixa "1º ao 5º".',
+    tiers: [
+      { label: '1º ao 3º', sub: 'Seus 3 bichos precisam sair entre o 1º e o 3º prêmio — os únicos 3 sorteados.', value: '1.500x' },
+      { label: '1º ao 5º', sub: 'Seus 3 bichos precisam sair entre o 1º e o 5º prêmio.', value: '150x' },
+    ]
+  },
+];
+
 /* ---------------- storage helpers ---------------- */
 function loadUsers() { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
 function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
@@ -691,6 +792,7 @@ const Render = {
     else if (id === 's-conquistas') this.conquistas();
     else if (id === 's-amigos') this.amigos();
     else if (id === 's-adicionar-amigos') this.buscaAmigos();
+    else if (id === 's-cotacoes') this.cotacoes();
     else if (id === 's-register') RegWizard.reset();
     else if (id === 's-suporte') this.suporte();
   },
@@ -886,8 +988,33 @@ const Render = {
       </div>`;
     }).join('');
   },
+  cotacoes() {
+    var list = document.getElementById('cotList');
+    list.innerHTML = COTACOES.map(function(c) {
+      var isGold = c.accent === 'gold';
+      var tiersHtml = c.tiers.map(function(t) {
+        return '<div class="cot-tier"><div><div class="cot-tier-label">' + t.label + '</div><div class="cot-tier-sub">' + t.sub + '</div></div><div class="cot-tier-value">' + t.value + '</div></div>';
+      }).join('');
+      return '<div class="cot-card' + (isGold ? ' gold' : '') + '">' +
+        '<div class="cot-card-header"><div><h3 class="cot-card-title">' + c.name + '</h3><div class="cot-card-mult">' + c.mult + '</div></div>' +
+        '<button class="cot-jogar" onclick="go(\'s-register\')">&#9654; JOGAR</button></div>' +
+        '<button class="cot-toggle" onclick="Cotacoes.toggle(this)">Entenda como jogar <span class="cot-toggle-arrow">&#9650;</span></button>' +
+        '<div class="cot-details" id="cot-' + c.id + '">' +
+        '<p class="cot-desc">' + c.desc + '</p>' +
+        '<p class="cot-example">' + c.example + '</p>' +
+        '<div class="cot-tiers">' + tiersHtml + '</div></div></div>';
+    }).join('');
+  },
   suporte() { this.topbars(); },
   drawer() { this.topbars(); },
+};
+
+var Cotacoes = {
+  toggle: function(btn) {
+    var details = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    details.classList.toggle('open');
+  }
 };
 
 function listRow(icon, title, sub, right, sign) {

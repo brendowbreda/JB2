@@ -1009,6 +1009,129 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   transform: scale(0.97);
 }
 
+/* Cotações screen */
+.cot-screen {
+  background: #0D0B1A !important;
+  margin: -20px -16px -90px;
+  width: calc(100% + 32px);
+  gap: 0 !important;
+  padding: 0 !important;
+}
+.cot-screen.active { display: flex !important; flex-direction: column; }
+.cot-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #0D0B1A;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+.cot-topbar h2 { color: #fff; font-size: 18px; margin: 0; font-weight: 800; }
+.cot-back {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.cot-spacer { width: 36px; }
+.cot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 16px 40px;
+}
+.cot-card {
+  background: #1E1A35;
+  border-radius: 18px;
+  padding: 24px 20px;
+  border-left: 4px solid #8CD73E;
+  position: relative;
+}
+.cot-card.gold { border-left-color: #FFC93C; }
+.cot-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cot-card-title { font-size: 20px; font-weight: 900; color: #fff; margin: 0; }
+.cot-card-mult { font-size: 32px; font-weight: 900; color: #8CD73E; margin: 4px 0 0; }
+.cot-card.gold .cot-card-mult { color: #FFC93C; }
+.cot-jogar {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(180deg, #8CD73E, #6FBE2A);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 800;
+  font-size: 14px;
+  font-family: var(--font);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.cot-card.gold .cot-jogar {
+  background: linear-gradient(180deg, #FFC93C, #E0A400);
+}
+.cot-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: var(--font);
+  cursor: pointer;
+  padding: 12px 0 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cot-toggle-arrow { font-size: 10px; transition: transform 0.2s; }
+.cot-toggle.open .cot-toggle-arrow { transform: rotate(180deg); }
+.cot-details {
+  display: none;
+  margin-top: 16px;
+}
+.cot-details.open { display: block; }
+.cot-desc {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+.cot-example {
+  color: #8CD73E;
+  font-size: 13.5px;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+.cot-card.gold .cot-example { color: #FFC93C; }
+.cot-tiers {
+  border-left: 2px solid rgba(255,255,255,0.15);
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cot-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cot-tier-label { font-size: 14px; font-weight: 800; color: #fff; }
+.cot-tier-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin: 2px 0 0; }
+.cot-tier-value { font-size: 14px; font-weight: 800; color: #fff; white-space: nowrap; }
+
 /* Login screen centered */
 #s-login {
   justify-content: center;

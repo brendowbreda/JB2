@@ -40,7 +40,7 @@
         <div class="landing-cotacao">
           <h3 class="landing-cotacao-title">Cotação <em class="landing-green-italic blink">ao vivo</em></h3>
           <p class="landing-section-sub">Multiplicadores do 1º prêmio por modalidade</p>
-          <button class="landing-btn-ghost" onclick="toast('Cotação em breve!')">VER COTAÇÃO</button>
+          <button class="landing-btn-ghost" onclick="go('s-cotacoes')">VER COTAÇÃO</button>
         </div>
       </div>
 
@@ -170,6 +170,16 @@
         <p class="field-error" id="regError4" hidden></p>
         <button class="reg-btn" onclick="RegWizard.finish()">Cadastre-se</button>
       </div>
+    </section>
+
+    <!-- ======================= COTAÇÕES ======================= -->
+    <section class="screen cot-screen" id="s-cotacoes">
+      <div class="cot-topbar">
+        <button class="cot-back" onclick="go('s-landing')">←</button>
+        <h2>Cotação</h2>
+        <span class="cot-spacer"></span>
+      </div>
+      <div class="cot-list" id="cotList"></div>
     </section>
 
     <!-- ======================= HOME ======================= -->
