@@ -565,20 +565,19 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   z-index: 29;
   justify-content: center;
 }
-.landing-topbar-title {
-  font-size: 15px;
+.landing-topbar-title,
+.landing-sticky-brand {
+  font-size: 16px;
   color: var(--ink);
-  letter-spacing: 0.5px;
 }
-.landing-topbar-title b { font-weight: 900; }
+.landing-topbar-title b,
+.landing-sticky-brand b { font-weight: 900; }
 
 .landing-sticky {
   z-index: 30;
   justify-content: space-between;
   box-shadow: 0 2px 16px rgba(0,0,0,0.1);
 }
-.landing-sticky-brand { font-size: 15px; color: var(--ink); }
-.landing-sticky-brand b { font-weight: 900; }
 .landing-sticky-btn {
   background: linear-gradient(180deg, #8CD73E, #6FBE2A);
   color: #fff;
