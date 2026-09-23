@@ -1039,7 +1039,7 @@ var ROLETA_ANIMALS = [
 ];
 
 var Roleta = {
-  valor: 10,
+  valor: 1,
   mult: 18,
   spinning: false,
   selectedAnimal: 0,
@@ -1259,7 +1259,7 @@ var Roleta = {
     if (!wrap || !wheel) return;
     if (this.blinkTimer) { clearInterval(this.blinkTimer); this.blinkTimer = null; }
     if (btn) { btn.disabled = true; btn.textContent = 'GIRANDO...'; }
-    if (result) result.textContent = '';
+    if (result) { result.textContent = ''; result.style.color = ''; }
     var n = ROLETA_ANIMALS.length;
     var seg = 360 / n;
     this.applyGradient(wheel, n, seg, -1, null);
@@ -1289,9 +1289,15 @@ var Roleta = {
         var hiColor = won ? '#1a6b3a' : '#8b1a1a';
         self.applyGradient(wheel, n, seg, winIdx, hiColor);
         if (won) {
-          if (result) result.textContent = '🎉 ' + animal.name + '! Você acertou! 🪙 ' + (self.valor * self.mult) + ' pts';
+          if (result) {
+            result.textContent = 'Parabéns! Você ganhou ' + self.fmtBRL(self.valor * self.mult) + '!';
+            result.style.color = '#22c55e';
+          }
         } else {
-          if (result) result.textContent = '😔 Saiu ' + animal.name + '! Você apostou em ' + chosen.name;
+          if (result) {
+            result.textContent = 'Não foi dessa vez. Mais sorte na próxima!';
+            result.style.color = '#ef4444';
+          }
         }
         var blinkCount = 0;
         self.blinkTimer = setInterval(function() {
@@ -1307,7 +1313,7 @@ var Roleta = {
     }, 4300);
   },
   changeVal: function(dir) {
-    var steps = [5, 10, 20, 50, 100, 200, 500];
+    var steps = [1, 2, 5, 10, 20, 50, 100];
     var cur = steps.indexOf(this.valor);
     if (cur === -1) cur = 1;
     cur += dir;
@@ -1320,14 +1326,18 @@ var Roleta = {
     this.valor = v;
     this.updateValor();
   },
+  fmtBRL: function(v) {
+    return 'R$ ' + v.toFixed(2).replace('.', ',');
+  },
   updateValor: function() {
     var disp = document.getElementById('rbValDisplay');
     var ganhos = document.getElementById('rbGanhos');
-    if (disp) disp.textContent = '🪙 ' + this.valor + ' pts';
-    if (ganhos) ganhos.textContent = '🪙 ' + (this.valor * this.mult) + ' pts';
+    if (disp) disp.textContent = this.fmtBRL(this.valor);
+    if (ganhos) ganhos.textContent = this.fmtBRL(this.valor * this.mult);
+    var self = this;
     document.querySelectorAll('.rb-preset').forEach(function(btn) {
-      var val = parseInt(btn.textContent.replace(/\D/g, ''));
-      btn.classList.toggle('selected', val === Roleta.valor);
+      var val = parseFloat(btn.textContent.replace('R$', '').replace(',', '.'));
+      btn.classList.toggle('selected', val === self.valor);
     });
   }
 };
