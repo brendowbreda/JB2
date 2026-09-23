@@ -252,7 +252,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   position: relative; display: flex; align-items: center;
   justify-content: center; width: 64px; height: 72px;
 }
-.home-fire-svg { width: 64px; height: 72px; }
+.home-fire-img { width: 64px; height: auto; }
 .home-fire-num {
   position: absolute; font-size: 20px; font-weight: 900;
   color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.25);
@@ -286,7 +286,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .visao-fire {
   position: relative; display: flex; align-items: center; justify-content: center;
 }
-.visao-fire-icon { font-size: 64px; }
+.visao-fire-icon { width: 64px; height: auto; }
 .visao-fire-num {
   position: absolute; font-size: 22px; font-weight: 900;
   color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.3);
