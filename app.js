@@ -1061,7 +1061,7 @@ var Roleta = {
     var html = '';
     for (var i = 0; i < n; i++) {
       var angle = i * seg;
-      html += '<div class="rw-animal" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px) rotate(-' + angle + 'deg)">' +
+      html += '<div class="rw-animal" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
         '<img src="bichos/' + ROLETA_ANIMALS[i].file + '" alt="' + ROLETA_ANIMALS[i].name + '"></div>';
     }
     wheel.innerHTML = html;
