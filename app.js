@@ -850,14 +850,7 @@ const Render = {
   },
   home() {
     if (!STATE) return;
-    document.getElementById('streakCount').textContent = `${STATE.streak} ${STATE.streak === 1 ? 'semana' : 'semanas'}`;
-    const dots = Streak.weekDots();
-    document.getElementById('weekDots').innerHTML = dots.map((d) => `<div class="week-dot ${d.filled ? 'filled' : ''} ${d.isCurrent ? 'today' : ''}"></div>`).join('');
-    const hint = document.getElementById('streakHint');
-    hint.textContent = STATE.weeks[weekKey()]
-      ? 'Você já apostou essa semana. Ofensiva garantida! 🔥'
-      : 'Aposte essa semana para manter sua ofensiva viva.';
-    document.getElementById('cashbackBanner').hidden = STATE.streak < 4;
+    document.getElementById('streakCount').textContent = STATE.streak;
 
     const results = document.getElementById('homeResultsPreview');
     const recentResolved = STATE.bets.filter((b) => b.status !== 'aguardando').slice(0, 3);

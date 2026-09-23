@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=18">
+<link rel="stylesheet" href="styles.css?v=19">
 </head>
 <body>
 <div class="page">
@@ -230,21 +230,10 @@
         <button class="icon-btn" onclick="Menu.open()" aria-label="Configurações"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
       </div>
 
-      <div class="card streak-card">
-        <div class="streak-head">
-          <div class="streak-flame" id="streakFlame">🔥</div>
-          <div>
-            <strong id="streakCount">0 semanas</strong>
-            <p>de ofensiva de apostas</p>
-          </div>
-          <div class="tier-chip" id="homeTierChip">🤍 Quartzo</div>
-        </div>
-        <div class="week-dots" id="weekDots"></div>
-        <p class="streak-hint" id="streakHint"></p>
-      </div>
-
-      <div id="cashbackBanner" class="card cashback-banner" hidden>
-        🎁 <strong>Cashback de 4 semanas ativo!</strong> Seus próximos depósitos ganham +10% de pontos bônus.
+      <div class="streak-mini" id="streakMini">
+        <span class="streak-mini-fire">🔥</span>
+        <strong id="streakCount">0</strong>
+        <span class="streak-mini-label">week streak</span>
       </div>
 
       <div class="cta-row">
@@ -752,6 +741,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=17"></script>
+<script src="app.js?v=19"></script>
 </body>
 </html>
