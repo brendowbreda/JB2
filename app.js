@@ -1211,4 +1211,65 @@ window.addEventListener('scroll', function() {
   if (topbar) topbar.hidden = scrolled;
 }, { passive: true });
 
-document.addEventListener('DOMContentLoaded', function() { App.init(); Roleta.init(); });
+var TrackDrag = {
+  tracks: [],
+  init: function() {
+    var wraps = document.querySelectorAll('.roleta-track-wrap');
+    var totalWidth = (80 + 12) * 25;
+    wraps.forEach(function(wrap) {
+      var track = wrap.querySelector('.roleta-track');
+      if (!track) return;
+      var isReverse = wrap.classList.contains('reverse');
+      var baseSpeed = isReverse ? 1.6 : -1.9;
+      var s = {
+        el: track, wrap: wrap,
+        x: isReverse ? -totalWidth : 0,
+        speed: baseSpeed, baseSpeed: baseSpeed,
+        dragging: false, startX: 0, startScrollX: 0,
+        lastX: 0, lastTime: 0, velocity: 0,
+        totalWidth: totalWidth
+      };
+      TrackDrag.tracks.push(s);
+      wrap.addEventListener('mousedown', function(e) { TrackDrag.onStart(s, e.clientX); e.preventDefault(); });
+      document.addEventListener('mousemove', function(e) { if (s.dragging) TrackDrag.onMove(s, e.clientX); });
+      document.addEventListener('mouseup', function() { if (s.dragging) TrackDrag.onEnd(s); });
+      wrap.addEventListener('touchstart', function(e) { TrackDrag.onStart(s, e.touches[0].clientX); }, { passive: true });
+      wrap.addEventListener('touchmove', function(e) { if (s.dragging) TrackDrag.onMove(s, e.touches[0].clientX); }, { passive: true });
+      wrap.addEventListener('touchend', function() { if (s.dragging) TrackDrag.onEnd(s); }, { passive: true });
+    });
+    requestAnimationFrame(function loop() { TrackDrag.tick(); requestAnimationFrame(loop); });
+  },
+  onStart: function(s, x) {
+    s.dragging = true;
+    s.startX = x; s.startScrollX = s.x;
+    s.lastX = x; s.lastTime = Date.now();
+    s.velocity = 0;
+    s.wrap.classList.add('dragging');
+  },
+  onMove: function(s, x) {
+    s.x = s.startScrollX + (x - s.startX);
+    var now = Date.now();
+    var dt = now - s.lastTime;
+    if (dt > 0) s.velocity = (x - s.lastX) / dt * 16;
+    s.lastX = x; s.lastTime = now;
+  },
+  onEnd: function(s) {
+    s.dragging = false;
+    s.speed = s.velocity * 1.5 + s.baseSpeed;
+    s.wrap.classList.remove('dragging');
+  },
+  tick: function() {
+    this.tracks.forEach(function(s) {
+      if (!s.dragging) {
+        s.x += s.speed;
+        s.speed += (s.baseSpeed - s.speed) * 0.03;
+      }
+      var w = s.totalWidth;
+      while (s.x <= -w) s.x += w;
+      while (s.x > 0) s.x -= w;
+      s.el.style.transform = 'translateX(' + s.x + 'px)';
+    });
+  }
+};
+
+document.addEventListener('DOMContentLoaded', function() { App.init(); Roleta.init(); TrackDrag.init(); });
