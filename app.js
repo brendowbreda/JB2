@@ -1078,18 +1078,24 @@ var Roleta = {
     if (this.pickOffset > maxOffset) this.pickOffset = maxOffset;
     strip.style.transform = 'translateX(-' + this.pickOffset + 'px)';
   },
+  applyGradient: function(wheel, n, seg, highlightIdx, color) {
+    var c1 = '#2D2757', c2 = '#3A3170', cFree = '#1a6b3a';
+    var parts = [];
+    for (var i = 0; i < n; i++) {
+      var c;
+      if (i === highlightIdx && color) c = color;
+      else if (ROLETA_ANIMALS[i].free) c = cFree;
+      else c = i % 2 === 0 ? c1 : c2;
+      parts.push(c + ' ' + (i * seg) + 'deg ' + ((i + 1) * seg) + 'deg');
+    }
+    wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
+  },
   buildWheel: function() {
     var wheel = document.getElementById('rwWheel');
     if (!wheel) return;
     var n = ROLETA_ANIMALS.length;
     var seg = 360 / n;
-    var c1 = '#2D2757', c2 = '#3A3170', cFree = '#1a6b3a';
-    var parts = [];
-    for (var i = 0; i < n; i++) {
-      var c = ROLETA_ANIMALS[i].free ? cFree : (i % 2 === 0 ? c1 : c2);
-      parts.push(c + ' ' + (i * seg) + 'deg ' + ((i + 1) * seg) + 'deg');
-    }
-    wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
+    this.applyGradient(wheel, n, seg, -1, null);
     var radius = 390;
     var html = '';
     for (var i = 0; i < n; i++) {
@@ -1115,6 +1121,7 @@ var Roleta = {
     if (result) result.textContent = '';
     var n = ROLETA_ANIMALS.length;
     var seg = 360 / n;
+    this.applyGradient(wheel, n, seg, -1, null);
     var winIdx;
     do { winIdx = Math.floor(Math.random() * n); } while (this.reroll && ROLETA_ANIMALS[winIdx].free);
     this.reroll = false;
@@ -1138,7 +1145,9 @@ var Roleta = {
         self.spinning = false;
         if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
         var chosen = ROLETA_ANIMALS[self.selectedAnimal];
-        if (winIdx === self.selectedAnimal) {
+        var won = winIdx === self.selectedAnimal;
+        self.applyGradient(wheel, n, seg, winIdx, won ? '#1a6b3a' : '#8b1a1a');
+        if (won) {
           if (result) result.textContent = '🎉 ' + animal.name + '! Você acertou! 🪙 ' + (self.valor * self.mult) + ' pts';
         } else {
           if (result) result.textContent = '😔 Saiu ' + animal.name + '! Você apostou em ' + chosen.name;
