@@ -721,8 +721,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 
 .landing-bichos-track {
-  background: #1A1535;
-  border-top: none;
+  background: #fff;
   overflow: hidden;
   padding: 40px 0 !important;
 }
@@ -757,7 +756,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   height: 80px;
   object-fit: contain;
   border-radius: 16px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(30,27,46,0.06);
   padding: 6px;
   flex-shrink: 0;
 }
@@ -779,57 +778,52 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   text-align: center;
   padding: 40px 24px !important;
 }
-.rb-carousel {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 20px 0 16px;
+.rw-container {
+  position: relative;
+  width: 300px;
+  height: 170px;
+  margin: 0 auto 24px;
+  overflow: hidden;
 }
-.rb-arrow {
-  width: 40px; height: 40px;
+.rw-pointer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: 0; height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 24px solid var(--gold);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+}
+.rw-wheel {
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
-  border: none;
-  background: #8CD73E;
-  color: #fff;
-  font-size: 24px;
-  font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
+  border: 3px solid var(--gold);
+  position: relative;
+  box-shadow: 0 0 0 6px rgba(255,193,60,0.15);
 }
-.rb-strip {
-  display: flex;
-  gap: 8px;
-  overflow: hidden;
-  flex: 1;
+.rw-animal {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: calc(50% - 15px);
+  top: calc(50% - 15px);
 }
-.rb-strip-item {
-  width: 64px; height: 64px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.08);
-  padding: 4px;
-  flex-shrink: 0;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border-color 0.2s;
-}
-.rb-strip-item.selected { border-color: var(--gold); }
-.rb-strip-item img {
-  width: 100%; height: 100%;
+.rw-animal img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  border-radius: 4px;
 }
-.rb-preview {
-  width: 200px; height: 200px;
-  margin: 0 auto 20px;
-  border-radius: 20px;
-  border: 4px solid var(--gold);
-  background: rgba(255,255,255,0.06);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-}
-.rb-preview img {
-  width: 85%; height: 85%;
-  object-fit: contain;
+.rw-result {
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: 900;
+  margin: 0 0 16px;
+  min-height: 26px;
 }
 .rb-valor {
   display: flex;

@@ -1038,48 +1038,61 @@ var ROLETA_ANIMALS = [
 ];
 
 var Roleta = {
-  selected: 1,
-  offset: 0,
   valor: 10,
   mult: 18,
-  visibleCount: 4,
+  spinning: false,
   init: function() {
-    this.renderStrip();
-    this.updatePreview();
+    this.buildWheel();
     this.updateValor();
   },
-  renderStrip: function() {
-    var strip = document.getElementById('rbStrip');
-    if (!strip) return;
-    var html = '';
-    for (var i = 0; i < this.visibleCount; i++) {
-      var idx = (this.offset + i) % ROLETA_ANIMALS.length;
-      var a = ROLETA_ANIMALS[idx];
-      var sel = idx === this.selected ? ' selected' : '';
-      html += '<div class="rb-strip-item' + sel + '" onclick="Roleta.select(' + idx + ')">' +
-        '<img src="bichos/' + a.file + '" alt="' + a.name + '"></div>';
+  buildWheel: function() {
+    var wheel = document.getElementById('rwWheel');
+    if (!wheel) return;
+    var n = ROLETA_ANIMALS.length;
+    var seg = 360 / n;
+    var c1 = '#2D2757', c2 = '#3A3170';
+    var parts = [];
+    for (var i = 0; i < n; i++) {
+      var c = i % 2 === 0 ? c1 : c2;
+      parts.push(c + ' ' + (i * seg) + 'deg ' + ((i + 1) * seg) + 'deg');
     }
-    strip.innerHTML = html;
+    wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
+    var radius = 118;
+    var html = '';
+    for (var i = 0; i < n; i++) {
+      var angle = i * seg;
+      html += '<div class="rw-animal" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px) rotate(-' + angle + 'deg)">' +
+        '<img src="bichos/' + ROLETA_ANIMALS[i].file + '" alt="' + ROLETA_ANIMALS[i].name + '"></div>';
+    }
+    wheel.innerHTML = html;
   },
-  select: function(idx) {
-    this.selected = idx;
-    this.renderStrip();
-    this.updatePreview();
-  },
-  prev: function() {
-    this.offset = (this.offset - 1 + ROLETA_ANIMALS.length) % ROLETA_ANIMALS.length;
-    this.renderStrip();
-  },
-  next: function() {
-    this.offset = (this.offset + 1) % ROLETA_ANIMALS.length;
-    this.renderStrip();
-  },
-  updatePreview: function() {
-    var img = document.getElementById('rbPreviewImg');
-    if (!img) return;
-    var a = ROLETA_ANIMALS[this.selected];
-    img.src = 'bichos/' + a.file;
-    img.alt = a.name;
+  spin: function() {
+    if (this.spinning) return;
+    this.spinning = true;
+    var wheel = document.getElementById('rwWheel');
+    var btn = document.getElementById('rwSpinBtn');
+    var result = document.getElementById('rwResult');
+    if (!wheel) return;
+    if (btn) { btn.disabled = true; btn.textContent = 'GIRANDO...'; }
+    if (result) result.textContent = '';
+    var n = ROLETA_ANIMALS.length;
+    var seg = 360 / n;
+    var winIdx = Math.floor(Math.random() * n);
+    wheel.style.transition = 'none';
+    wheel.style.transform = 'rotate(0deg)';
+    wheel.offsetHeight;
+    var spins = 5 + Math.floor(Math.random() * 3);
+    var offset = (Math.random() - 0.5) * seg * 0.5;
+    var target = ((spins + 1) * 360) - (winIdx * seg) + offset;
+    wheel.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+    wheel.style.transform = 'rotate(' + target + 'deg)';
+    var self = this;
+    setTimeout(function() {
+      self.spinning = false;
+      if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
+      var animal = ROLETA_ANIMALS[winIdx];
+      if (result) result.textContent = '🎉 ' + animal.name + '! Ganho: 🪙 ' + (self.valor * self.mult) + ' pts';
+    }, 4300);
   },
   changeVal: function(dir) {
     var steps = [5, 10, 20, 50, 100, 200, 500];
