@@ -975,7 +975,10 @@ const Render = {
   },
   perfil() {
     const u = loadUsers()[CURRENT_EMAIL];
+    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
     document.getElementById('perfilNome').textContent = u.name;
+    const saldo = document.getElementById('perfilSaldo');
+    if (saldo) saldo.textContent = fmtBRL(STATE.points);
     const tier = tierFor(STATE.totalWagered);
     document.getElementById('perfilTierChip').textContent = `${tier.icon} ${tier.name} · ${tier.label}`;
     const next = nextTier(tier);
@@ -990,10 +993,20 @@ const Render = {
       bar.style.width = '100%';
       label.textContent = 'Você atingiu a pedra máxima! 💎';
     }
-    document.getElementById('statSemanas').textContent = STATE.streak;
+    document.getElementById('statSemanas').innerHTML = '🔥 <b>' + STATE.streak + '</b>';
     document.getElementById('statApostas').textContent = STATE.totalBets;
-    document.getElementById('statSeguindo').textContent = STATE.friends.length;
-    document.getElementById('statSeguidores').textContent = Math.max(STATE.friends.length, Math.round(STATE.friends.length * 1.4));
+    const amigosList = document.getElementById('perfilAmigosList');
+    if (amigosList) {
+      if (STATE.friends.length) {
+        amigosList.innerHTML = STATE.friends.map(f => {
+          const ini = f.name.split(' ').filter(Boolean).map(w => w[0]).slice(0,2).join('').toUpperCase();
+          const first = f.name.split(' ')[0];
+          return `<div class="perfil-amigo-item" onclick="go('s-amigos')"><div class="avatar avatar-initials">${ini}</div><span>${first}</span></div>`;
+        }).join('');
+      } else {
+        amigosList.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhum amigo ainda.</p>';
+      }
+    }
     const preview = document.getElementById('perfilAchvPreview');
     const unlocked = ACHIEVEMENTS.filter((a) => STATE.achievements[a.id]).slice(0, 4);
     preview.innerHTML = (unlocked.length ? unlocked : ACHIEVEMENTS.slice(0, 4)).map((a) => achvTileHtml(a, !!STATE.achievements[a.id])).join('');
