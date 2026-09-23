@@ -1260,10 +1260,10 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .reg-lgpd {
   color: var(--ink-faint);
-  font-size: 10px;
+  font-size: 9px;
   text-align: center;
-  margin: 16px 0 20px;
-  line-height: 1.5;
+  margin: 12px 0 16px;
+  line-height: 1.4;
 }
 .reg-lgpd b {
   color: var(--ink-dim);
