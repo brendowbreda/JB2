@@ -1042,6 +1042,7 @@ var Roleta = {
   valor: 1,
   mult: 18,
   spinning: false,
+  freeSpinsLeft: 0,
   selectedAnimal: 0,
   pickOffset: 0,
   init: function() {
@@ -1148,7 +1149,7 @@ var Roleta = {
     }
     function onMove(x) {
       if (!dragging) return;
-      if (Math.abs(x - startX) > 5) didDrag = true;
+      if (Math.abs(x - startX) > 15) didDrag = true;
       self.pickerX = startScrollX + (x - startX);
       var w = self.pickerSetW;
       while (self.pickerX <= -2 * w) self.pickerX += w;
@@ -1278,29 +1279,17 @@ var Roleta = {
       var animal = ROLETA_ANIMALS[winIdx];
       if (animal.free) {
         if (result) result.textContent = '';
+        self.freeSpinsLeft = 3;
         self.showFreeOverlay(function() {
           self.spinning = false;
           self.reroll = true;
           self.spin();
         });
       } else {
-        self.spinning = false;
-        if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
         var chosen = ROLETA_ANIMALS[self.selectedAnimal];
         var won = winIdx === self.selectedAnimal;
         var hiColor = won ? '#1a6b3a' : '#8b1a1a';
         self.applyGradient(wheel, n, seg, winIdx, hiColor);
-        if (won) {
-          if (result) {
-            result.textContent = 'Parabéns! Você ganhou ' + self.fmtBRL(self.valor * self.mult) + '!';
-            result.style.color = '#22c55e';
-          }
-        } else {
-          if (result) {
-            result.textContent = 'Não foi dessa vez. Mais sorte na próxima!';
-            result.style.color = '#ef4444';
-          }
-        }
         var blinkCount = 0;
         self.blinkTimer = setInterval(function() {
           blinkCount++;
@@ -1311,6 +1300,26 @@ var Roleta = {
             self.applyGradient(wheel, n, seg, -1, null);
           }
         }, 300);
+        if (self.freeSpinsLeft > 0) {
+          self.freeSpinsLeft--;
+          var msg = won
+            ? 'Parabéns!\n' + self.fmtBRL(self.valor * self.mult)
+            : 'Não foi\ndessa vez!';
+          var color = won ? '#22c55e' : '#ef4444';
+          self.showResultOverlay(msg, color, function() {
+            self.spinning = false;
+            self.reroll = true;
+            self.spin();
+          });
+        } else {
+          self.spinning = false;
+          if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
+          if (won) {
+            self.showResultOverlay('Parabéns!\n' + self.fmtBRL(self.valor * self.mult), '#22c55e', null);
+          } else {
+            self.showResultOverlay('Não foi\ndessa vez!', '#ef4444', null);
+          }
+        }
       }
     }, 4300);
   },
@@ -1330,6 +1339,29 @@ var Roleta = {
   },
   fmtBRL: function(v) {
     return 'R$ ' + v.toFixed(2).replace('.', ',');
+  },
+  showResultOverlay: function(msg, color, cb) {
+    var lines = msg.split('\n');
+    var html = '<div class="free-overlay-content">';
+    for (var i = 0; i < lines.length; i++) {
+      html += '<span class="free-overlay-text" style="color:' + color + '">' + lines[i] + '</span>';
+    }
+    html += '</div>';
+    var overlay = document.createElement('div');
+    overlay.className = 'free-overlay';
+    overlay.innerHTML = html;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function() {
+      overlay.classList.add('free-overlay-show');
+    });
+    setTimeout(function() {
+      overlay.classList.remove('free-overlay-show');
+      overlay.classList.add('free-overlay-hide');
+      setTimeout(function() {
+        overlay.remove();
+        if (cb) cb();
+      }, 500);
+    }, 2000);
   },
   showFreeOverlay: function(cb) {
     var overlay = document.createElement('div');
