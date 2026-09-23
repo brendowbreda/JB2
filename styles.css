@@ -540,6 +540,50 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 /* ---------- docs ---------- */
 .doc-text p { font-size: 13.5px; line-height: 1.6; color: var(--ink-dim); }
 .doc-text strong { color: var(--ink); }
+.doc-date { font-size: 12px; color: var(--ink-faint); font-style: italic; }
+
+/* ---------- portal transparência ---------- */
+#s-transparencia { background: #1a1640; }
+#s-transparencia .topbar-simple { background: #1a1640; }
+#s-transparencia .topbar-simple h2 { color: #fff; }
+#s-transparencia .topbar-simple .icon-btn { color: #fff; }
+.tp-sub { color: rgba(255,255,255,0.6); font-size: 13px; margin: -4px 0 16px; }
+.tp-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 16px; margin-bottom: 12px;
+  display: flex; flex-wrap: wrap; align-items: center;
+}
+.tp-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  color: rgba(255,255,255,0.5); flex: 1;
+}
+.tp-verified {
+  font-size: 12px; font-weight: 700; color: #c5ff4a;
+}
+.tp-value {
+  width: 100%; font-size: 28px; font-weight: 900; color: #fff;
+  margin: 4px 0 2px; display: block;
+}
+.tp-green { color: #c5ff4a; }
+.tp-hint {
+  font-size: 11px; color: rgba(255,255,255,0.4); width: 100%;
+}
+.tp-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;
+}
+.tp-stat {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 14px; text-align: center;
+}
+.tp-stat strong {
+  display: block; font-size: 22px; font-weight: 900; color: #fff;
+}
+.tp-stat span {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  color: rgba(255,255,255,0.5); margin-top: 4px; display: block;
+}
 
 /* ---------- toast / modal ---------- */
 .toast-container {
