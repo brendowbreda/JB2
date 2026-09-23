@@ -750,15 +750,7 @@ const Amigos = {
 /* ---------------- account ---------------- */
 const Account = {
   save() {
-    const name = document.getElementById('contaNome').value.trim();
-    const phone = document.getElementById('contaTelefone').value.trim();
-    if (!name) { toast('Informe seu nome.'); return; }
-    const users = loadUsers();
-    users[CURRENT_EMAIL].name = name;
-    users[CURRENT_EMAIL].phone = phone;
-    saveUsers(users);
     toast('Dados atualizados!');
-    Render.topbars();
   },
   confirmDelete() { Modal.open('deleteModal'); },
   deleteConfirmed() {
@@ -801,8 +793,12 @@ const Render = {
     const users = loadUsers();
     const u = users[CURRENT_EMAIL] || { name: 'Você' };
     const tier = tierFor(STATE.totalWagered);
+    const initials = u.name.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase() || '?';
     ['homeName', 'drawerName'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = u.name; });
-    ['homeBalance', 'drawerBalance', 'carteiraSaldo', 'sacarSaldo'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = fmtPoints(STATE.points); });
+    ['homeAvatar', 'drawerAvatar', 'perfilAvatar'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = initials; });
+    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+    ['homeBalance', 'drawerBalance'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = fmtBRL(STATE.points); });
+    ['carteiraSaldo', 'sacarSaldo'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = fmtPoints(STATE.points); });
     const tierChip = document.getElementById('homeTierChip');
     if (tierChip) tierChip.textContent = `${tier.icon} ${tier.name}`;
     const unread = STATE.notifications.filter((n) => !n.read).length;
@@ -844,9 +840,12 @@ const Render = {
   },
   conta() {
     const u = loadUsers()[CURRENT_EMAIL];
-    document.getElementById('contaNome').value = u.name;
-    document.getElementById('contaEmail').value = u.email;
-    document.getElementById('contaTelefone').value = u.phone || '';
+    const el = (id) => document.getElementById(id);
+    if (el('contaNomeDisplay')) el('contaNomeDisplay').textContent = u.name.toUpperCase();
+    if (el('contaNascDisplay')) el('contaNascDisplay').textContent = u.birth || '—';
+    if (el('contaCpfDisplay')) el('contaCpfDisplay').textContent = u.cpf ? u.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : '—';
+    if (el('contaEmailDisplay')) el('contaEmailDisplay').textContent = (u.email || '—').toUpperCase();
+    if (el('contaTelDisplay')) el('contaTelDisplay').textContent = u.phone || '—';
   },
   carteira() {
     const list = document.getElementById('extratoList');

@@ -114,6 +114,37 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   color: var(--danger);
   margin-top: 10px;
 }
+.btn-danger-text {
+  width: 100%;
+  padding: 14px;
+  border: none; background: none;
+  color: var(--danger);
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; margin-top: 8px;
+}
+.conta-sub {
+  color: var(--ink-faint); font-size: 13px;
+  margin: -4px 0 16px; padding: 0 4px;
+}
+.conta-fields {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); margin-bottom: 16px;
+}
+.conta-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px; border-bottom: 1px dashed var(--border);
+}
+.conta-row:last-child { border-bottom: none; }
+.conta-icon { color: var(--ink-dim); flex-shrink: 0; }
+.conta-info { flex: 1; min-width: 0; }
+.conta-value {
+  display: block; font-size: 15px; font-weight: 600;
+  color: var(--ink); overflow: hidden; text-overflow: ellipsis;
+}
+.conta-hint {
+  display: block; font-size: 11px; color: var(--ink-faint); margin-top: 2px;
+}
+.conta-lock { color: var(--ink-faint); flex-shrink: 0; }
 .btn-whatsapp {
   background: var(--whatsapp);
   color: #fff;
@@ -174,7 +205,12 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   font-size: 22px;
   flex-shrink: 0;
 }
+.avatar-initials {
+  font-size: 16px; font-weight: 700; color: #fff;
+  text-transform: uppercase; letter-spacing: 1px;
+}
 .avatar-lg { width: 72px; height: 72px; font-size: 34px; margin: 0 auto; }
+.avatar-lg.avatar-initials { font-size: 28px; }
 .topbar-user-text { display: flex; flex-direction: column; gap: 3px; }
 .topbar-user-text strong { font-size: 15px; }
 .balance-pill {
