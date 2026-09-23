@@ -1154,11 +1154,11 @@ var Roleta = {
     wheel.innerHTML = html;
     if (pins) {
       var pinHtml = '';
-      var pinR = 444;
+      var pinR = 454;
       for (var i = 0; i < n; i++) {
         var a = i * seg * Math.PI / 180;
-        var px = 450 + pinR * Math.sin(a) - 5;
-        var py = 450 - pinR * Math.cos(a) - 5;
+        var px = 460 + pinR * Math.sin(a) - 5;
+        var py = 460 - pinR * Math.cos(a) - 5;
         pinHtml += '<div class="rw-pin" style="left:' + px + 'px;top:' + py + 'px"></div>';
       }
       pins.innerHTML = pinHtml;
@@ -1172,6 +1172,7 @@ var Roleta = {
     var btn = document.getElementById('rwSpinBtn');
     var result = document.getElementById('rwResult');
     if (!wrap || !wheel) return;
+    if (this.blinkTimer) { clearInterval(this.blinkTimer); this.blinkTimer = null; }
     if (btn) { btn.disabled = true; btn.textContent = 'GIRANDO...'; }
     if (result) result.textContent = '';
     var n = ROLETA_ANIMALS.length;
@@ -1201,12 +1202,23 @@ var Roleta = {
         if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
         var chosen = ROLETA_ANIMALS[self.selectedAnimal];
         var won = winIdx === self.selectedAnimal;
-        self.applyGradient(wheel, n, seg, winIdx, won ? '#1a6b3a' : '#8b1a1a');
+        var hiColor = won ? '#1a6b3a' : '#8b1a1a';
+        self.applyGradient(wheel, n, seg, winIdx, hiColor);
         if (won) {
           if (result) result.textContent = '🎉 ' + animal.name + '! Você acertou! 🪙 ' + (self.valor * self.mult) + ' pts';
         } else {
           if (result) result.textContent = '😔 Saiu ' + animal.name + '! Você apostou em ' + chosen.name;
         }
+        var blinkCount = 0;
+        self.blinkTimer = setInterval(function() {
+          blinkCount++;
+          if (blinkCount > 10) { clearInterval(self.blinkTimer); return; }
+          if (blinkCount % 2 === 0) {
+            self.applyGradient(wheel, n, seg, winIdx, hiColor);
+          } else {
+            self.applyGradient(wheel, n, seg, -1, null);
+          }
+        }, 300);
       }
     }, 4300);
   },

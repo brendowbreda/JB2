@@ -855,7 +855,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   border-left: 24px solid transparent;
   border-right: 24px solid transparent;
   border-top: 48px solid var(--gold);
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.7));
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.8));
   pointer-events: none;
 }
 .rw-pointer::after {
@@ -873,9 +873,10 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   position: absolute;
   width: 920px;
   height: 920px;
-  top: 40px;
+  top: 36px;
   left: 50%;
   margin-left: -460px;
+  transform-origin: 460px 460px;
 }
 .rw-wheel {
   width: 900px;
@@ -885,14 +886,14 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   box-shadow: 0 0 0 3px #8B6914, inset 0 0 0 3px #8B6914;
   position: absolute;
   top: 0;
-  left: 10px;
+  left: 0;
 }
 .rw-pins {
   position: absolute;
   top: 0;
-  left: 10px;
-  width: 900px;
-  height: 900px;
+  left: 0;
+  width: 920px;
+  height: 920px;
   border-radius: 50%;
   pointer-events: none;
 }
@@ -902,9 +903,15 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   height: 10px;
   background: radial-gradient(circle at 35% 35%, #fff, var(--gold) 50%, #8B6914);
   border-radius: 50%;
-  left: calc(50% - 5px);
-  top: calc(50% - 5px);
   box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+@keyframes blink-win {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes blink-lose {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 .rw-animal {
   position: absolute;
