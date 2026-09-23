@@ -1230,7 +1230,7 @@ var Roleta = {
       var angle = i * seg;
       if (ROLETA_ANIMALS[i].free) {
         html += '<div class="rw-animal rw-free" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
-          '<span style="font-size:36px">🎁</span></div>';
+          '<span style="font-size:36px">🍀</span></div>';
       } else {
         html += '<div class="rw-animal" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
           '<img src="bichos/' + ROLETA_ANIMALS[i].file + '" alt="' + ROLETA_ANIMALS[i].name + '"></div>';
@@ -1277,10 +1277,12 @@ var Roleta = {
     setTimeout(function() {
       var animal = ROLETA_ANIMALS[winIdx];
       if (animal.free) {
-        if (result) result.textContent = '🎁 Giro Grátis! Girando de novo...';
-        self.spinning = false;
-        self.reroll = true;
-        setTimeout(function() { self.spin(); }, 1200);
+        if (result) result.textContent = '';
+        self.showFreeOverlay(function() {
+          self.spinning = false;
+          self.reroll = true;
+          self.spin();
+        });
       } else {
         self.spinning = false;
         if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
@@ -1328,6 +1330,26 @@ var Roleta = {
   },
   fmtBRL: function(v) {
     return 'R$ ' + v.toFixed(2).replace('.', ',');
+  },
+  showFreeOverlay: function(cb) {
+    var overlay = document.createElement('div');
+    overlay.className = 'free-overlay';
+    overlay.innerHTML = '<div class="free-overlay-content">' +
+      '<span class="free-overlay-x">3X</span>' +
+      '<span class="free-overlay-text">GRÁTIS</span>' +
+      '</div>';
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function() {
+      overlay.classList.add('free-overlay-show');
+    });
+    setTimeout(function() {
+      overlay.classList.remove('free-overlay-show');
+      overlay.classList.add('free-overlay-hide');
+      setTimeout(function() {
+        overlay.remove();
+        if (cb) cb();
+      }, 500);
+    }, 2000);
   },
   updateValor: function() {
     var disp = document.getElementById('rbValDisplay');
