@@ -1046,6 +1046,7 @@ var Roleta = {
   pickOffset: 0,
   init: function() {
     this.buildPicker();
+    this.initPickerSwipe();
     this.buildWheel();
     this.updateValor();
   },
@@ -1090,8 +1091,50 @@ var Roleta = {
     }
     wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
   },
+  initPickerSwipe: function() {
+    var track = document.getElementById('rbPickerTrack');
+    var strip = document.getElementById('rbPickerStrip');
+    if (!track || !strip) return;
+    var self = this, startX = 0, startOff = 0, dragging = false;
+    var itemW = 62 + 8;
+    var maxOff = (25 - 4) * itemW;
+    function onStart(x) {
+      dragging = true;
+      startX = x;
+      startOff = self.pickOffset;
+      strip.classList.add('dragging');
+      track.classList.add('dragging');
+    }
+    function onMove(x) {
+      if (!dragging) return;
+      var dx = startX - x;
+      var off = startOff + dx;
+      if (off < 0) off = 0;
+      if (off > maxOff) off = maxOff;
+      self.pickOffset = off;
+      strip.style.transform = 'translateX(-' + off + 'px)';
+    }
+    function onEnd() {
+      if (!dragging) return;
+      dragging = false;
+      strip.classList.remove('dragging');
+      track.classList.remove('dragging');
+      var itemW = 62 + 8;
+      self.pickOffset = Math.round(self.pickOffset / itemW) * itemW;
+      if (self.pickOffset < 0) self.pickOffset = 0;
+      if (self.pickOffset > maxOff) self.pickOffset = maxOff;
+      strip.style.transform = 'translateX(-' + self.pickOffset + 'px)';
+    }
+    track.addEventListener('mousedown', function(e) { e.preventDefault(); onStart(e.clientX); });
+    window.addEventListener('mousemove', function(e) { onMove(e.clientX); });
+    window.addEventListener('mouseup', onEnd);
+    track.addEventListener('touchstart', function(e) { onStart(e.touches[0].clientX); }, { passive: true });
+    track.addEventListener('touchmove', function(e) { onMove(e.touches[0].clientX); }, { passive: true });
+    track.addEventListener('touchend', onEnd);
+  },
   buildWheel: function() {
     var wheel = document.getElementById('rwWheel');
+    var pins = document.getElementById('rwPins');
     if (!wheel) return;
     var n = ROLETA_ANIMALS.length;
     var seg = 360 / n;
@@ -1109,14 +1152,26 @@ var Roleta = {
       }
     }
     wheel.innerHTML = html;
+    if (pins) {
+      var pinHtml = '';
+      var pinR = 444;
+      for (var i = 0; i < n; i++) {
+        var a = i * seg * Math.PI / 180;
+        var px = 450 + pinR * Math.sin(a) - 5;
+        var py = 450 - pinR * Math.cos(a) - 5;
+        pinHtml += '<div class="rw-pin" style="left:' + px + 'px;top:' + py + 'px"></div>';
+      }
+      pins.innerHTML = pinHtml;
+    }
   },
   spin: function() {
     if (this.spinning) return;
     this.spinning = true;
+    var wrap = document.getElementById('rwWheelWrap');
     var wheel = document.getElementById('rwWheel');
     var btn = document.getElementById('rwSpinBtn');
     var result = document.getElementById('rwResult');
-    if (!wheel) return;
+    if (!wrap || !wheel) return;
     if (btn) { btn.disabled = true; btn.textContent = 'GIRANDO...'; }
     if (result) result.textContent = '';
     var n = ROLETA_ANIMALS.length;
@@ -1125,14 +1180,14 @@ var Roleta = {
     var winIdx;
     do { winIdx = Math.floor(Math.random() * n); } while (this.reroll && ROLETA_ANIMALS[winIdx].free);
     this.reroll = false;
-    wheel.style.transition = 'none';
-    wheel.style.transform = 'rotate(0deg)';
-    wheel.offsetHeight;
+    wrap.style.transition = 'none';
+    wrap.style.transform = 'rotate(0deg)';
+    wrap.offsetHeight;
     var spins = 5 + Math.floor(Math.random() * 3);
     var offset = (Math.random() - 0.5) * seg * 0.5;
     var target = ((spins + 1) * 360) - (winIdx * seg) + offset;
-    wheel.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
-    wheel.style.transform = 'rotate(' + target + 'deg)';
+    wrap.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+    wrap.style.transform = 'rotate(' + target + 'deg)';
     var self = this;
     setTimeout(function() {
       var animal = ROLETA_ANIMALS[winIdx];

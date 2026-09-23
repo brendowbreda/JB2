@@ -60,9 +60,10 @@
       <div class="landing-section landing-roleta">
         <h3 class="landing-section-title">Roleta dos Bichos</h3>
         <p class="landing-section-sub" style="color:rgba(255,255,255,0.6)">Escolha o bicho, defina o valor e gire a roleta.<br>Deu o seu bicho, você ganha — direto na sua carteira.</p>
+        <p class="rb-picker-label">Escolha um bicho:</p>
         <div class="rb-picker">
           <button class="rb-picker-arrow" onclick="Roleta.pickScroll(-1)">‹</button>
-          <div class="rb-picker-track">
+          <div class="rb-picker-track" id="rbPickerTrack">
             <div class="rb-picker-strip" id="rbPickerStrip"></div>
           </div>
           <button class="rb-picker-arrow" onclick="Roleta.pickScroll(1)">›</button>
@@ -72,7 +73,10 @@
       <div class="landing-section landing-roleta-bichos">
         <div class="rw-container">
           <div class="rw-pointer"></div>
-          <div class="rw-wheel" id="rwWheel"></div>
+          <div class="rw-wheel-wrap" id="rwWheelWrap">
+            <div class="rw-wheel" id="rwWheel"></div>
+            <div class="rw-pins" id="rwPins"></div>
+          </div>
         </div>
         <p class="rw-result" id="rwResult"></p>
         <div class="rb-valor">
