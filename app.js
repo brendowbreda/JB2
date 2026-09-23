@@ -1049,6 +1049,10 @@ var Roleta = {
     this.initPickerSwipe();
     this.buildWheel();
     this.updateValor();
+    var self = this;
+    requestAnimationFrame(function() {
+      self.pickerCenterOn(self.selectedAnimal, false);
+    });
   },
   buildPicker: function() {
     var strip = document.getElementById('rbPickerStrip');
@@ -1091,6 +1095,36 @@ var Roleta = {
     }
     wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
   },
+  pickerCenterOn: function(idx, animate) {
+    var carousel = document.getElementById('rbPickerCarousel');
+    var strip = document.getElementById('rbPickerStrip');
+    if (!carousel || !strip) return;
+    var cW = carousel.offsetWidth;
+    var items = strip.children;
+    var target = null;
+    var setLen = this.pickerSetW;
+    for (var i = 0; i < items.length; i++) {
+      if (parseInt(items[i].dataset.idx) === idx) {
+        var pos = i * this.pickerItemW + this.pickerItemW / 2;
+        if (pos >= setLen && pos < setLen * 2) {
+          target = -(pos - cW / 2);
+          break;
+        }
+      }
+    }
+    if (target === null) target = this.pickerX;
+    this.pickerX = target;
+    if (animate) {
+      strip.style.transition = 'transform 0.3s ease';
+    } else {
+      strip.style.transition = 'none';
+    }
+    strip.style.transform = 'translateX(' + this.pickerX + 'px)';
+    if (animate) {
+      var s = strip;
+      setTimeout(function() { s.style.transition = 'none'; }, 320);
+    }
+  },
   initPickerSwipe: function() {
     var carousel = document.getElementById('rbPickerCarousel');
     var strip = document.getElementById('rbPickerStrip');
@@ -1098,8 +1132,7 @@ var Roleta = {
     var self = this;
     var dragging = false, startX = 0, startY = 0, startScrollX = 0, didDrag = false;
     var lastX = 0, lastTime = 0, velocity = 0;
-    var baseSpeed = -0.8;
-    var speed = baseSpeed;
+    var animId = 0;
     function onStart(x, y) {
       dragging = true;
       didDrag = false;
@@ -1109,29 +1142,71 @@ var Roleta = {
       lastX = x;
       lastTime = Date.now();
       velocity = 0;
+      if (animId) { cancelAnimationFrame(animId); animId = 0; }
+      strip.style.transition = 'none';
       carousel.classList.add('dragging');
     }
     function onMove(x) {
       if (!dragging) return;
       if (Math.abs(x - startX) > 5) didDrag = true;
       self.pickerX = startScrollX + (x - startX);
+      var w = self.pickerSetW;
+      while (self.pickerX <= -2 * w) self.pickerX += w;
+      while (self.pickerX > -w) self.pickerX -= w;
+      strip.style.transform = 'translateX(' + self.pickerX + 'px)';
       var now = Date.now();
       var dt = now - lastTime;
       if (dt > 0) velocity = (x - lastX) / dt * 16;
       lastX = x;
       lastTime = now;
     }
+    function coast() {
+      velocity *= 0.95;
+      self.pickerX += velocity;
+      var w = self.pickerSetW;
+      while (self.pickerX <= -2 * w) self.pickerX += w;
+      while (self.pickerX > -w) self.pickerX -= w;
+      strip.style.transform = 'translateX(' + self.pickerX + 'px)';
+      if (Math.abs(velocity) > 0.5) {
+        animId = requestAnimationFrame(coast);
+      } else {
+        animId = 0;
+        snapToNearest();
+      }
+    }
+    function snapToNearest() {
+      var cW = carousel.offsetWidth;
+      var center = -self.pickerX + cW / 2;
+      var nearest = Math.round(center / self.pickerItemW);
+      var setLen = Math.round(self.pickerSetW / self.pickerItemW);
+      var inSet = ((nearest % setLen) + setLen) % setLen;
+      var items = [];
+      for (var i = 0; i < ROLETA_ANIMALS.length; i++) {
+        if (!ROLETA_ANIMALS[i].free) items.push(i);
+      }
+      var animalIdx = items[inSet] !== undefined ? items[inSet] : items[0];
+      self.pickAnimal(animalIdx);
+      self.pickerCenterOn(animalIdx, true);
+    }
     function onEnd() {
       if (!dragging) return;
       dragging = false;
-      speed = velocity * 1.2 + baseSpeed;
       carousel.classList.remove('dragging');
       if (!didDrag) {
         var el = document.elementFromPoint(startX, startY);
         if (el) {
           var item = el.closest('.rb-picker-item');
-          if (item) self.pickAnimal(parseInt(item.dataset.idx));
+          if (item) {
+            self.pickAnimal(parseInt(item.dataset.idx));
+            self.pickerCenterOn(parseInt(item.dataset.idx), true);
+            return;
+          }
         }
+      }
+      if (Math.abs(velocity) > 1) {
+        animId = requestAnimationFrame(coast);
+      } else {
+        snapToNearest();
       }
     }
     carousel.addEventListener('mousedown', function(e) { e.preventDefault(); onStart(e.clientX, e.clientY); });
@@ -1140,18 +1215,7 @@ var Roleta = {
     carousel.addEventListener('touchstart', function(e) { onStart(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
     carousel.addEventListener('touchmove', function(e) { if (dragging) onMove(e.touches[0].clientX); }, { passive: true });
     carousel.addEventListener('touchend', function() { onEnd(); });
-    function tick() {
-      if (!dragging) {
-        self.pickerX += speed;
-        speed += (baseSpeed - speed) * 0.03;
-      }
-      var w = self.pickerSetW;
-      while (self.pickerX <= -2 * w) self.pickerX += w;
-      while (self.pickerX > -w) self.pickerX -= w;
-      strip.style.transform = 'translateX(' + self.pickerX + 'px)';
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+    self.pickerCenterOn(self.selectedAnimal, false);
   },
   buildWheel: function() {
     var wheel = document.getElementById('rwWheel');
