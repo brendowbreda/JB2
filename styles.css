@@ -936,10 +936,11 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .rw-result {
   color: var(--gold);
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 900;
   margin: 0 0 16px;
-  min-height: 26px;
+  min-height: 20px;
+  white-space: nowrap;
 }
 .free-overlay {
   position: fixed;
