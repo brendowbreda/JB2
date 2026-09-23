@@ -145,6 +145,17 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   display: block; font-size: 11px; color: var(--ink-faint); margin-top: 2px;
 }
 .conta-lock { color: var(--ink-faint); flex-shrink: 0; }
+.conta-edit-btn {
+  background: none; border: none; color: var(--primary); cursor: pointer;
+  padding: 6px; flex-shrink: 0; border-radius: 50%;
+}
+.conta-edit-btn:active { background: var(--primary-tint); }
+.conta-edit-btn.saving { color: var(--ink-faint); }
+.conta-input {
+  width: 100%; border: none; border-bottom: 2px solid var(--primary);
+  font-size: 15px; font-weight: 600; color: var(--ink);
+  padding: 4px 0; margin-top: 2px; background: transparent; outline: none;
+}
 .btn-whatsapp {
   background: var(--whatsapp);
   color: #fff;
@@ -620,6 +631,40 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .modal-card.open { bottom: 0; }
 .modal-card h3 { margin: 8px 0 6px; }
 .modal-card p { color: var(--ink-dim); font-size: 13.5px; }
+.modal-dark {
+  background: #1a1640; text-align: left; padding: 28px 24px 24px;
+}
+.modal-close-btn {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(255,255,255,.12); border: none; color: #fff;
+  width: 32px; height: 32px; border-radius: 50%; font-size: 16px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.modal-dark-title {
+  color: #fff; font-size: 22px; font-weight: 800; margin: 0 0 8px;
+}
+.modal-dark-sub {
+  color: rgba(255,255,255,.55) !important; font-size: 13.5px; line-height: 1.45;
+  margin: 0 0 20px;
+}
+.modal-dark-info {
+  border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+  margin-bottom: 20px; overflow: hidden;
+}
+.modal-dark-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 16px; color: rgba(255,255,255,.75); font-size: 14px;
+}
+.modal-dark-row + .modal-dark-row {
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.modal-dark-row span:last-child { font-weight: 700; color: #fff; }
+.btn-encerrar {
+  width: 100%; padding: 16px; border: none; border-radius: 28px;
+  background: #e05a4f; color: #fff; font-size: 16px; font-weight: 700;
+  cursor: pointer;
+}
+.btn-encerrar:active { opacity: .85; }
 
 /* ---------- landing page ---------- */
 #s-landing {

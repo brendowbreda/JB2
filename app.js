@@ -749,10 +749,52 @@ const Amigos = {
 
 /* ---------------- account ---------------- */
 const Account = {
-  save() {
+  editing: null,
+  editField(field) {
+    if (this.editing === field) {
+      this.saveField(field);
+      return;
+    }
+    if (this.editing) this.cancelEdit(this.editing);
+    this.editing = field;
+    const display = document.getElementById(field === 'email' ? 'contaEmailDisplay' : 'contaTelDisplay');
+    const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
+    const btn = document.getElementById(field === 'email' ? 'contaEmailBtn' : 'contaTelBtn');
+    const u = loadUsers()[CURRENT_EMAIL];
+    input.value = field === 'email' ? (u.email || '') : (u.phone || '');
+    display.style.display = 'none';
+    input.style.display = 'block';
+    input.focus();
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  },
+  cancelEdit(field) {
+    const display = document.getElementById(field === 'email' ? 'contaEmailDisplay' : 'contaTelDisplay');
+    const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
+    const btn = document.getElementById(field === 'email' ? 'contaEmailBtn' : 'contaTelBtn');
+    display.style.display = 'block';
+    input.style.display = 'none';
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>';
+    this.editing = null;
+  },
+  saveField(field) {
+    const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
+    const val = input.value.trim();
+    const users = loadUsers();
+    if (field === 'email') users[CURRENT_EMAIL].email = val || users[CURRENT_EMAIL].email;
+    else users[CURRENT_EMAIL].phone = val;
+    saveUsers(users);
+    this.cancelEdit(field);
+    Render.conta();
     toast('Dados atualizados!');
   },
-  confirmDelete() { Modal.open('deleteModal'); },
+  confirmDelete() {
+    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+    const el = document.getElementById('deleteModalSaldo');
+    if (el) el.textContent = fmtBRL(STATE.points);
+    const ap = document.getElementById('deleteModalApostas');
+    if (ap) ap.textContent = STATE.bets.filter(b => b.status === 'pendente').length;
+    Modal.open('deleteModal');
+  },
   deleteConfirmed() {
     const users = loadUsers();
     delete users[CURRENT_EMAIL];

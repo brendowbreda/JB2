@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 <div class="page">
@@ -322,20 +322,23 @@
           </div>
           <span class="conta-lock"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
         </div>
-        <div class="conta-row">
+        <div class="conta-row editable" id="contaEmailRow">
           <span class="conta-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
           <div class="conta-info">
             <span class="conta-value" id="contaEmailDisplay">—</span>
+            <input type="email" class="conta-input" id="contaEmailInput" placeholder="seu@email.com" style="display:none">
           </div>
+          <button class="conta-edit-btn" id="contaEmailBtn" onclick="Account.editField('email')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
         </div>
-        <div class="conta-row">
+        <div class="conta-row editable" id="contaTelRow">
           <span class="conta-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
           <div class="conta-info">
             <span class="conta-value" id="contaTelDisplay">—</span>
+            <input type="tel" class="conta-input" id="contaTelInput" placeholder="(00) 00000-0000" style="display:none">
           </div>
+          <button class="conta-edit-btn" id="contaTelBtn" onclick="Account.editField('tel')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
         </div>
       </div>
-      <button class="btn-primary" onclick="Account.save()">Salvar alterações</button>
       <button class="btn-danger-text" onclick="Account.confirmDelete()">Encerrar minha conta</button>
     </section>
 
@@ -725,17 +728,20 @@
 
   <!-- Delete account confirm -->
   <div class="modal-backdrop" id="deleteModalBackdrop" onclick="Modal.close('deleteModal')"></div>
-  <div class="modal-card" id="deleteModal">
-    <div class="mascot">😢</div>
-    <h3>Encerrar sua conta?</h3>
-    <p>Você vai perder sua ofensiva, pontos e conquistas nesta versão de demonstração.</p>
-    <button class="btn-danger-outline" onclick="Account.deleteConfirmed()">Sim, encerrar conta</button>
-    <button class="btn-outline" onclick="Modal.close('deleteModal')">Cancelar</button>
+  <div class="modal-card modal-dark" id="deleteModal">
+    <button class="modal-close-btn" onclick="Modal.close('deleteModal')">✕</button>
+    <h3 class="modal-dark-title">Encerrar sua conta?</h3>
+    <p class="modal-dark-sub">Isso é diferente de sair — sua conta e seu histórico de apostas serão encerrados permanentemente.</p>
+    <div class="modal-dark-info">
+      <div class="modal-dark-row"><span>Saldo atual</span><span id="deleteModalSaldo">R$ 0,00</span></div>
+      <div class="modal-dark-row"><span>Apostas aguardando resultado</span><span id="deleteModalApostas">0</span></div>
+    </div>
+    <button class="btn-encerrar" onclick="Account.deleteConfirmed()">Encerrar conta</button>
   </div>
 
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=9"></script>
+<script src="app.js?v=10"></script>
 </body>
 </html>
