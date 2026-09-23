@@ -734,7 +734,59 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   padding-bottom: 40px !important;
 }
 .landing-roleta .landing-section-title { color: #fff; }
-.landing-roleta .landing-section-sub { color: rgba(255,255,255,0.6); }
+.landing-roleta .landing-section-sub { color: rgba(255,255,255,0.6); font-size: 13px; }
+
+.rb-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -24px;
+  padding: 0 8px;
+}
+.rb-picker-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--green);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rb-picker-track {
+  flex: 1;
+  overflow: hidden;
+}
+.rb-picker-strip {
+  display: flex;
+  gap: 10px;
+  transition: transform 0.3s ease;
+}
+.rb-picker-item {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  padding: 6px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.rb-picker-item.selected {
+  border-color: var(--gold);
+  transform: scale(1.08);
+}
+.rb-picker-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
 .roleta-track-wrap {
   overflow: hidden;

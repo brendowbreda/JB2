@@ -1042,9 +1042,41 @@ var Roleta = {
   valor: 10,
   mult: 18,
   spinning: false,
+  selectedAnimal: 0,
+  pickOffset: 0,
   init: function() {
+    this.buildPicker();
     this.buildWheel();
     this.updateValor();
+  },
+  buildPicker: function() {
+    var strip = document.getElementById('rbPickerStrip');
+    if (!strip) return;
+    var html = '';
+    for (var i = 0; i < ROLETA_ANIMALS.length; i++) {
+      var a = ROLETA_ANIMALS[i];
+      if (a.free) continue;
+      var sel = i === this.selectedAnimal ? ' selected' : '';
+      html += '<div class="rb-picker-item' + sel + '" data-idx="' + i + '" onclick="Roleta.pickAnimal(' + i + ')">' +
+        '<img src="bichos/' + a.file + '" alt="' + a.name + '"></div>';
+    }
+    strip.innerHTML = html;
+  },
+  pickAnimal: function(idx) {
+    this.selectedAnimal = idx;
+    document.querySelectorAll('.rb-picker-item').forEach(function(el) {
+      el.classList.toggle('selected', parseInt(el.dataset.idx) === idx);
+    });
+  },
+  pickScroll: function(dir) {
+    var strip = document.getElementById('rbPickerStrip');
+    if (!strip) return;
+    var itemW = 72 + 10;
+    this.pickOffset += dir * 3 * itemW;
+    var maxOffset = (25 - 4) * itemW;
+    if (this.pickOffset < 0) this.pickOffset = 0;
+    if (this.pickOffset > maxOffset) this.pickOffset = maxOffset;
+    strip.style.transform = 'translateX(-' + this.pickOffset + 'px)';
   },
   buildWheel: function() {
     var wheel = document.getElementById('rwWheel');
@@ -1105,7 +1137,12 @@ var Roleta = {
       } else {
         self.spinning = false;
         if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
-        if (result) result.textContent = '🎉 ' + animal.name + '! Ganho: 🪙 ' + (self.valor * self.mult) + ' pts';
+        var chosen = ROLETA_ANIMALS[self.selectedAnimal];
+        if (winIdx === self.selectedAnimal) {
+          if (result) result.textContent = '🎉 ' + animal.name + '! Você acertou! 🪙 ' + (self.valor * self.mult) + ' pts';
+        } else {
+          if (result) result.textContent = '😔 Saiu ' + animal.name + '! Você apostou em ' + chosen.name;
+        }
       }
     }, 4300);
   },
