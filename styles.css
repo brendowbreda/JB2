@@ -217,7 +217,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   flex-shrink: 0;
 }
 .avatar-initials {
-  font-size: 16px; font-weight: 700; color: transparent;
+  font-size: 16px; font-weight: 700; color: #fff;
   text-transform: uppercase; letter-spacing: 1px;
 }
 .avatar-lg { width: 72px; height: 72px; font-size: 34px; margin: 0 auto; }
