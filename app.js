@@ -1053,31 +1053,31 @@ var Roleta = {
   buildPicker: function() {
     var strip = document.getElementById('rbPickerStrip');
     if (!strip) return;
-    var html = '';
+    var items = [];
     for (var i = 0; i < ROLETA_ANIMALS.length; i++) {
-      var a = ROLETA_ANIMALS[i];
-      if (a.free) continue;
-      var sel = i === this.selectedAnimal ? ' selected' : '';
-      html += '<div class="rb-picker-item' + sel + '" data-idx="' + i + '" onclick="Roleta.pickAnimal(' + i + ')">' +
-        '<img src="bichos/' + a.file + '" alt="' + a.name + '"></div>';
+      if (ROLETA_ANIMALS[i].free) continue;
+      items.push(i);
+    }
+    var html = '';
+    for (var rep = 0; rep < 3; rep++) {
+      for (var j = 0; j < items.length; j++) {
+        var idx = items[j];
+        var a = ROLETA_ANIMALS[idx];
+        var sel = idx === this.selectedAnimal ? ' selected' : '';
+        html += '<div class="rb-picker-item' + sel + '" data-idx="' + idx + '">' +
+          '<img src="bichos/' + a.file + '" alt="' + a.name + '"></div>';
+      }
     }
     strip.innerHTML = html;
+    this.pickerItemW = 68 + 10;
+    this.pickerSetW = items.length * this.pickerItemW;
+    this.pickerX = -this.pickerSetW;
   },
   pickAnimal: function(idx) {
     this.selectedAnimal = idx;
     document.querySelectorAll('.rb-picker-item').forEach(function(el) {
       el.classList.toggle('selected', parseInt(el.dataset.idx) === idx);
     });
-  },
-  pickScroll: function(dir) {
-    var strip = document.getElementById('rbPickerStrip');
-    if (!strip) return;
-    var itemW = 62 + 8;
-    this.pickOffset += dir * 4 * itemW;
-    var maxOffset = (25 - 4) * itemW;
-    if (this.pickOffset < 0) this.pickOffset = 0;
-    if (this.pickOffset > maxOffset) this.pickOffset = maxOffset;
-    strip.style.transform = 'translateX(-' + this.pickOffset + 'px)';
   },
   applyGradient: function(wheel, n, seg, highlightIdx, color) {
     var c1 = '#2D2757', c2 = '#3A3170', cFree = '#1a6b3a';
@@ -1092,45 +1092,66 @@ var Roleta = {
     wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
   },
   initPickerSwipe: function() {
-    var track = document.getElementById('rbPickerTrack');
+    var carousel = document.getElementById('rbPickerCarousel');
     var strip = document.getElementById('rbPickerStrip');
-    if (!track || !strip) return;
-    var self = this, startX = 0, startOff = 0, dragging = false;
-    var itemW = 62 + 8;
-    var maxOff = (25 - 4) * itemW;
-    function onStart(x) {
+    if (!carousel || !strip) return;
+    var self = this;
+    var dragging = false, startX = 0, startY = 0, startScrollX = 0, didDrag = false;
+    var lastX = 0, lastTime = 0, velocity = 0;
+    var baseSpeed = -0.8;
+    var speed = baseSpeed;
+    function onStart(x, y) {
       dragging = true;
+      didDrag = false;
       startX = x;
-      startOff = self.pickOffset;
-      strip.classList.add('dragging');
-      track.classList.add('dragging');
+      startY = y;
+      startScrollX = self.pickerX;
+      lastX = x;
+      lastTime = Date.now();
+      velocity = 0;
+      carousel.classList.add('dragging');
     }
     function onMove(x) {
       if (!dragging) return;
-      var dx = startX - x;
-      var off = startOff + dx;
-      if (off < 0) off = 0;
-      if (off > maxOff) off = maxOff;
-      self.pickOffset = off;
-      strip.style.transform = 'translateX(-' + off + 'px)';
+      if (Math.abs(x - startX) > 5) didDrag = true;
+      self.pickerX = startScrollX + (x - startX);
+      var now = Date.now();
+      var dt = now - lastTime;
+      if (dt > 0) velocity = (x - lastX) / dt * 16;
+      lastX = x;
+      lastTime = now;
     }
     function onEnd() {
       if (!dragging) return;
       dragging = false;
-      strip.classList.remove('dragging');
-      track.classList.remove('dragging');
-      var itemW = 62 + 8;
-      self.pickOffset = Math.round(self.pickOffset / itemW) * itemW;
-      if (self.pickOffset < 0) self.pickOffset = 0;
-      if (self.pickOffset > maxOff) self.pickOffset = maxOff;
-      strip.style.transform = 'translateX(-' + self.pickOffset + 'px)';
+      speed = velocity * 1.2 + baseSpeed;
+      carousel.classList.remove('dragging');
+      if (!didDrag) {
+        var el = document.elementFromPoint(startX, startY);
+        if (el) {
+          var item = el.closest('.rb-picker-item');
+          if (item) self.pickAnimal(parseInt(item.dataset.idx));
+        }
+      }
     }
-    track.addEventListener('mousedown', function(e) { e.preventDefault(); onStart(e.clientX); });
-    window.addEventListener('mousemove', function(e) { onMove(e.clientX); });
-    window.addEventListener('mouseup', onEnd);
-    track.addEventListener('touchstart', function(e) { onStart(e.touches[0].clientX); }, { passive: true });
-    track.addEventListener('touchmove', function(e) { onMove(e.touches[0].clientX); }, { passive: true });
-    track.addEventListener('touchend', onEnd);
+    carousel.addEventListener('mousedown', function(e) { e.preventDefault(); onStart(e.clientX, e.clientY); });
+    document.addEventListener('mousemove', function(e) { if (dragging) onMove(e.clientX); });
+    document.addEventListener('mouseup', function() { onEnd(); });
+    carousel.addEventListener('touchstart', function(e) { onStart(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    carousel.addEventListener('touchmove', function(e) { if (dragging) onMove(e.touches[0].clientX); }, { passive: true });
+    carousel.addEventListener('touchend', function() { onEnd(); });
+    function tick() {
+      if (!dragging) {
+        self.pickerX += speed;
+        speed += (baseSpeed - speed) * 0.03;
+      }
+      var w = self.pickerSetW;
+      while (self.pickerX <= -2 * w) self.pickerX += w;
+      while (self.pickerX > -w) self.pickerX -= w;
+      strip.style.transform = 'translateX(' + self.pickerX + 'px)';
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   },
   buildWheel: function() {
     var wheel = document.getElementById('rwWheel');
@@ -1154,11 +1175,11 @@ var Roleta = {
     wheel.innerHTML = html;
     if (pins) {
       var pinHtml = '';
-      var pinR = 454;
+      var pinR = 440;
       for (var i = 0; i < n; i++) {
         var a = i * seg * Math.PI / 180;
-        var px = 460 + pinR * Math.sin(a) - 5;
-        var py = 460 - pinR * Math.cos(a) - 5;
+        var px = 450 + pinR * Math.sin(a) - 10;
+        var py = 450 - pinR * Math.cos(a) - 10;
         pinHtml += '<div class="rw-pin" style="left:' + px + 'px;top:' + py + 'px"></div>';
       }
       pins.innerHTML = pinHtml;
@@ -1185,8 +1206,7 @@ var Roleta = {
     wrap.style.transform = 'rotate(0deg)';
     wrap.offsetHeight;
     var spins = 5 + Math.floor(Math.random() * 3);
-    var offset = (Math.random() - 0.5) * seg * 0.5;
-    var target = ((spins + 1) * 360) - (winIdx * seg) + offset;
+    var target = ((spins + 1) * 360) - (winIdx * seg);
     wrap.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
     wrap.style.transform = 'rotate(' + target + 'deg)';
     var self = this;
