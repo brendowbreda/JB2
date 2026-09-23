@@ -694,6 +694,14 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .modal-card.open { bottom: 0; }
 .modal-card h3 { margin: 8px 0 6px; }
 .modal-card p { color: var(--ink-dim); font-size: 13.5px; }
+.streak-rewards { width: 100%; margin: 12px 0 16px; }
+.streak-reward-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px; color: var(--ink);
+}
+.streak-reward-row:last-child { border-bottom: none; }
+.streak-reward-row strong { color: var(--primary-deep); font-weight: 700; }
 .modal-dark {
   background: #fff; text-align: left; padding: 28px 24px 24px;
 }

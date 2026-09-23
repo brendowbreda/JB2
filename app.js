@@ -512,6 +512,9 @@ const Streak = {
     STATE.streak = count;
     STATE.bestStreak = Math.max(STATE.bestStreak || 0, count);
   },
+  showInfo() {
+    Modal.open('streakModal');
+  },
   weekDots() {
     const dots = [];
     for (let i = 6; i >= 0; i--) {
@@ -853,13 +856,6 @@ const Render = {
     document.getElementById('streakCount').textContent = STATE.streak;
     const betsEl = document.getElementById('homeTotalBets');
     if (betsEl) betsEl.textContent = STATE.totalBets;
-    const rewardEl = document.getElementById('streakReward');
-    if (rewardEl) {
-      const s = STATE.streak;
-      const next5 = Math.ceil((s + 1) / 5) * 5;
-      const prize = next5 % 10 === 0 ? 'R$ 100' : 'R$ 50';
-      rewardEl.textContent = `${next5 - s} sem. p/ ${prize}`;
-    }
 
     const results = document.getElementById('homeResultsPreview');
     const recentResolved = STATE.bets.filter((b) => b.status !== 'aguardando').slice(0, 3);
