@@ -632,33 +632,33 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .modal-card h3 { margin: 8px 0 6px; }
 .modal-card p { color: var(--ink-dim); font-size: 13.5px; }
 .modal-dark {
-  background: #1a1640; text-align: left; padding: 28px 24px 24px;
+  background: #fff; text-align: left; padding: 28px 24px 24px;
 }
 .modal-close-btn {
   position: absolute; top: 16px; right: 16px;
-  background: rgba(255,255,255,.12); border: none; color: #fff;
+  background: var(--bg); border: none; color: var(--ink);
   width: 32px; height: 32px; border-radius: 50%; font-size: 16px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
 .modal-dark-title {
-  color: #fff; font-size: 22px; font-weight: 800; margin: 0 0 8px;
+  color: var(--ink); font-size: 22px; font-weight: 800; margin: 0 0 8px;
 }
 .modal-dark-sub {
-  color: rgba(255,255,255,.55) !important; font-size: 13.5px; line-height: 1.45;
+  color: var(--ink-dim) !important; font-size: 13.5px; line-height: 1.45;
   margin: 0 0 20px;
 }
 .modal-dark-info {
-  border: 1px solid rgba(255,255,255,.12); border-radius: 12px;
+  border: 1px solid var(--border); border-radius: 12px;
   margin-bottom: 20px; overflow: hidden;
 }
 .modal-dark-row {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 14px 16px; color: rgba(255,255,255,.75); font-size: 14px;
+  padding: 14px 16px; color: var(--ink-dim); font-size: 14px;
 }
 .modal-dark-row + .modal-dark-row {
-  border-top: 1px solid rgba(255,255,255,.08);
+  border-top: 1px solid var(--border);
 }
-.modal-dark-row span:last-child { font-weight: 700; color: #fff; }
+.modal-dark-row span:last-child { font-weight: 700; color: var(--ink); }
 .btn-encerrar {
   width: 100%; padding: 16px; border: none; border-radius: 28px;
   background: #e05a4f; color: #fff; font-size: 16px; font-weight: 700;
