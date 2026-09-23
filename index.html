@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=20">
+<link rel="stylesheet" href="styles.css?v=21">
 </head>
 <body>
 <div class="page">
@@ -230,10 +230,20 @@
         <button class="icon-btn" onclick="Menu.open()" aria-label="Configurações"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
       </div>
 
-      <div class="streak-mini" id="streakMini">
-        <span class="streak-mini-fire">🔥</span>
-        <strong id="streakCount">0</strong>
-        <span class="streak-mini-label">week streak</span>
+      <div class="home-cards-row">
+        <div class="home-card" onclick="go('s-perfil')">
+          <span class="home-card-title">Frequência</span>
+          <div class="home-fire-wrap">
+            <svg class="home-fire-svg" viewBox="0 0 60 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 0C30 0 10 20 10 42c0 11 9 20 20 20s20-9 20-20C50 20 30 0 30 0zm0 54c-6.6 0-12-5.4-12-12 0-8 6-16 12-22 6 6 12 14 12 22 0 6.6-5.4 12-12 12z" fill="#FF5500" fill-opacity=".15"/><path d="M30 4C30 4 14 22 14 42c0 8.8 7.2 16 16 16s16-7.2 16-16C46 22 30 4 30 4z" fill="#FF5500"/><path d="M30 28c-3 4-8 10-8 16a8 8 0 0016 0c0-6-5-12-8-16z" fill="#FF8800"/></svg>
+            <strong class="home-fire-num" id="streakCount">0</strong>
+          </div>
+          <span class="home-card-sub" id="streakReward"></span>
+        </div>
+        <div class="home-card" onclick="go('s-apostas')">
+          <span class="home-card-title">Minhas Apostas</span>
+          <strong class="home-card-big" id="homeTotalBets">0</strong>
+          <span class="home-card-sub">apostas feitas</span>
+        </div>
       </div>
 
       <div class="cta-row">
@@ -747,6 +757,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=20"></script>
+<script src="app.js?v=21"></script>
 </body>
 </html>
