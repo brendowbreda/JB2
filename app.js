@@ -1071,8 +1071,8 @@ var Roleta = {
   pickScroll: function(dir) {
     var strip = document.getElementById('rbPickerStrip');
     if (!strip) return;
-    var itemW = 72 + 10;
-    this.pickOffset += dir * 3 * itemW;
+    var itemW = 62 + 8;
+    this.pickOffset += dir * 4 * itemW;
     var maxOffset = (25 - 4) * itemW;
     if (this.pickOffset < 0) this.pickOffset = 0;
     if (this.pickOffset > maxOffset) this.pickOffset = maxOffset;
