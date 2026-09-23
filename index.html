@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=19">
+<link rel="stylesheet" href="styles.css?v=20">
 </head>
 <body>
 <div class="page">
@@ -515,12 +515,18 @@
         <p class="tier-progress-label" id="tierProgressLabel"></p>
       </div>
 
-      <div class="section-head">
-        <h3>Visão geral</h3>
-      </div>
-      <div class="stat-grid cols-2">
-        <div class="stat-box"><strong id="statApostas">0</strong><span>apostas feitas</span></div>
-        <div class="stat-box"><strong id="statSemanas">🔥 0</strong><span>semanas ativas</span></div>
+      <div class="visao-row">
+        <div class="visao-streak">
+          <div class="visao-fire">
+            <span class="visao-fire-icon">🔥</span>
+            <strong class="visao-fire-num" id="statSemanas">0</strong>
+          </div>
+          <span class="visao-fire-label">Semanas</span>
+        </div>
+        <div class="visao-stats">
+          <div class="visao-stat"><strong id="statApostas">0</strong><span>apostas feitas</span></div>
+          <div class="visao-stat"><strong id="statAmigosCount">0</strong><span>amigos</span></div>
+        </div>
       </div>
 
       <div class="section-head">
@@ -741,6 +747,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=19"></script>
+<script src="app.js?v=20"></script>
 </body>
 </html>

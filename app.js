@@ -986,8 +986,10 @@ const Render = {
       bar.style.width = '100%';
       label.textContent = 'Você atingiu a pedra máxima! 💎';
     }
-    document.getElementById('statSemanas').innerHTML = '🔥 <b>' + STATE.streak + '</b>';
+    document.getElementById('statSemanas').textContent = STATE.streak;
     document.getElementById('statApostas').textContent = STATE.totalBets;
+    const amigosCount = document.getElementById('statAmigosCount');
+    if (amigosCount) amigosCount.textContent = STATE.friends.length;
     const amigosList = document.getElementById('perfilAmigosList');
     if (amigosList) {
       if (STATE.friends.length) {

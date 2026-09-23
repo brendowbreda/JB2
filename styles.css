@@ -251,6 +251,39 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .tier-chip.lg { margin: 10px auto 0; font-size: 13px; }
 
+.visao-row {
+  display: flex; gap: 12px; align-items: stretch;
+}
+.visao-streak {
+  flex: 0 0 auto; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--card); border-radius: var(--radius);
+  padding: 16px 24px; box-shadow: var(--shadow-sm);
+}
+.visao-fire {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.visao-fire-icon { font-size: 64px; }
+.visao-fire-num {
+  position: absolute; font-size: 22px; font-weight: 900;
+  color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.3);
+  margin-top: 8px;
+}
+.visao-fire-label {
+  font-size: 13px; font-weight: 700; color: var(--streak);
+  margin-top: -2px;
+}
+.visao-stats {
+  flex: 1; display: flex; flex-direction: column; gap: 8px;
+}
+.visao-stat {
+  background: var(--card); border-radius: var(--radius);
+  padding: 14px 16px; box-shadow: var(--shadow-sm);
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+}
+.visao-stat strong { font-size: 18px; font-weight: 800; display: block; }
+.visao-stat span { font-size: 10px; color: var(--ink-dim); margin-top: 2px; }
+
 /* ---------- CTA row ---------- */
 .cta-row { display: flex; gap: 10px; }
 .cta-row.two .cta-btn { flex: 1; }
