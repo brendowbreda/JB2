@@ -1035,6 +1035,7 @@ var ROLETA_ANIMALS = [
   { file: '23-urso.png', name: 'Urso' },
   { file: '24-veado.png', name: 'Veado' },
   { file: '25-vaca.png', name: 'Vaca' },
+  { file: null, name: 'Giro Grátis', free: true },
 ];
 
 var Roleta = {
@@ -1050,10 +1051,10 @@ var Roleta = {
     if (!wheel) return;
     var n = ROLETA_ANIMALS.length;
     var seg = 360 / n;
-    var c1 = '#2D2757', c2 = '#3A3170';
+    var c1 = '#2D2757', c2 = '#3A3170', cFree = '#1a6b3a';
     var parts = [];
     for (var i = 0; i < n; i++) {
-      var c = i % 2 === 0 ? c1 : c2;
+      var c = ROLETA_ANIMALS[i].free ? cFree : (i % 2 === 0 ? c1 : c2);
       parts.push(c + ' ' + (i * seg) + 'deg ' + ((i + 1) * seg) + 'deg');
     }
     wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
@@ -1061,8 +1062,13 @@ var Roleta = {
     var html = '';
     for (var i = 0; i < n; i++) {
       var angle = i * seg;
-      html += '<div class="rw-animal" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
-        '<img src="bichos/' + ROLETA_ANIMALS[i].file + '" alt="' + ROLETA_ANIMALS[i].name + '"></div>';
+      if (ROLETA_ANIMALS[i].free) {
+        html += '<div class="rw-animal rw-free" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
+          '<span style="font-size:36px">🎁</span></div>';
+      } else {
+        html += '<div class="rw-animal" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
+          '<img src="bichos/' + ROLETA_ANIMALS[i].file + '" alt="' + ROLETA_ANIMALS[i].name + '"></div>';
+      }
     }
     wheel.innerHTML = html;
   },
@@ -1077,7 +1083,9 @@ var Roleta = {
     if (result) result.textContent = '';
     var n = ROLETA_ANIMALS.length;
     var seg = 360 / n;
-    var winIdx = Math.floor(Math.random() * n);
+    var winIdx;
+    do { winIdx = Math.floor(Math.random() * n); } while (this.reroll && ROLETA_ANIMALS[winIdx].free);
+    this.reroll = false;
     wheel.style.transition = 'none';
     wheel.style.transform = 'rotate(0deg)';
     wheel.offsetHeight;
@@ -1088,10 +1096,17 @@ var Roleta = {
     wheel.style.transform = 'rotate(' + target + 'deg)';
     var self = this;
     setTimeout(function() {
-      self.spinning = false;
-      if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
       var animal = ROLETA_ANIMALS[winIdx];
-      if (result) result.textContent = '🎉 ' + animal.name + '! Ganho: 🪙 ' + (self.valor * self.mult) + ' pts';
+      if (animal.free) {
+        if (result) result.textContent = '🎁 Giro Grátis! Girando de novo...';
+        self.spinning = false;
+        self.reroll = true;
+        setTimeout(function() { self.spin(); }, 1200);
+      } else {
+        self.spinning = false;
+        if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
+        if (result) result.textContent = '🎉 ' + animal.name + '! Ganho: 🪙 ' + (self.valor * self.mult) + ' pts';
+      }
     }, 4300);
   },
   changeVal: function(dir) {
