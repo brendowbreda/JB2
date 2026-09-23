@@ -1057,7 +1057,7 @@ var Roleta = {
       parts.push(c + ' ' + (i * seg) + 'deg ' + ((i + 1) * seg) + 'deg');
     }
     wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
-    var radius = 118;
+    var radius = 390;
     var html = '';
     for (var i = 0; i < n; i++) {
       var angle = i * seg;

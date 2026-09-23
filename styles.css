@@ -773,8 +773,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .rw-container {
   position: relative;
-  width: 300px;
-  height: 170px;
+  width: 100%;
+  height: 130px;
   margin: 0 auto 24px;
   overflow: hidden;
 }
@@ -785,31 +785,33 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   transform: translateX(-50%);
   z-index: 5;
   width: 0; height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-top: 24px solid var(--gold);
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 30px solid var(--gold);
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
 }
 .rw-wheel {
-  width: 300px;
-  height: 300px;
+  width: 900px;
+  height: 900px;
   border-radius: 50%;
-  border: 3px solid var(--gold);
-  position: relative;
+  border: 4px solid var(--gold);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -450px;
   box-shadow: 0 0 0 6px rgba(255,193,60,0.15);
 }
 .rw-animal {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  left: calc(50% - 15px);
-  top: calc(50% - 15px);
+  width: 55px;
+  height: 55px;
+  left: calc(50% - 27.5px);
+  top: calc(50% - 27.5px);
 }
 .rw-animal img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 4px;
 }
 .rw-result {
   color: var(--gold);
