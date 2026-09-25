@@ -384,6 +384,10 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   transform: scale(1.15);
 }
 .home-roleta-wheel { margin: 12px 0; }
+.home-roleta-wheel .rw-container { background: transparent; }
+.home-roleta-wheel .rw-pointer {
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+}
 .home-roleta-valor { text-align: center; margin-top: 8px; }
 .home-rb-val-btn {
   background: var(--card); color: var(--ink); border: 1px solid var(--border);
