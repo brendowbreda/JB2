@@ -701,6 +701,15 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .streak-reward-row:last-child { border-bottom: none; }
 .streak-reward-row strong { color: var(--primary-deep); font-weight: 700; }
+.streak-prize { text-align: left; padding: 12px 0; }
+.streak-prize-value {
+  display: block; font-size: 24px; font-weight: 900;
+  color: var(--primary-deep); line-height: 1;
+}
+.streak-prize-label {
+  display: block; font-size: 12px; color: var(--ink-dim);
+  margin-top: 4px;
+}
 .streak-subtitle {
   font-size: 13px; font-weight: 600; color: var(--ink);
   margin-bottom: 2px; text-align: left;
