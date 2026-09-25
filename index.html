@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=53">
+<link rel="stylesheet" href="styles.css?v=54">
 </head>
 <body>
 <div class="page">
@@ -276,19 +276,24 @@
       <div class="section-head" style="margin-top:18px">
         <h3>ROLETA DOS BICHOS</h3>
       </div>
-      <div class="landing-section landing-roleta" style="border-radius:14px;margin:0">
-        <p class="landing-section-sub" style="color:rgba(255,255,255,0.6)">Escolha o bicho, defina o valor e gire a roleta.<br>Deu o seu bicho, você ganha — direto na sua carteira.</p>
-        <p class="rb-picker-label">Escolha um bicho:</p>
-        <div class="rb-picker-carousel" id="rbPickerCarousel2">
-          <div class="rb-picker-strip" id="rbPickerStrip2"></div>
-        </div>
-        <div class="rb-picker-arrows">
-          <span class="rb-picker-hint-arrow">‹</span>
-          <span class="rb-picker-hint-text">deslize para escolher</span>
-          <span class="rb-picker-hint-arrow">›</span>
-        </div>
+      <div class="home-roleta-steps">
+        <div class="home-roleta-step"><strong>1.</strong> Escolha um bicho</div>
+        <div class="home-roleta-step"><strong>2.</strong> Defina o valor da aposta</div>
+        <div class="home-roleta-step"><strong>3.</strong> Clique em Girar a Roleta</div>
+        <div class="home-roleta-step"><strong>4.</strong> Acertou o bicho, você ganha — direto na sua carteira</div>
       </div>
-      <div class="landing-section landing-roleta-bichos" style="border-radius:0 0 14px 14px;margin:0;padding-top:0">
+
+      <p class="home-roleta-label">Escolha um bicho:</p>
+      <div class="rb-picker-carousel home-rb-picker" id="rbPickerCarousel2">
+        <div class="rb-picker-strip" id="rbPickerStrip2"></div>
+      </div>
+      <div class="rb-picker-arrows home-rb-arrows">
+        <span class="rb-picker-hint-arrow">‹</span>
+        <span class="rb-picker-hint-text">deslize para escolher</span>
+        <span class="rb-picker-hint-arrow">›</span>
+      </div>
+
+      <div class="home-roleta-wheel">
         <div class="rw-container">
           <div class="rw-pointer"></div>
           <div class="rw-ring"></div>
@@ -298,20 +303,24 @@
           </div>
         </div>
         <p class="rw-result" id="rwResult2"></p>
-        <div class="rb-valor">
-          <button class="rb-val-btn" onclick="Roleta.changeVal(-1)">−</button>
-          <span class="rb-val-display" id="rbValDisplay2">R$ 1,00</span>
-          <button class="rb-val-btn" onclick="Roleta.changeVal(1)">+</button>
-        </div>
-        <div class="rb-presets" id="rbPresetsHome">
-          <button class="rb-preset" onclick="Roleta.setVal(5)">R$5,00</button>
-          <button class="rb-preset" onclick="Roleta.setVal(10)">R$10,00</button>
-          <button class="rb-preset" onclick="Roleta.setVal(20)">R$20,00</button>
-          <button class="rb-preset" onclick="Roleta.setVal(50)">R$50,00</button>
-        </div>
-        <p class="rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 18,00</strong></p>
-        <button class="landing-btn-green" id="rwSpinBtn2" onclick="Roleta.spin()" style="margin-top:8px">GIRAR ROLETA</button>
       </div>
+
+      <p class="home-roleta-label">Defina o valor da aposta:</p>
+      <div class="home-roleta-valor">
+        <div class="rb-valor">
+          <button class="rb-val-btn home-rb-val-btn" onclick="Roleta.changeVal(-1)">−</button>
+          <span class="rb-val-display home-rb-val-display" id="rbValDisplay2">R$ 1,00</span>
+          <button class="rb-val-btn home-rb-val-btn" onclick="Roleta.changeVal(1)">+</button>
+        </div>
+        <div class="rb-presets home-rb-presets" id="rbPresetsHome">
+          <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(5)">R$5,00</button>
+          <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(10)">R$10,00</button>
+          <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(20)">R$20,00</button>
+          <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(50)">R$50,00</button>
+        </div>
+        <p class="rb-ganhos home-rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 18,00</strong></p>
+      </div>
+      <button class="landing-btn-green home-rb-spin" id="rwSpinBtn2" onclick="Roleta.spin()">GIRAR ROLETA</button>
 
       <div class="home-section-card home-section-suporte">
         <div class="suporte-row">
@@ -839,6 +848,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=27"></script>
+<script src="app.js?v=28"></script>
 </body>
 </html>

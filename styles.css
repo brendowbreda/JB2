@@ -357,6 +357,45 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .home-game-card--green .home-game-title,
 .home-game-card--green .home-game-sub { color: #fff; }
 
+.home-roleta-steps {
+  margin-top: 10px; padding: 12px 14px; background: var(--card);
+  border-radius: 14px; box-shadow: var(--shadow-sm);
+}
+.home-roleta-step {
+  font-size: 12px; color: var(--ink-dim); line-height: 1.8;
+}
+.home-roleta-step strong { color: var(--ink); }
+.home-roleta-label {
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  margin: 16px 0 8px; text-align: left;
+}
+.home-rb-picker { margin: 0; }
+.home-rb-arrows { justify-content: center; margin-bottom: 8px; }
+.home-rb-arrows .rb-picker-hint-arrow,
+.home-rb-arrows .rb-picker-hint-text { color: var(--ink-dim); }
+.home-rb-picker .rb-picker-item {
+  background: var(--card); border: 2px solid transparent; border-radius: 12px;
+}
+.home-rb-picker .rb-picker-item.selected {
+  background: #e8f5e9; border-color: #8bc34a;
+}
+.home-roleta-wheel { margin: 12px 0; }
+.home-roleta-valor { text-align: center; margin-top: 8px; }
+.home-rb-val-btn {
+  background: var(--card); color: var(--ink); border: 1px solid var(--border);
+}
+.home-rb-val-display { color: var(--ink); }
+.home-rb-preset {
+  background: var(--card); color: var(--ink); border: 1px solid var(--border);
+}
+.home-rb-preset.selected { background: #8bc34a; color: #fff; border-color: #8bc34a; }
+.home-rb-ganhos { color: var(--ink-dim); }
+.home-rb-ganhos strong { color: var(--primary-deep); }
+.home-rb-spin {
+  width: 100%; margin-top: 10px; border-radius: 14px; padding: 14px;
+  font-size: 15px;
+}
+
 .home-cotacao {
   margin-top: 16px; padding: 16px; background: var(--card);
   border-radius: 14px; box-shadow: var(--shadow-sm); cursor: pointer;
