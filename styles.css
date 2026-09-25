@@ -345,11 +345,11 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .home-game-emoji { font-size: 32px; line-height: 1; }
 .home-game-title {
-  font-size: 12px; font-weight: 700; color: var(--ink);
+  font-size: 16px; font-weight: 800; color: var(--ink);
   text-align: center;
 }
 .home-game-sub {
-  font-size: 9px; color: var(--ink-dim); text-align: center; line-height: 1.3;
+  font-size: 11px; color: var(--ink-dim); text-align: center; line-height: 1.3;
 }
 .home-game-card--green {
   background: #8bc34a;
