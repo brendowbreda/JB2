@@ -369,7 +369,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   margin: 10px 0 6px; text-align: left;
 }
 .home-rb-picker { margin: 0; padding: 8px 0; }
-.home-rb-arrows { justify-content: center; margin-bottom: 8px; gap: 8px; margin-top: 6px; }
+.home-rb-arrows { justify-content: center; margin-bottom: 4px; gap: 8px; margin-top: -4px; }
 .home-rb-arrows .rb-picker-hint-arrow {
   color: var(--ink-dim); font-size: 16px; font-weight: 400;
 }
