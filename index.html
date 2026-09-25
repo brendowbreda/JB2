@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=23">
+<link rel="stylesheet" href="styles.css?v=33">
 </head>
 <body>
 <div class="page">
@@ -231,11 +231,11 @@
       </div>
 
       <div class="home-cards-row">
-        <div class="home-card" onclick="Streak.showInfo()">
+        <div class="home-card home-card--freq" onclick="Streak.showInfo()">
           <span class="home-card-title">Frequência</span>
-          <div class="home-fire-wrap">
-            <img src="fogo.png" class="home-fire-img" alt="Fogo">
-            <strong class="home-fire-num" id="streakCount">0</strong>
+          <div class="home-freq-row">
+            <img src="fogo.png" class="home-freq-fire" alt="Fogo">
+            <strong class="home-freq-num" id="streakCount">0</strong>
           </div>
         </div>
         <div class="home-card" onclick="go('s-apostas')">
@@ -744,12 +744,12 @@
   <div class="modal-card" id="streakModal">
     <div style="font-size:48px;margin-bottom:4px;"><img src="fogo.png" style="width:48px;height:auto;" alt="Fogo"></div>
     <h3>Frequência de Apostas</h3>
-    <p>Aposte pelo menos 1x por semana para manter sua frequência ativa e ganhar prêmios!</p>
+    <p class="streak-subtitle">Entenda como funciona:</p>
+    <p class="streak-rules">Min. 10 apostas por semana (valor mínimo de R$ 1,00 cada aposta).<br>Mantenha sua frequência ativa e ganhe prêmios!</p>
     <div class="streak-rewards">
-      <div class="streak-reward-row"><span>5 semanas seguidas</span><strong>R$ 50,00</strong></div>
-      <div class="streak-reward-row"><span>10 semanas seguidas</span><strong>R$ 100,00</strong></div>
-      <div class="streak-reward-row"><span>A cada 10 semanas</span><strong>R$ 100,00</strong></div>
+      <div class="streak-reward-row"><span>A cada 10 semanas você ganha</span><strong>R$ 100,00</strong></div>
     </div>
+    <p class="streak-note">Esse valor vai direto para o seu saldo, <strong>não podendo ser sacado.</strong><br>Aumente suas apostas utilizando esse valor para ganhar muito mais!<br>Se tiver sorte, o prêmio que você ganhar pode ser sacado normalmente.</p>
     <button class="btn-outline" onclick="Modal.close('streakModal')">Entendi</button>
   </div>
 
@@ -769,6 +769,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=23"></script>
+<script src="app.js?v=25"></script>
 </body>
 </html>
