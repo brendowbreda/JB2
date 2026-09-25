@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=59">
+<link rel="stylesheet" href="styles.css?v=60">
 </head>
 <body>
 <div class="page">
@@ -289,20 +289,8 @@
       </div>
       <div class="rb-picker-arrows home-rb-arrows">
         <span class="rb-picker-hint-arrow">‹</span>
-        <span class="rb-picker-hint-text">deslize para escolher</span>
+        <span class="rb-picker-hint-text">deslize para ver outros bichos</span>
         <span class="rb-picker-hint-arrow">›</span>
-      </div>
-
-      <div class="home-roleta-wheel">
-        <div class="rw-container">
-          <div class="rw-pointer"></div>
-          <div class="rw-ring"></div>
-          <div class="rw-wheel-wrap" id="rwWheelWrap2">
-            <div class="rw-wheel" id="rwWheel2"></div>
-            <div class="rw-pins" id="rwPins2"></div>
-          </div>
-        </div>
-        <p class="rw-result" id="rwResult2"></p>
       </div>
 
       <p class="home-roleta-label">Defina o valor da aposta:</p>
@@ -320,6 +308,19 @@
         </div>
         <p class="rb-ganhos home-rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 18,00</strong></p>
       </div>
+
+      <div class="home-roleta-wheel">
+        <div class="rw-container">
+          <div class="rw-pointer"></div>
+          <div class="rw-ring"></div>
+          <div class="rw-wheel-wrap" id="rwWheelWrap2">
+            <div class="rw-wheel" id="rwWheel2"></div>
+            <div class="rw-pins" id="rwPins2"></div>
+          </div>
+        </div>
+        <p class="rw-result" id="rwResult2"></p>
+      </div>
+
       <button class="landing-btn-green home-rb-spin" id="rwSpinBtn2" onclick="Roleta.spin()">GIRAR ROLETA</button>
 
       <div class="home-section-card home-section-suporte">

@@ -389,16 +389,16 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
 }
 .home-roleta-valor { text-align: center; margin-top: 8px; }
-.home-rb-val-btn {
-  background: var(--card); color: var(--ink); border: 1px solid var(--border);
+.home-roleta-valor .rb-val-btn {
+  background: var(--card); color: var(--ink); border: 2px solid var(--border);
 }
-.home-rb-val-display { color: var(--ink); }
-.home-rb-preset {
-  background: var(--card); color: var(--ink); border: 1px solid var(--border);
+.home-roleta-valor .rb-val-display { color: var(--ink); }
+.home-roleta-valor .rb-preset {
+  background: var(--card); color: var(--ink); border: 1.5px solid var(--border);
 }
-.home-rb-preset.selected { background: #8bc34a; color: #fff; border-color: #8bc34a; }
-.home-rb-ganhos { color: var(--ink-dim); }
-.home-rb-ganhos strong { color: var(--primary-deep); }
+.home-roleta-valor .rb-preset.selected { background: #8bc34a; color: #fff; border-color: #8bc34a; }
+.home-roleta-valor .rb-ganhos { color: var(--ink-dim); }
+.home-roleta-valor .rb-ganhos strong { color: var(--primary-deep); }
 .home-rb-spin {
   width: 100%; margin-top: 10px; border-radius: 14px; padding: 14px;
   font-size: 15px;
