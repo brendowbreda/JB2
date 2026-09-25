@@ -854,8 +854,8 @@ const Render = {
   home() {
     if (!STATE) return;
     document.getElementById('streakCount').textContent = STATE.streak;
-    const betsEl = document.getElementById('homeTotalBets');
-    if (betsEl) betsEl.textContent = STATE.totalBets;
+    const betsEl = document.getElementById('homeTotalWins');
+    if (betsEl) betsEl.textContent = STATE.bets.filter(b => b.status === 'ganhou').length;
 
     const results = document.getElementById('homeResultsPreview');
     const recentResolved = STATE.bets.filter((b) => b.status !== 'aguardando').slice(0, 3);
