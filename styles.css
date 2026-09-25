@@ -340,6 +340,15 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .home-action-deposit { background: #1b6b3a; }
 .home-action-sacar { background: #8b1a1a; }
 
+.home-game-card {
+  padding: 18px 12px; gap: 6px;
+}
+.home-game-emoji { font-size: 32px; line-height: 1; }
+.home-game-title {
+  font-size: 12px; font-weight: 700; color: var(--ink);
+  text-align: center;
+}
+
 .row-link {
   display: flex; align-items: center; justify-content: space-between;
   background: var(--card);
