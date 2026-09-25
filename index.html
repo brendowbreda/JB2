@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=49">
+<link rel="stylesheet" href="styles.css?v=50">
 </head>
 <body>
 <div class="page">
@@ -267,18 +267,51 @@
           <span class="home-game-emoji">🐆</span>
           <span class="home-game-title">Jogo do Bicho</span>
         </div>
-        <div class="home-card home-game-card" onclick="Bet.start()">
-          <span class="home-game-emoji">🎰</span>
-          <span class="home-game-title">Roleta dos Bichos</span>
+        <div class="home-card home-game-card" onclick="go('s-cotacoes')">
+          <span class="home-game-emoji">📊</span>
+          <span class="home-game-title">Cotação <em class="landing-green-italic blink" style="font-size:inherit">ao vivo</em></span>
+          <span class="home-game-sub">Multiplicadores do 1º prêmio por modalidade</span>
         </div>
       </div>
 
-      <div class="home-cotacao" onclick="go('s-cotacoes')">
-        <div class="home-cotacao-text">
-          <h3>Cotação <em class="landing-green-italic blink">ao vivo</em></h3>
-          <p>Multiplicadores do 1º prêmio por modalidade</p>
+      <div class="section-head" style="margin-top:18px">
+        <h3>ROLETA DOS BICHOS</h3>
+      </div>
+      <div class="landing-section landing-roleta" style="border-radius:14px;margin:0">
+        <p class="landing-section-sub" style="color:rgba(255,255,255,0.6)">Escolha o bicho, defina o valor e gire a roleta.<br>Deu o seu bicho, você ganha — direto na sua carteira.</p>
+        <p class="rb-picker-label">Escolha um bicho:</p>
+        <div class="rb-picker-carousel" id="rbPickerCarousel2">
+          <div class="rb-picker-strip" id="rbPickerStrip2"></div>
         </div>
-        <button class="btn-outline" onclick="go('s-cotacoes')">VER COTAÇÃO</button>
+        <div class="rb-picker-arrows">
+          <span class="rb-picker-hint-arrow">‹</span>
+          <span class="rb-picker-hint-text">deslize para escolher</span>
+          <span class="rb-picker-hint-arrow">›</span>
+        </div>
+      </div>
+      <div class="landing-section landing-roleta-bichos" style="border-radius:0 0 14px 14px;margin:0;padding-top:0">
+        <div class="rw-container">
+          <div class="rw-pointer"></div>
+          <div class="rw-ring"></div>
+          <div class="rw-wheel-wrap" id="rwWheelWrap2">
+            <div class="rw-wheel" id="rwWheel2"></div>
+            <div class="rw-pins" id="rwPins2"></div>
+          </div>
+        </div>
+        <p class="rw-result" id="rwResult2"></p>
+        <div class="rb-valor">
+          <button class="rb-val-btn" onclick="Roleta.changeVal(-1)">−</button>
+          <span class="rb-val-display" id="rbValDisplay2">R$ 1,00</span>
+          <button class="rb-val-btn" onclick="Roleta.changeVal(1)">+</button>
+        </div>
+        <div class="rb-presets" id="rbPresetsHome">
+          <button class="rb-preset" onclick="Roleta.setVal(5)">R$5,00</button>
+          <button class="rb-preset" onclick="Roleta.setVal(10)">R$10,00</button>
+          <button class="rb-preset" onclick="Roleta.setVal(20)">R$20,00</button>
+          <button class="rb-preset" onclick="Roleta.setVal(50)">R$50,00</button>
+        </div>
+        <p class="rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 18,00</strong></p>
+        <button class="landing-btn-green" id="rwSpinBtn2" onclick="Roleta.spin()" style="margin-top:8px">GIRAR ROLETA</button>
       </div>
 
       <div class="home-section-card home-section-suporte">
@@ -807,6 +840,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=25"></script>
+<script src="app.js?v=26"></script>
 </body>
 </html>

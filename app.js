@@ -1099,18 +1099,27 @@ var Roleta = {
   freeSpinsLeft: 0,
   selectedAnimal: 0,
   pickOffset: 0,
+  instances: [],
   init: function() {
-    this.buildPicker();
-    this.initPickerSwipe();
-    this.buildWheel();
+    this.initInstance('');
+    this.initInstance('2');
+  },
+  initInstance: function(suffix) {
+    var strip = document.getElementById('rbPickerStrip' + suffix);
+    if (!strip) return;
+    this.instances.push(suffix);
+    this.buildPicker(suffix);
+    this.initPickerSwipe(suffix);
+    this.buildWheel(suffix);
     this.updateValor();
     var self = this;
     requestAnimationFrame(function() {
-      self.pickerCenterOn(self.selectedAnimal, false);
+      self.pickerCenterOn(self.selectedAnimal, false, suffix);
     });
   },
-  buildPicker: function() {
-    var strip = document.getElementById('rbPickerStrip');
+  buildPicker: function(suffix) {
+    suffix = suffix || '';
+    var strip = document.getElementById('rbPickerStrip' + suffix);
     if (!strip) return;
     var items = [];
     for (var i = 0; i < ROLETA_ANIMALS.length; i++) {
@@ -1150,9 +1159,10 @@ var Roleta = {
     }
     wheel.style.background = 'conic-gradient(from ' + (-seg / 2) + 'deg, ' + parts.join(', ') + ')';
   },
-  pickerCenterOn: function(idx, animate) {
-    var carousel = document.getElementById('rbPickerCarousel');
-    var strip = document.getElementById('rbPickerStrip');
+  pickerCenterOn: function(idx, animate, suffix) {
+    suffix = suffix || '';
+    var carousel = document.getElementById('rbPickerCarousel' + suffix);
+    var strip = document.getElementById('rbPickerStrip' + suffix);
     if (!carousel || !strip) return;
     var cW = carousel.offsetWidth;
     var items = strip.children;
@@ -1180,9 +1190,10 @@ var Roleta = {
       setTimeout(function() { s.style.transition = 'none'; }, 320);
     }
   },
-  initPickerSwipe: function() {
-    var carousel = document.getElementById('rbPickerCarousel');
-    var strip = document.getElementById('rbPickerStrip');
+  initPickerSwipe: function(suffix) {
+    suffix = suffix || '';
+    var carousel = document.getElementById('rbPickerCarousel' + suffix);
+    var strip = document.getElementById('rbPickerStrip' + suffix);
     if (!carousel || !strip) return;
     var self = this;
     var dragging = false, startX = 0, startY = 0, startScrollX = 0, didDrag = false;
@@ -1241,7 +1252,7 @@ var Roleta = {
       }
       var animalIdx = items[inSet] !== undefined ? items[inSet] : items[0];
       self.pickAnimal(animalIdx);
-      self.pickerCenterOn(animalIdx, true);
+      self.pickerCenterOn(animalIdx, true, suffix);
     }
     function onEnd() {
       if (!dragging) return;
@@ -1253,7 +1264,7 @@ var Roleta = {
           var item = el.closest('.rb-picker-item');
           if (item) {
             self.pickAnimal(parseInt(item.dataset.idx));
-            self.pickerCenterOn(parseInt(item.dataset.idx), true);
+            self.pickerCenterOn(parseInt(item.dataset.idx), true, suffix);
             return;
           }
         }
@@ -1270,11 +1281,12 @@ var Roleta = {
     carousel.addEventListener('touchstart', function(e) { onStart(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
     carousel.addEventListener('touchmove', function(e) { if (dragging) onMove(e.touches[0].clientX); }, { passive: true });
     carousel.addEventListener('touchend', function() { onEnd(); });
-    self.pickerCenterOn(self.selectedAnimal, false);
+    self.pickerCenterOn(self.selectedAnimal, false, suffix);
   },
-  buildWheel: function() {
-    var wheel = document.getElementById('rwWheel');
-    var pins = document.getElementById('rwPins');
+  buildWheel: function(suffix) {
+    suffix = suffix || '';
+    var wheel = document.getElementById('rwWheel' + suffix);
+    var pins = document.getElementById('rwPins' + suffix);
     if (!wheel) return;
     var n = ROLETA_ANIMALS.length;
     var seg = 360 / n;
@@ -1307,10 +1319,12 @@ var Roleta = {
   spin: function() {
     if (this.spinning) return;
     this.spinning = true;
+    var suffix = '';
     var wrap = document.getElementById('rwWheelWrap');
-    var wheel = document.getElementById('rwWheel');
-    var btn = document.getElementById('rwSpinBtn');
-    var result = document.getElementById('rwResult');
+    if (!wrap || !wrap.offsetParent) { wrap = document.getElementById('rwWheelWrap2'); suffix = '2'; }
+    var wheel = document.getElementById('rwWheel' + suffix);
+    var btn = document.getElementById('rwSpinBtn' + suffix);
+    var result = document.getElementById('rwResult' + suffix);
     if (!wrap || !wheel) return;
     if (this.blinkTimer) { clearInterval(this.blinkTimer); this.blinkTimer = null; }
     if (btn) { btn.disabled = true; btn.textContent = 'GIRANDO...'; }
@@ -1438,11 +1452,14 @@ var Roleta = {
     }, 2000);
   },
   updateValor: function() {
-    var disp = document.getElementById('rbValDisplay');
-    var ganhos = document.getElementById('rbGanhos');
-    if (disp) disp.textContent = this.fmtBRL(this.valor);
-    if (ganhos) ganhos.textContent = this.fmtBRL(this.valor * this.mult);
+    var suffixes = ['', '2'];
     var self = this;
+    suffixes.forEach(function(s) {
+      var disp = document.getElementById('rbValDisplay' + s);
+      var ganhos = document.getElementById('rbGanhos' + s);
+      if (disp) disp.textContent = self.fmtBRL(self.valor);
+      if (ganhos) ganhos.textContent = self.fmtBRL(self.valor * self.mult);
+    });
     document.querySelectorAll('.rb-preset').forEach(function(btn) {
       var val = parseFloat(btn.textContent.replace('R$', '').replace(',', '.'));
       btn.classList.toggle('selected', val === self.valor);
