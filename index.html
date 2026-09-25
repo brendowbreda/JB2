@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=38">
+<link rel="stylesheet" href="styles.css?v=39">
 </head>
 <body>
 <div class="page">
@@ -238,9 +238,12 @@
             <strong class="home-freq-num" id="streakCount">0</strong>
           </div>
         </div>
-        <div class="home-card" onclick="go('s-apostas')">
-          <span class="home-card-title">Minhas Apostas</span>
-          <strong class="home-card-big" id="homeTotalBets">0</strong>
+        <div class="home-card home-card--freq" onclick="go('s-apostas')">
+          <span class="home-card-title">Minhas Vitórias</span>
+          <div class="home-freq-row">
+            <span class="home-trophy">🏆</span>
+            <strong class="home-freq-num" id="homeTotalBets">0</strong>
+          </div>
         </div>
       </div>
 
