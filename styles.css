@@ -365,18 +365,23 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .home-roleta-step strong { color: var(--ink); }
 .home-roleta-label {
-  font-size: 13px; font-weight: 700; color: var(--ink);
+  font-size: 16px; font-weight: 800; color: var(--ink);
   margin: 10px 0 6px; text-align: left;
 }
 .home-rb-picker { margin: 0; }
-.home-rb-arrows { justify-content: center; margin-bottom: 8px; }
-.home-rb-arrows .rb-picker-hint-arrow,
-.home-rb-arrows .rb-picker-hint-text { color: var(--ink-dim); }
+.home-rb-arrows { justify-content: center; margin-bottom: 8px; gap: 8px; margin-top: 6px; }
+.home-rb-arrows .rb-picker-hint-arrow {
+  color: var(--ink-dim); font-size: 16px; font-weight: 400;
+}
+.home-rb-arrows .rb-picker-hint-text {
+  color: var(--ink-dim); font-size: 10px; font-weight: 400; text-transform: none;
+}
 .home-rb-picker .rb-picker-item {
-  background: var(--card); border: 2px solid transparent; border-radius: 12px;
+  background: transparent; border: 2px solid transparent; border-radius: 12px;
 }
 .home-rb-picker .rb-picker-item.selected {
   background: #e8f5e9; border-color: #8bc34a;
+  transform: scale(1.15);
 }
 .home-roleta-wheel { margin: 12px 0; }
 .home-roleta-valor { text-align: center; margin-top: 8px; }
