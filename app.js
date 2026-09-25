@@ -858,13 +858,27 @@ const Render = {
     if (betsEl) betsEl.textContent = STATE.bets.filter(b => b.status === 'ganhou').length;
 
     const results = document.getElementById('homeResultsPreview');
-    const recentResolved = STATE.bets.filter((b) => b.status !== 'aguardando').slice(0, 3);
-    results.innerHTML = recentResolved.length
-      ? recentResolved.map((b) => resultRowHtml(b)).join('')
-      : `<p class="muted-note">Nenhum resultado ainda. Faça sua primeira aposta!</p>`;
+    if (results) {
+      const recentResolved = STATE.bets.filter((b) => b.status !== 'aguardando').slice(0, 3);
+      results.innerHTML = recentResolved.length
+        ? recentResolved.map((b) => resultRowHtml(b)).join('')
+        : `<p class="muted-note">Nenhum resultado ainda. Faça sua primeira aposta!</p>`;
+    }
 
     const feed = document.getElementById('homeFeedPreview');
-    feed.innerHTML = STATE.feed.slice(0, 2).map((f) => feedRowHtml(f)).join('') || `<p class="muted-note">Adicione amigos para ver os palpites deles aqui.</p>`;
+    if (feed) feed.innerHTML = STATE.feed.slice(0, 2).map((f) => feedRowHtml(f)).join('') || `<p class="muted-note">Adicione amigos para ver os palpites deles aqui.</p>`;
+
+    if (!Roleta._home2Init) {
+      var strip2 = document.getElementById('rbPickerStrip2');
+      if (strip2 && strip2.children.length === 0) {
+        Roleta.buildPicker('2');
+        Roleta.initPickerSwipe('2');
+        Roleta.buildWheel('2');
+        Roleta.updateValor();
+        Roleta.pickerCenterOn(Roleta.selectedAnimal, false, '2');
+        Roleta._home2Init = true;
+      }
+    }
   },
   notificacoes() {
     const list = document.getElementById('notifList');
