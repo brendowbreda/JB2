@@ -1400,7 +1400,6 @@ var Roleta = {
         } else {
           self.spinning = false;
           if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
-          if (suffix === '') wrap.classList.add('idle-spin');
           if (won) {
             self.showResultOverlay('Parabéns!\n' + self.fmtBRL(self.valor * self.mult), '#22c55e', null);
           } else {
