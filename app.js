@@ -1338,6 +1338,7 @@ var Roleta = {
     var suffix = '';
     var wrap = document.getElementById('rwWheelWrap');
     if (!wrap || !wrap.offsetParent) { wrap = document.getElementById('rwWheelWrap2'); suffix = '2'; }
+    this._lastSpinSuffix = suffix;
     wrap.classList.remove('idle-spin');
     var wheel = document.getElementById('rwWheel' + suffix);
     var btn = document.getElementById('rwSpinBtn' + suffix);
@@ -1427,27 +1428,20 @@ var Roleta = {
     return 'R$ ' + v.toFixed(2).replace('.', ',');
   },
   showResultOverlay: function(msg, color, cb) {
-    var lines = msg.split('\n');
-    var html = '<div class="free-overlay-content">';
-    for (var i = 0; i < lines.length; i++) {
-      html += '<span class="free-overlay-text" style="color:' + color + '">' + lines[i] + '</span>';
-    }
-    html += '</div>';
-    var overlay = document.createElement('div');
-    overlay.className = 'free-overlay';
-    overlay.innerHTML = html;
-    document.body.appendChild(overlay);
-    requestAnimationFrame(function() {
-      overlay.classList.add('free-overlay-show');
-    });
-    setTimeout(function() {
-      overlay.classList.remove('free-overlay-show');
-      overlay.classList.add('free-overlay-hide');
+    var suffix = this._lastSpinSuffix || '';
+    var result = document.getElementById('rwResult' + suffix);
+    if (result) {
+      var text = msg.replace('\n', ' ');
+      result.textContent = text;
+      result.style.color = color;
+      result.classList.add('rw-result-show');
       setTimeout(function() {
-        overlay.remove();
+        result.classList.remove('rw-result-show');
         if (cb) cb();
-      }, 500);
-    }, 2000);
+      }, 2500);
+    } else {
+      if (cb) setTimeout(cb, 2500);
+    }
   },
   showFreeOverlay: function(cb) {
     var overlay = document.createElement('div');

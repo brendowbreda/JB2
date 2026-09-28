@@ -1253,12 +1253,16 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   justify-content: center;
 }
 .rw-result {
-  color: var(--gold);
-  font-size: 13px;
-  font-weight: 900;
-  margin: 0 0 16px;
-  min-height: 20px;
-  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 800;
+  margin: 8px 0;
+  min-height: 22px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.rw-result-show {
+  opacity: 1;
 }
 .free-overlay {
   position: fixed;
