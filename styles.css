@@ -1042,7 +1042,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   background: #1A1535;
   border-top: none;
   overflow: hidden;
-  padding-bottom: 40px !important;
+  padding-bottom: 16px !important;
 }
 .landing-roleta .landing-section-title { color: #fff; }
 .landing-roleta .landing-section-sub { color: rgba(255,255,255,0.6); font-size: 13px; }
@@ -1151,12 +1151,12 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   background: #1A1535;
   border-top: none;
   text-align: center;
-  padding: 40px 24px !important;
+  padding: 16px 24px !important;
 }
 .rw-container {
   position: relative;
   width: calc(100% + 48px);
-  margin: 0 -24px 24px;
+  margin: 0 -24px 10px;
   height: 220px;
   overflow: hidden;
 }
@@ -1193,6 +1193,13 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   left: 50%;
   margin-left: -450px;
   transform-origin: 450px 450px;
+}
+.rw-wheel-wrap.idle-spin {
+  animation: idle-rotate 12s linear infinite;
+}
+@keyframes idle-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 .rw-wheel {
   width: 900px;

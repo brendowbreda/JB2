@@ -1329,6 +1329,8 @@ var Roleta = {
       }
       pins.innerHTML = pinHtml;
     }
+    var wrapEl = document.getElementById('rwWheelWrap' + suffix);
+    if (wrapEl && suffix === '') wrapEl.classList.add('idle-spin');
   },
   spin: function() {
     if (this.spinning) return;
@@ -1336,6 +1338,7 @@ var Roleta = {
     var suffix = '';
     var wrap = document.getElementById('rwWheelWrap');
     if (!wrap || !wrap.offsetParent) { wrap = document.getElementById('rwWheelWrap2'); suffix = '2'; }
+    wrap.classList.remove('idle-spin');
     var wheel = document.getElementById('rwWheel' + suffix);
     var btn = document.getElementById('rwSpinBtn' + suffix);
     var result = document.getElementById('rwResult' + suffix);
@@ -1396,6 +1399,7 @@ var Roleta = {
         } else {
           self.spinning = false;
           if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
+          if (suffix === '') wrap.classList.add('idle-spin');
           if (won) {
             self.showResultOverlay('Parabéns!\n' + self.fmtBRL(self.valor * self.mult), '#22c55e', null);
           } else {
