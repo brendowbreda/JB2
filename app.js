@@ -1389,8 +1389,8 @@ var Roleta = {
         if (self.freeSpinsLeft > 0) {
           self.freeSpinsLeft--;
           var msg = won
-            ? 'Parabéns!\n' + self.fmtBRL(self.valor * self.mult)
-            : 'Não foi\ndessa vez!';
+            ? 'Parabéns, você está com sorte!'
+            : 'Não foi dessa vez!';
           var color = won ? '#22c55e' : '#ef4444';
           self.showResultOverlay(msg, color, function() {
             self.spinning = false;
@@ -1401,9 +1401,9 @@ var Roleta = {
           self.spinning = false;
           if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
           if (won) {
-            self.showResultOverlay('Parabéns!\n' + self.fmtBRL(self.valor * self.mult), '#22c55e', null);
+            self.showResultOverlay('Parabéns, você está com sorte!', '#22c55e', null);
           } else {
-            self.showResultOverlay('Não foi\ndessa vez!', '#ef4444', null);
+            self.showResultOverlay('Não foi dessa vez!', '#ef4444', null);
           }
         }
       }
