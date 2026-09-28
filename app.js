@@ -1364,9 +1364,8 @@ var Roleta = {
     setTimeout(function() {
       var animal = ROLETA_ANIMALS[winIdx];
       if (animal.free) {
-        if (result) result.textContent = '';
         self.freeSpinsLeft = 3;
-        self.showFreeOverlay(function() {
+        self.showResultOverlay('🍀 Trevo da sorte! 3 giros grátis', '#22c55e', function() {
           self.spinning = false;
           self.reroll = true;
           self.spin();
