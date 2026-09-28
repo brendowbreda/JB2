@@ -874,7 +874,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .landing-topbar {
   z-index: 29;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .landing-topbar-title,
 .landing-sticky-brand {
@@ -886,7 +886,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 .landing-sticky {
   z-index: 30;
-  justify-content: space-between;
+  justify-content: flex-start;
   box-shadow: 0 2px 16px rgba(0,0,0,0.1);
 }
 .landing-sticky-btn {
