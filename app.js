@@ -1273,6 +1273,8 @@ var Roleta = {
       dragging = false;
       carousel.classList.remove('dragging');
       if (!didDrag) {
+        self.pickerX = startScrollX;
+        strip.style.transform = 'translateX(' + self.pickerX + 'px)';
         var el = document.elementFromPoint(startX, startY);
         if (el) {
           var item = el.closest('.rb-picker-item');
