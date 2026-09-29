@@ -243,7 +243,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   grid-template-columns: 1fr 1fr 1fr;
 }
 .home-wallet-val {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--primary-deep);
 }
 .home-card {
@@ -254,16 +254,16 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .home-card:active { opacity: .85; }
 .home-card-title {
-  font-size: 11px; font-weight: 700; color: var(--ink-dim);
+  font-size: 11px; font-weight: 400; color: var(--ink-dim);
   letter-spacing: .5px; margin-bottom: 6px;
 }
 .home-freq-row {
   display: flex; align-items: center; gap: 6px;
 }
-.home-freq-fire { width: 36px; height: auto; }
-.home-trophy-img { width: 36px; height: auto; }
+.home-freq-fire { width: 28px; height: auto; }
+.home-trophy-img { width: 28px; height: auto; }
 .home-freq-num {
-  font-size: 28px; font-weight: 900; color: var(--ink);
+  font-size: 20px; font-weight: 800; color: var(--ink);
   line-height: 1;
 }
 .home-card-big {
