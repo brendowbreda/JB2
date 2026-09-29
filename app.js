@@ -859,7 +859,7 @@ const Render = {
       var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
       var now = new Date();
       var d = now.getDate(); var pad = d < 10 ? '0' + d : d;
-      dateEl.textContent = 'Dia ' + pad + ', ' + dias[now.getDay()] + ', ' + meses[now.getMonth()] + ' de ' + now.getFullYear();
+      dateEl.textContent = 'hoje - dia ' + pad + ' (' + dias[now.getDay()] + ') de ' + meses[now.getMonth()] + ' de ' + now.getFullYear() + '.';
     }
     var walletEl = document.getElementById('homeWalletVal');
     if (walletEl) walletEl.textContent = 'R$ ' + Number(STATE.points).toFixed(2).replace('.', ',');
