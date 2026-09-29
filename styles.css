@@ -357,6 +357,30 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .home-game-card--green .home-game-title,
 .home-game-card--green .home-game-sub { color: #fff; }
 
+.home-roleta-banner {
+  display: flex;
+  align-items: center;
+  background: #8bc34a;
+  border-radius: 16px;
+  padding: 10px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  gap: 12px;
+}
+.home-roleta-banner-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.home-roleta-banner-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: .5px;
+}
+
 .home-roleta-steps {
   margin-top: 4px;
 }
