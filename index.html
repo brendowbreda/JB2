@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=69">
+<link rel="stylesheet" href="styles.css?v=70">
 </head>
 <body>
 <div class="page">
@@ -228,7 +228,13 @@
         </button>
       </div>
 
-      <div class="home-cards-row">
+      <div class="home-cards-row home-cards-row--3">
+        <div class="home-card home-card--freq" onclick="go('s-carteira')">
+          <span class="home-card-title">Minha Carteira</span>
+          <div class="home-freq-row">
+            <strong class="home-freq-num home-wallet-val" id="homeWalletVal">R$ 0,00</strong>
+          </div>
+        </div>
         <div class="home-card home-card--freq" onclick="Streak.showInfo()">
           <span class="home-card-title">Minha Frequência</span>
           <div class="home-freq-row">
