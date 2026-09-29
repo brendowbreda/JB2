@@ -224,8 +224,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .avatar-lg.avatar-initials { font-size: 28px; }
 .topbar-user-text { display: flex; flex-direction: column; gap: 3px; }
 .topbar-user-text strong { font-size: 15px; }
-.topbar-name-big { font-size: 18px !important; }
-.topbar-date { font-size: 12px; color: var(--ink-dim); font-weight: 400; }
+.topbar-name-big { font-size: 22px !important; }
+.topbar-date { font-size: 11px; color: var(--ink-dim); font-weight: 400; }
 .balance-pill {
   display: inline-flex; align-items: center; gap: 3px;
   background: none; color: var(--ink);

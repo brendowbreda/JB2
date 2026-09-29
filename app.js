@@ -855,11 +855,11 @@ const Render = {
     if (!STATE) return;
     var dateEl = document.getElementById('homeDate');
     if (dateEl) {
-      var dias = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
-      var meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      var dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+      var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
       var now = new Date();
       var d = now.getDate(); var pad = d < 10 ? '0' + d : d;
-      dateEl.textContent = 'Dia ' + pad + ', ' + dias[now.getDay()] + ', ' + meses[now.getMonth()] + ' ' + now.getFullYear();
+      dateEl.textContent = 'Dia ' + pad + ', ' + dias[now.getDay()] + ', ' + meses[now.getMonth()] + ' de ' + now.getFullYear();
     }
     var walletEl = document.getElementById('homeWalletVal');
     if (walletEl) walletEl.textContent = 'R$ ' + Number(STATE.points).toFixed(2).replace('.', ',');
