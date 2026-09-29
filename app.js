@@ -1156,6 +1156,7 @@ var Roleta = {
     this.pickerX = -this.pickerSetW;
   },
   pickAnimal: function(idx) {
+    if (this.spinning) return;
     this.selectedAnimal = idx;
     document.querySelectorAll('.rb-picker-item').forEach(function(el) {
       el.classList.toggle('selected', parseInt(el.dataset.idx) === idx);
