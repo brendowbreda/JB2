@@ -372,6 +372,11 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .home-game-card--green {
   background: #8bc34a;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(139,195,74,0.4); }
+  50% { box-shadow: 0 0 20px rgba(139,195,74,0.8), 0 0 40px rgba(139,195,74,0.3); }
 }
 .home-game-card--green .home-game-title,
 .home-game-card--green .home-game-sub { color: #fff; }
