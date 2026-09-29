@@ -866,6 +866,8 @@ const Render = {
     document.getElementById('streakCount').textContent = STATE.streak;
     const betsEl = document.getElementById('homeTotalWins');
     if (betsEl) betsEl.textContent = STATE.bets.filter(b => b.status === 'ganhou').length;
+    var medalsEl = document.getElementById('homeTotalMedals');
+    if (medalsEl) medalsEl.textContent = (STATE.conquistas || []).filter(function(c) { return c.unlocked; }).length;
 
     const results = document.getElementById('homeResultsPreview');
     if (results) {

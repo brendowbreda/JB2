@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=73">
+<link rel="stylesheet" href="styles.css?v=74">
 </head>
 <body>
 <div class="page">
@@ -228,13 +228,12 @@
         </button>
       </div>
 
+      <div class="home-wallet-card" onclick="go('s-carteira')">
+        <span class="home-wallet-label">Carteira:</span>
+        <strong class="home-wallet-value" id="homeWalletVal">R$ 0,00</strong>
+      </div>
+
       <div class="home-cards-row home-cards-row--3">
-        <div class="home-card home-card--freq" onclick="go('s-carteira')">
-          <span class="home-card-title">Carteira</span>
-          <div class="home-freq-row">
-            <strong class="home-freq-num home-wallet-val" id="homeWalletVal">R$ 0,00</strong>
-          </div>
-        </div>
         <div class="home-card home-card--freq" onclick="Streak.showInfo()">
           <span class="home-card-title">Frequência</span>
           <div class="home-freq-row">
@@ -247,6 +246,13 @@
           <div class="home-freq-row">
             <img src="trofeu.png" class="home-trophy-img" alt="Troféu">
             <strong class="home-freq-num" id="homeTotalWins">0</strong>
+          </div>
+        </div>
+        <div class="home-card home-card--freq" onclick="go('s-conquistas')">
+          <span class="home-card-title">Medalhas</span>
+          <div class="home-freq-row">
+            <span class="home-medal-icon">🏅</span>
+            <strong class="home-freq-num" id="homeTotalMedals">0</strong>
           </div>
         </div>
       </div>
@@ -851,6 +857,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=40"></script>
+<script src="app.js?v=41"></script>
 </body>
 </html>
