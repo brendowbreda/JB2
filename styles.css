@@ -362,19 +362,18 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   align-items: center;
   background: var(--ink);
   border-radius: 16px;
-  padding: 14px 20px;
+  padding: 20px;
   margin-top: 10px;
   cursor: pointer;
-  gap: 16px;
+  gap: 20px;
   overflow: hidden;
 }
 .home-roleta-banner-img {
-  width: 140px;
+  width: 120px;
   height: auto;
   border-radius: 0;
   object-fit: contain;
   flex-shrink: 0;
-  margin: -14px 0 -14px -10px;
 }
 .home-roleta-banner-text {
   display: flex;
@@ -382,7 +381,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   gap: 4px;
 }
 .home-roleta-banner-title {
-  font-size: 20px;
+  font-size: 18px;
+  white-space: nowrap;
   font-weight: 800;
   color: #fff;
   letter-spacing: .5px;
