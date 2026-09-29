@@ -830,6 +830,7 @@ const Render = {
     else if (id === 's-amigos') this.amigos();
     else if (id === 's-adicionar-amigos') this.buscaAmigos();
     else if (id === 's-cotacoes') this.cotacoes();
+    else if (id === 's-roleta') this.roleta();
     else if (id === 's-register') RegWizard.reset();
     else if (id === 's-suporte') this.suporte();
   },
@@ -880,6 +881,8 @@ const Render = {
     const feed = document.getElementById('homeFeedPreview');
     if (feed) feed.innerHTML = STATE.feed.slice(0, 2).map((f) => feedRowHtml(f)).join('') || `<p class="muted-note">Adicione amigos para ver os palpites deles aqui.</p>`;
 
+  },
+  roleta() {
     if (!Roleta._home2Init) {
       var strip2 = document.getElementById('rbPickerStrip2');
       if (strip2 && strip2.children.length === 0) {
