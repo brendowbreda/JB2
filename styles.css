@@ -245,15 +245,15 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .home-wallet-card {
   background: var(--card); border-radius: 14px;
   padding: 14px 18px; box-shadow: var(--shadow-sm);
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center;
   cursor: pointer; margin-bottom: 10px;
 }
 .home-wallet-card:active { opacity: .85; }
 .home-wallet-label {
-  font-size: 14px; font-weight: 400; color: var(--ink-dim);
+  font-size: 16px; font-weight: 400; color: var(--ink);
 }
 .home-wallet-value {
-  font-size: 20px; font-weight: 800; color: var(--primary-deep);
+  font-size: 16px; font-weight: 800; color: var(--primary-deep);
 }
 .home-medal-img { width: 28px; height: auto; }
 .home-card {
