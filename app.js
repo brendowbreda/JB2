@@ -853,6 +853,16 @@ const Render = {
   },
   home() {
     if (!STATE) return;
+    var dateEl = document.getElementById('homeDate');
+    if (dateEl) {
+      var dias = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+      var meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      var now = new Date();
+      var d = now.getDate(); var pad = d < 10 ? '0' + d : d;
+      dateEl.textContent = 'Dia ' + pad + ', ' + dias[now.getDay()] + ', ' + meses[now.getMonth()] + ' ' + now.getFullYear();
+    }
+    var walletEl = document.getElementById('homeWalletVal');
+    if (walletEl) walletEl.textContent = 'R$ ' + Number(STATE.points).toFixed(2).replace('.', ',');
     document.getElementById('streakCount').textContent = STATE.streak;
     const betsEl = document.getElementById('homeTotalWins');
     if (betsEl) betsEl.textContent = STATE.bets.filter(b => b.status === 'ganhou').length;
