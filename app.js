@@ -1162,7 +1162,7 @@ var Roleta = {
     });
   },
   applyGradient: function(wheel, n, seg, highlightIdx, color) {
-    var c1 = '#2D2757', c2 = '#3A3170', cFree = '#1a6b3a';
+    var c1 = '#2D2757', c2 = '#3A3170', cFree = '#2e8b3e';
     var parts = [];
     for (var i = 0; i < n; i++) {
       var c;
@@ -1313,7 +1313,7 @@ var Roleta = {
       var angle = i * seg;
       if (ROLETA_ANIMALS[i].free) {
         html += '<div class="rw-animal rw-free" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
-          '<span style="font-size:36px">🍀</span></div>';
+          '<img src="trevo.png" alt="Trevo da Sorte" style="width:70px;height:70px"></div>';
       } else {
         html += '<div class="rw-animal" style="transform:rotate(' + angle + 'deg) translateY(-' + radius + 'px)">' +
           '<img src="bichos/' + ROLETA_ANIMALS[i].file + '" alt="' + ROLETA_ANIMALS[i].name + '"></div>';
