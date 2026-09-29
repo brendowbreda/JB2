@@ -366,13 +366,15 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   margin-top: 10px;
   cursor: pointer;
   gap: 16px;
+  overflow: hidden;
 }
 .home-roleta-banner-img {
-  width: 110px;
-  height: 110px;
-  border-radius: 14px;
-  object-fit: cover;
+  width: 160px;
+  height: auto;
+  border-radius: 0;
+  object-fit: contain;
   flex-shrink: 0;
+  margin: -14px 0 -14px -10px;
 }
 .home-roleta-banner-title {
   font-size: 22px;
