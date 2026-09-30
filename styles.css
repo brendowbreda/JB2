@@ -859,8 +859,11 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .saque-summary-total span { font-weight: 800; color: var(--ink); }
 .saque-summary-total strong { color: var(--primary-deep); font-size: 16px; }
 .saque-disclaimer {
-  font-size: 11px; color: var(--danger); line-height: 1.4; text-align: center; margin: 0 0 12px;
+  display: flex; gap: 8px; align-items: flex-start; background: #fff8e1; border-radius: var(--radius-sm);
+  padding: 10px 12px; margin: 0 0 12px; text-align: left;
 }
+.saque-disclaimer span { font-size: 11px; color: #b8860b; line-height: 1.4; }
+.saque-disclaimer svg { flex-shrink: 0; margin-top: 1px; }
 .saque-confirmed-btn {
   width: 100%; padding: 16px; border: none; border-radius: 999px;
   background: linear-gradient(180deg, var(--primary), var(--primary-deep));
