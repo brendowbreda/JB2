@@ -729,6 +729,13 @@ const Wallet = {
     if (navigator.clipboard) navigator.clipboard.writeText(Wallet.pixCode);
     toast('Código copiado!');
   },
+  closePix() {
+    Modal.close('modal-pix');
+    document.getElementById('depositCustom').value = '';
+    Wallet.selectedAmount = null;
+    go('s-home');
+    Render.home();
+  },
   confirmPix() {
     var amount = Wallet.pendingAmount || 0;
     STATE.balance = (STATE.balance || 0) + amount;
@@ -737,8 +744,7 @@ const Wallet = {
     Modal.close('modal-pix');
     document.getElementById('depositCustom').value = '';
     Wallet.selectedAmount = null;
-    go('s-carteira');
-    Render.carteira();
+    go('s-home');
     Render.home();
   },
   genUUID() { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); }); },

@@ -471,7 +471,7 @@
       </div>
     </section>
 
-    <div class="modal-backdrop" id="modal-pixBackdrop" onclick="Modal.close('modal-pix')"></div>
+    <div class="modal-backdrop" id="modal-pixBackdrop" onclick="Wallet.closePix()"></div>
     <div class="modal-card modal-pix-content" id="modal-pix">
       <h3 class="pix-title">Pague com Pix</h3>
       <p class="pix-sub">Escaneie o QR Code ou copie o código abaixo.</p>
@@ -484,7 +484,7 @@
           Copiar código
         </button>
       </div>
-      <button class="pix-cancel" onclick="Modal.close('modal-pix')">Cancelar pagamento</button>
+      <button class="pix-cancel" onclick="Wallet.closePix()">Cancelar pagamento</button>
     </div>
 
     <section class="screen" id="s-sacar">
@@ -974,6 +974,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=69"></script>
+<script src="app.js?v=70"></script>
 </body>
 </html>
