@@ -989,8 +989,7 @@ const Render = {
   depositar() {
     const grid = document.getElementById('depositAmounts');
     grid.innerHTML = DEPOSIT_PRESETS.map(function(v) {
-      var pop = v === DEPOSIT_POPULAR ? '<span class="dep-popular">Mais escolhido</span>' : '';
-      return '<div class="dep-tile' + (v === DEPOSIT_POPULAR ? ' dep-tile--popular' : '') + '" onclick="Render.selectDeposit(' + v + ', this)">' + pop + '<span class="dep-tile-val">R$ ' + v + ',00</span></div>';
+      return '<div class="dep-tile" onclick="Render.selectDeposit(' + v + ', this)"><span class="dep-tile-val">R$ ' + v + ',00</span></div>';
     }).join('');
     Wallet.selectedAmount = null;
     document.getElementById('depositCustom').value = '';
@@ -999,7 +998,8 @@ const Render = {
     document.querySelectorAll('#depositAmounts .dep-tile').forEach(function(t) { t.classList.remove('selected'); });
     el.classList.add('selected');
     Wallet.selectedAmount = v;
-    document.getElementById('depositCustom').value = '';
+    var n = v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    document.getElementById('depositCustom').value = n;
   },
   sacar() {},
   resultados() {
