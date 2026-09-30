@@ -375,6 +375,44 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .home-game-card--green .home-game-title,
 .home-game-card--green .home-game-sub { color: #fff; }
 
+.home-loteria-banner {
+  display: flex;
+  align-items: center;
+  background: #0a2463;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  gap: 20px;
+  overflow: hidden;
+}
+.home-loteria-banner:active { opacity: .85; }
+.home-loteria-banner-img {
+  width: 120px;
+  height: auto;
+  border-radius: 0;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.home-loteria-banner-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: .5px;
+}
+.home-loteria-banner-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.4;
+}
+.home-loteria-banner-cta {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4fc3f7;
+  margin-top: 4px;
+}
+
 .home-roleta-banner {
   display: flex;
   align-items: center;
