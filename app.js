@@ -760,15 +760,11 @@ const Account = {
     el.value = this.fmtPhone(v);
   },
   editField(field) {
-    if (this.editing === field) {
-      this.saveField(field);
-      return;
-    }
-    if (this.editing) this.cancelEdit(this.editing);
+    if (this.editing === field) return;
+    if (this.editing) this.autoSave(this.editing);
     this.editing = field;
     const display = document.getElementById(field === 'email' ? 'contaEmailDisplay' : 'contaTelDisplay');
     const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
-    const btn = document.getElementById(field === 'email' ? 'contaEmailBtn' : 'contaTelBtn');
     const u = loadUsers()[CURRENT_EMAIL];
     if (field === 'email') {
       input.value = u.email || '';
@@ -779,27 +775,23 @@ const Account = {
     display.style.display = 'none';
     input.style.display = 'block';
     input.focus();
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    input.onblur = function() { Account.autoSave(field); };
   },
-  cancelEdit(field) {
+  autoSave(field) {
+    if (this.editing !== field) return;
     const display = document.getElementById(field === 'email' ? 'contaEmailDisplay' : 'contaTelDisplay');
-    const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
-    const btn = document.getElementById(field === 'email' ? 'contaEmailBtn' : 'contaTelBtn');
-    display.style.display = 'block';
-    input.style.display = 'none';
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>';
-    this.editing = null;
-  },
-  saveField(field) {
     const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
     const val = input.value.trim();
     const users = loadUsers();
     if (field === 'email') users[CURRENT_EMAIL].email = val || users[CURRENT_EMAIL].email;
     else users[CURRENT_EMAIL].phone = val.replace(/\D/g, '');
     saveUsers(users);
-    this.cancelEdit(field);
+    display.style.display = 'block';
+    input.style.display = 'none';
+    input.onblur = null;
+    this.editing = null;
     Render.conta();
-    toast('Dados atualizados!');
+    toast('Salvo!');
   },
   confirmDelete() {
     const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
