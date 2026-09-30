@@ -800,12 +800,17 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   text-align: center; cursor: pointer;
   display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
-.aposta-card--aguardando { background: #3a3520; }
-.aposta-card--ganhou { background: #1e3a20; }
-.aposta-card--perdeu { background: #3a1e20; }
-.aposta-card-icon { font-size: 22px; }
-.aposta-card-title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: .3px; }
-.aposta-card-num { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; }
+.aposta-card--aguardando { background: var(--streak-tint); }
+.aposta-card--aguardando .aposta-card-title { color: #9a7b2f; }
+.aposta-card--aguardando .aposta-card-num { color: #9a7b2f; }
+.aposta-card--ganhou { background: var(--primary-tint); }
+.aposta-card--ganhou .aposta-card-title { color: var(--primary-deep); }
+.aposta-card--ganhou .aposta-card-num { color: var(--primary-deep); }
+.aposta-card--perdeu { background: var(--danger-tint); }
+.aposta-card--perdeu .aposta-card-title { color: var(--danger); }
+.aposta-card--perdeu .aposta-card-num { color: var(--danger); }
+.aposta-card-title { font-size: 11px; font-weight: 600; letter-spacing: .3px; }
+.aposta-card-num { font-size: 22px; font-weight: 800; line-height: 1; }
 
 .amigo-add-mini {
   width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--primary-deep);
