@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=102">
+<link rel="stylesheet" href="styles.css?v=103">
 </head>
 <body>
 <div class="page">
@@ -490,21 +490,51 @@
     <section class="screen" id="s-sacar">
       <div class="topbar-simple">
         <button class="icon-btn" onclick="go('s-carteira')">←</button>
-        <h2>Sacar pontos</h2>
+        <h2>Saque</h2>
         <span class="spacer"></span>
       </div>
-      <div class="card wallet-balance">
-        <span>Saldo disponível</span>
-        <strong>🪙 <span id="sacarSaldo">0</span> pts</strong>
+      <div class="card">
+        <div class="saque-input-box">
+          <span class="saque-prefix">R$</span>
+          <input type="text" id="saqueValor" placeholder="Valor do saque" inputmode="decimal" oninput="Wallet.maskSaque(this)">
+        </div>
+        <p class="saque-disponivel">Disponível para saque: <strong id="saqueDisponivel">R$ 0,00</strong></p>
+        <p class="saque-taxa">Taxa de saque: <strong>R$ 2,50</strong></p>
+      </div>
+      <div class="saque-regras">
+        <strong>REGRAS DE SAQUE</strong>
+        <p>Os saques podem ser feitos para qualquer chave Pix, desde que sejam feitos para sua própria titularidade.</p>
       </div>
       <div class="card">
-        <div class="field">
-          <label>Quantos pontos deseja sacar?</label>
-          <input type="number" id="sacarValor" placeholder="Ex: 100" min="1">
+        <p class="saque-section-label">CHAVE PIX DE DESTINO</p>
+        <div class="saque-pix-tabs">
+          <button class="saque-pix-tab active" data-pix="cpf" onclick="Wallet.selectPixType('cpf')">CPF</button>
+          <button class="saque-pix-tab" data-pix="telefone" onclick="Wallet.selectPixType('telefone')">Telefone</button>
+          <button class="saque-pix-tab" data-pix="email" onclick="Wallet.selectPixType('email')">Email</button>
         </div>
-        <button class="btn-primary" onclick="Wallet.withdraw()">Confirmar saque</button>
+        <div class="saque-pix-input-row">
+          <svg class="saque-pix-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h6"/></svg>
+          <input type="text" id="saquePixKey" placeholder="000.000.000-00" oninput="Wallet.maskPixKey(this)">
+        </div>
+        <button class="saque-confirm-btn" onclick="Wallet.withdraw()">Confirmar saque</button>
       </div>
     </section>
+
+    <div class="modal-backdrop" id="saqueConfirmBackdrop" onclick="Wallet.closeSaque()"></div>
+    <div class="modal-card" id="saqueConfirm">
+      <div class="saque-success-icon">
+        <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="25" fill="none" stroke="#2e7d32" stroke-width="3"/><path d="M17 28l8 8 14-14" fill="none" stroke="#2e7d32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Saque confirmado!</h3>
+      <p class="saque-confirm-sub">Seu saque foi solicitado com sucesso.</p>
+      <div class="saque-summary">
+        <div class="saque-summary-row"><span>Valor do saque</span><span id="saqueResumoValor">R$ 0,00</span></div>
+        <div class="saque-summary-row"><span>Taxa de saque</span><span>– R$ 2,50</span></div>
+        <div class="saque-summary-row saque-summary-total"><span>Valor total do saque</span><strong id="saqueResumoTotal">R$ 0,00</strong></div>
+      </div>
+      <p class="saque-disclaimer">Atenção: não nos responsabilizamos por envios realizados para uma chave Pix incorreta.</p>
+      <button class="saque-confirmed-btn" onclick="Wallet.closeSaque()">Confirmado</button>
+    </div>
 
     <!-- ======================= RESULTADOS ======================= -->
     <section class="screen" id="s-resultados">
@@ -974,6 +1004,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=70"></script>
+<script src="app.js?v=71"></script>
 </body>
 </html>

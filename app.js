@@ -692,6 +692,7 @@ function currentScreenId() {
 /* ---------------- wallet ---------------- */
 const DEPOSIT_PRESETS = [10, 30, 50, 100];
 const DEPOSIT_POPULAR = 30;
+const SAQUE_TAXA = 2.50;
 const Wallet = {
   selectedAmount: null,
   fmtBRL(v) { return 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); },
@@ -749,16 +750,64 @@ const Wallet = {
   },
   genUUID() { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); }); },
   crc16() { return (Math.random().toString(16).slice(2, 6)).toUpperCase(); },
+  saquePixType: 'cpf',
+  maskSaque(el) {
+    var v = el.value.replace(/\D/g, '');
+    if (!v) { el.value = ''; return; }
+    var n = (parseInt(v, 10) / 100).toFixed(2);
+    el.value = n.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  },
+  selectPixType(type) {
+    Wallet.saquePixType = type;
+    document.querySelectorAll('.saque-pix-tab').forEach(function(t) { t.classList.toggle('active', t.dataset.pix === type); });
+    var input = document.getElementById('saquePixKey');
+    input.value = '';
+    var u = loadUsers()[CURRENT_EMAIL];
+    if (type === 'cpf') {
+      input.placeholder = '000.000.000-00';
+      input.inputMode = 'numeric';
+      if (u && u.cpf) {
+        var c = u.cpf.replace(/\D/g, '');
+        input.value = c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      }
+    } else if (type === 'telefone') {
+      input.placeholder = '(00) 00000-0000';
+      input.inputMode = 'numeric';
+      if (u && u.phone) {
+        var p = u.phone.replace(/\D/g, '');
+        if (p.length === 11) input.value = '(' + p.slice(0,2) + ') ' + p.slice(2,7) + '-' + p.slice(7);
+        else if (p.length === 10) input.value = '(' + p.slice(0,2) + ') ' + p.slice(2,6) + '-' + p.slice(6);
+      }
+    } else {
+      input.placeholder = 'seu@email.com';
+      input.inputMode = 'email';
+      if (u && u.email) input.value = u.email;
+    }
+  },
+  maskPixKey(el) {
+    if (Wallet.saquePixType === 'cpf') RegWizard.maskCpf(el);
+    else if (Wallet.saquePixType === 'telefone') RegWizard.maskPhone(el);
+  },
   withdraw() {
-    const val = Number(document.getElementById('sacarValor').value);
-    if (!val || val <= 0) { toast('Digite um valor válido.'); return; }
-    if (val > STATE.points) { toast('Saldo insuficiente.'); return; }
-    STATE.points -= val;
+    var raw = document.getElementById('saqueValor').value.replace(/\D/g, '');
+    var amount = raw ? parseInt(raw, 10) / 100 : 0;
+    if (!amount || amount < 10) { toast('Valor mínimo: R$ 10,00'); return; }
+    if (amount > STATE.points) { toast('Saldo insuficiente.'); return; }
+    var pixKey = document.getElementById('saquePixKey').value.trim();
+    if (!pixKey) { toast('Informe sua chave Pix.'); return; }
+    var total = amount - SAQUE_TAXA;
+    if (total <= 0) { toast('O valor precisa ser maior que a taxa de R$ 2,50.'); return; }
+    STATE.points -= amount;
     saveState();
-    toast(`Saque de 🪙 ${fmtPoints(val)} pts confirmado.`);
-    document.getElementById('sacarValor').value = '';
-    go('s-carteira');
-    Render.carteira();
+    document.getElementById('saqueResumoValor').textContent = Wallet.fmtBRL(amount);
+    document.getElementById('saqueResumoTotal').textContent = Wallet.fmtBRL(total);
+    Modal.open('saqueConfirm');
+  },
+  closeSaque() {
+    Modal.close('saqueConfirm');
+    document.getElementById('saqueValor').value = '';
+    document.getElementById('saquePixKey').value = '';
+    go('s-home');
     Render.home();
   },
 };
@@ -903,7 +952,7 @@ const Render = {
     ['homeAvatar', 'drawerAvatar', 'perfilAvatar'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = initials; });
     const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
     ['homeBalance', 'drawerBalance'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = fmtBRL(STATE.points); });
-    ['carteiraSaldo', 'sacarSaldo'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = fmtPoints(STATE.points); });
+    const carteiraSaldoEl = document.getElementById('carteiraSaldo'); if (carteiraSaldoEl) carteiraSaldoEl.textContent = fmtPoints(STATE.points);
     const tierChip = document.getElementById('homeTierChip');
     if (tierChip) tierChip.textContent = `${tier.icon} ${tier.name}`;
     const unread = STATE.notifications.filter((n) => !n.read).length;
@@ -1007,7 +1056,12 @@ const Render = {
     var n = v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     document.getElementById('depositCustom').value = n;
   },
-  sacar() {},
+  sacar() {
+    var disp = document.getElementById('saqueDisponivel');
+    if (disp) disp.textContent = Wallet.fmtBRL(STATE.points);
+    document.getElementById('saqueValor').value = '';
+    Wallet.selectPixType('cpf');
+  },
   resultados() {
     const list = document.getElementById('resultadosList');
     const resolved = STATE.bets.filter((b) => b.status !== 'aguardando');

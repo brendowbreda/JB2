@@ -800,6 +800,74 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px;
 }
 
+/* ---------- saque ---------- */
+.saque-input-box {
+  display: flex; align-items: center; border: 2px solid var(--border); border-radius: var(--radius-md);
+  padding: 0 16px; background: #FAFAFD; margin-bottom: 12px;
+}
+.saque-input-box:focus-within { border-color: var(--primary); }
+.saque-prefix { font-weight: 800; font-size: 20px; color: var(--primary-deep); margin-right: 8px; }
+.saque-input-box input {
+  flex: 1; border: none; background: none; padding: 18px 0; font-family: var(--font);
+  font-size: 20px; font-weight: 700; color: var(--ink); outline: none;
+}
+.saque-disponivel { font-size: 14px; color: var(--ink-dim); margin: 0 0 4px; }
+.saque-disponivel strong { color: var(--primary-deep); font-weight: 800; }
+.saque-taxa { font-size: 13px; color: var(--ink-dim); margin: 0; }
+.saque-taxa strong { color: var(--danger); font-weight: 800; }
+.saque-regras {
+  border-left: 4px solid var(--gold); background: var(--card);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px 16px; box-shadow: 0 2px 8px rgba(30,27,46,.05);
+}
+.saque-regras strong { font-size: 13px; color: var(--ink); display: block; margin-bottom: 6px; letter-spacing: .3px; }
+.saque-regras p { font-size: 12px; color: var(--ink-dim); line-height: 1.5; margin: 0; font-style: italic; }
+.saque-section-label { font-size: 12px; font-weight: 800; color: var(--ink); letter-spacing: .5px; margin: 0 0 10px; }
+.saque-pix-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.saque-pix-tab {
+  flex: 1; padding: 12px 8px; border: 2px solid var(--border); border-radius: var(--radius-sm);
+  background: none; font-family: var(--font); font-weight: 700; font-size: 14px;
+  color: var(--ink-dim); cursor: pointer; text-align: center;
+}
+.saque-pix-tab.active { border-color: var(--primary); color: var(--primary-deep); background: var(--primary-tint); }
+.saque-pix-input-row {
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 2px solid var(--primary); padding: 10px 0; margin-bottom: 20px;
+}
+.saque-pix-icon { color: var(--ink-dim); flex-shrink: 0; }
+.saque-pix-input-row input {
+  flex: 1; border: none; background: none; font-family: var(--font);
+  font-size: 16px; font-weight: 600; color: var(--ink); outline: none;
+}
+.saque-confirm-btn {
+  width: 100%; padding: 16px; border: none; border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-deep));
+  color: #fff; font-family: var(--font); font-weight: 800; font-size: 15px;
+  cursor: pointer; box-shadow: 0 10px 20px -8px rgba(34,192,140,0.55);
+}
+.saque-success-icon { margin-bottom: 8px; }
+.saque-confirm-sub { color: var(--ink-dim); font-size: 13px; margin-bottom: 4px; }
+.saque-summary {
+  border: 1px solid var(--border); border-radius: 12px; margin: 16px 0;
+  overflow: hidden; text-align: left;
+}
+.saque-summary-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 16px; font-size: 14px; color: var(--ink-dim);
+}
+.saque-summary-row + .saque-summary-row { border-top: 1px solid var(--border); }
+.saque-summary-total { background: var(--primary-tint); }
+.saque-summary-total span { font-weight: 800; color: var(--ink); }
+.saque-summary-total strong { color: var(--primary-deep); font-size: 16px; }
+.saque-disclaimer {
+  font-size: 11px; color: var(--danger); line-height: 1.4; text-align: center; margin: 0 0 12px;
+}
+.saque-confirmed-btn {
+  width: 100%; padding: 16px; border: none; border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-deep));
+  color: #fff; font-family: var(--font); font-weight: 800; font-size: 15px; cursor: pointer;
+}
+
 .bet-summary { display: flex; flex-direction: column; gap: 8px; }
 .bet-summary-row { display: flex; justify-content: space-between; font-size: 13.5px; }
 .bet-summary-row strong { font-weight: 800; }
