@@ -427,13 +427,11 @@ const Auth = {
     const email = 'demo@palpiteclub.com';
     const users = loadUsers();
     if (!users[email]) {
-      users[email] = { name: 'Rafa Demo', email, phone: '(11) 90000-0000', password: 'demo', createdAt: nowIso() };
+      users[email] = { name: 'Rafa Demo', email, phone: '11900000000', cpf: '00011122233', password: 'demo', createdAt: nowIso() };
       saveUsers(users);
     }
     CURRENT_EMAIL = email;
-    let existing = loadState(email);
-    if (!existing) { existing = Seed.demoState(); }
-    STATE = existing;
+    STATE = Seed.demoState();
     saveState();
     setSession(email);
     App.enter();
@@ -1054,13 +1052,6 @@ const Render = {
       } else {
         amigosList.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhum amigo ainda.</p>';
       }
-    }
-    const preview = document.getElementById('perfilAchvPreview');
-    const unlocked = ACHIEVEMENTS.filter((a) => STATE.achievements[a.id]).slice(0, 5);
-    if (unlocked.length) {
-      preview.innerHTML = unlocked.map((a) => `<div class="achv-icon-only" title="${a.name}">${a.emoji}</div>`).join('');
-    } else {
-      preview.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhuma conquista ainda.</p>';
     }
   },
   conquistas() {
