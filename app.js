@@ -979,10 +979,14 @@ const Render = {
     var emptySub = tab === 'aguardando'
       ? 'Você não possui nenhum jogo aguardando resultado. Após fazer sua aposta, ela fica disponível aqui aguardando o resultado.'
       : tab === 'ganhou'
-      ? 'Cada aposta é uma nova chance. Faça seu palpite agora e boa sorte!'
+      ? 'Cada aposta é uma nova chance.<br>Faça seu palpite agora e boa sorte!'
       : 'Quem nunca perdeu, nunca jogou. A sorte é assim: quanto mais você tenta, mais perto fica da vitória!';
-    var emptyBtn = tab === 'perdeu' ? { label: 'Faça sua primeira aposta', action: "go('s-jogo')" } : null;
-    list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState(emptyIcon, emptyTitle, emptySub, emptyBtn);
+    var emptyBtns = tab === 'ganhou'
+      ? [{ label: 'Jogo do Bicho', action: "go('s-jogo')" }, { label: 'Roleta dos Bichos', action: "go('s-roleta')" }]
+      : tab === 'perdeu'
+      ? { label: 'Faça sua primeira aposta', action: "go('s-jogo')" }
+      : null;
+    list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState(emptyIcon, emptyTitle, emptySub, emptyBtns);
   },
   animalGrid() {
     const grid = document.getElementById('animalGrid');
@@ -1653,8 +1657,13 @@ function achvTileHtml(a, unlocked) {
     <span class="name">${a.name}</span>
   </div>`;
 }
-function emptyState(emoji, title, sub, btn) {
-  return `<div class="empty-state"><div class="mascot">${emoji}</div><strong>${title}</strong><p>${sub}</p>${btn ? `<button class="empty-state-btn" onclick="${btn.action}">${btn.label}</button>` : ''}</div>`;
+function emptyState(emoji, title, sub, btns) {
+  var btnHtml = '';
+  if (btns) {
+    var arr = Array.isArray(btns) ? btns : [btns];
+    btnHtml = '<div class="empty-state-btns">' + arr.map(function(b) { return '<button class="empty-state-btn" onclick="' + b.action + '">' + b.label + '</button>'; }).join('') + '</div>';
+  }
+  return '<div class="empty-state"><div class="mascot">' + emoji + '</div><strong>' + title + '</strong><p>' + sub + '</p>' + btnHtml + '</div>';
 }
 
 /* ---------------- boot ---------------- */
