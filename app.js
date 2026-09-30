@@ -912,7 +912,12 @@ const Render = {
     if (el('contaNascDisplay')) el('contaNascDisplay').textContent = u.birth || '—';
     if (el('contaCpfDisplay')) el('contaCpfDisplay').textContent = u.cpf ? u.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : '—';
     if (el('contaEmailDisplay')) el('contaEmailDisplay').textContent = (u.email || '—').toUpperCase();
-    if (el('contaTelDisplay')) el('contaTelDisplay').textContent = u.phone || '—';
+    if (el('contaTelDisplay')) {
+      var p = (u.phone || '').replace(/\D/g, '');
+      if (p.length === 11) el('contaTelDisplay').textContent = '(' + p.slice(0,2) + ') ' + p.slice(2,7) + '-' + p.slice(7);
+      else if (p.length === 10) el('contaTelDisplay').textContent = '(' + p.slice(0,2) + ') ' + p.slice(2,6) + '-' + p.slice(6);
+      else el('contaTelDisplay').textContent = u.phone || '—';
+    }
   },
   carteira() {
     const list = document.getElementById('extratoList');
