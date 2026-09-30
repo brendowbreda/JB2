@@ -975,11 +975,14 @@ const Render = {
     const map = { aguardando: 'aguardando', ganhou: 'ganhou', perdeu: 'perdeu' };
     const filtered = STATE.bets.filter((b) => b.status === map[tab]);
     const list = document.getElementById('apostasList');
-    list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState(
-      tab === 'aguardando' ? '' : tab === 'ganhou' ? '🏆' : '📭',
-      tab === 'aguardando' ? 'Nenhuma aposta pendente' : tab === 'ganhou' ? 'Ainda sem vitórias' : 'Nenhuma aposta perdida',
-      tab === 'aguardando' ? 'Você não possui nenhum jogo aguardando resultado. Após fazer sua aposta, ela fica disponível aqui aguardando o resultado.' : 'Suas apostas aparecem aqui.'
-    );
+    var emptyIcon = tab === 'aguardando' ? '' : tab === 'ganhou' ? '' : '';
+    var emptyTitle = tab === 'aguardando' ? 'Nenhuma aposta pendente' : tab === 'ganhou' ? 'Você ainda não ganhou nenhuma aposta' : 'Nenhuma aposta perdida';
+    var emptySub = tab === 'aguardando'
+      ? 'Você não possui nenhum jogo aguardando resultado. Após fazer sua aposta, ela fica disponível aqui aguardando o resultado.'
+      : tab === 'ganhou'
+      ? 'Cada aposta é uma nova chance. Faça seu palpite agora e boa sorte!'
+      : 'Ótima notícia! Você ainda não perdeu nenhuma aposta.';
+    list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState(emptyIcon, emptyTitle, emptySub);
   },
   animalGrid() {
     const grid = document.getElementById('animalGrid');
