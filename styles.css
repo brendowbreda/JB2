@@ -242,18 +242,12 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .home-cards-row--3 {
   grid-template-columns: 1fr 1fr 1fr;
 }
-.home-wallet-card {
-  background: var(--card); border-radius: 14px;
-  padding: 14px 18px; box-shadow: var(--shadow-sm);
-  display: flex; align-items: center;
-  cursor: pointer; margin-bottom: 10px;
-}
-.home-wallet-card:active { opacity: .85; }
-.home-wallet-label {
-  font-size: 16px; font-weight: 400; color: var(--ink);
+.home-wallet-inline {
+  font-size: 15px; font-weight: 400; color: var(--ink);
+  margin: 0 0 12px; cursor: pointer;
 }
 .home-wallet-value {
-  font-size: 16px; font-weight: 800; color: var(--primary-deep);
+  font-size: 15px; font-weight: 800; color: var(--primary-deep);
 }
 .home-medal-img { width: 28px; height: auto; }
 .home-card {
