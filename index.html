@@ -242,7 +242,7 @@
             <strong class="home-freq-num" id="streakCount">0</strong>
           </div>
         </div>
-        <div class="home-card home-card--freq" onclick="go('s-apostas')">
+        <div class="home-card home-card--freq" onclick="Apostas.goTab('ganhou')">
           <span class="home-card-title">Vitórias</span>
           <div class="home-freq-row">
             <img src="trofeu.png" class="home-trophy-img" alt="Troféu">
@@ -627,7 +627,7 @@
             <strong class="home-freq-num" id="perfilStreakCount">0</strong>
           </div>
         </div>
-        <div class="home-card home-card--freq" onclick="go('s-apostas')">
+        <div class="home-card home-card--freq" onclick="Apostas.goTab('ganhou')">
           <span class="home-card-title">Vitórias</span>
           <div class="home-freq-row">
             <img src="trofeu.png" class="home-trophy-img" alt="Troféu">
@@ -647,15 +647,15 @@
         <h3>Minhas apostas</h3>
       </div>
       <div class="home-cards-row home-cards-row--3">
-        <div class="aposta-card aposta-card--aguardando" onclick="go('s-apostas')">
+        <div class="aposta-card aposta-card--aguardando" onclick="Apostas.goTab('aguardando')">
           <span class="aposta-card-title">Aguardando</span>
           <strong class="aposta-card-num" id="perfilAguardando">0</strong>
         </div>
-        <div class="aposta-card aposta-card--ganhou" onclick="go('s-apostas')">
+        <div class="aposta-card aposta-card--ganhou" onclick="Apostas.goTab('ganhou')">
           <span class="aposta-card-title">Ganhou</span>
           <strong class="aposta-card-num" id="perfilGanhou">0</strong>
         </div>
-        <div class="aposta-card aposta-card--perdeu" onclick="go('s-apostas')">
+        <div class="aposta-card aposta-card--perdeu" onclick="Apostas.goTab('perdeu')">
           <span class="aposta-card-title">Perdeu</span>
           <strong class="aposta-card-num" id="perfilPerdeu">0</strong>
         </div>
@@ -954,6 +954,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=59"></script>
+<script src="app.js?v=60"></script>
 </body>
 </html>

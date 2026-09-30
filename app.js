@@ -720,6 +720,11 @@ const Apostas = {
     document.querySelectorAll('#s-apostas .tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === tab));
     Render.apostas();
   },
+  goTab(tab) {
+    this.currentTab = tab;
+    go('s-apostas');
+    this.showTab(tab);
+  },
 };
 
 /* ---------------- amigos ---------------- */
@@ -959,9 +964,9 @@ const Render = {
     const filtered = STATE.bets.filter((b) => b.status === map[tab]);
     const list = document.getElementById('apostasList');
     list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState(
-      tab === 'aguardando' ? '⏳' : tab === 'ganhou' ? '🏆' : '📭',
+      tab === 'aguardando' ? '' : tab === 'ganhou' ? '🏆' : '📭',
       tab === 'aguardando' ? 'Nenhuma aposta pendente' : tab === 'ganhou' ? 'Ainda sem vitórias' : 'Nenhuma aposta perdida',
-      'Suas apostas aparecem aqui.'
+      tab === 'aguardando' ? 'Você não possui nenhum jogo aguardando resultado. Após fazer sua aposta, ela fica disponível aqui aguardando o resultado.' : 'Suas apostas aparecem aqui.'
     );
   },
   animalGrid() {
