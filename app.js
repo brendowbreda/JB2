@@ -497,6 +497,22 @@ const Seed = {
         status: 'perdeu', payout: 0,
       });
     }
+    var h1 = new Date(today); h1.setHours(h1.getHours() - 1);
+    var h2 = new Date(today); h2.setHours(h2.getHours() - 2);
+    var h3 = new Date(today); h3.setHours(h3.getHours() - 3);
+    var h4 = new Date(today); h4.setHours(h4.getHours() - 4);
+    var h5 = new Date(today); h5.setHours(h5.getHours() - 5);
+    var h6 = new Date(today); h6.setHours(h6.getHours() - 6);
+    var h7 = new Date(today); h7.setHours(h7.getHours() - 7);
+    s.notifications = [
+      { id: uid(), text: 'Seu saque de R$ 47,50 foi solicitado e aprovado.', at: h1.toISOString(), read: false },
+      { id: uid(), text: 'Conquista desbloqueada: Manha da Sorte!', at: h2.toISOString(), read: false },
+      { id: uid(), text: 'Resultado saiu: parabens, voce ganhou R$ 360,00 no Galo!', at: h3.toISOString(), read: true },
+      { id: uid(), text: 'Resultado saiu: nao foi dessa vez no Cachorro. Tente novamente!', at: h4.toISOString(), read: true },
+      { id: uid(), text: 'Parabens! Voce fez 10 apostas essa semana (semana 10 de 10 para ganhar R$ 100,00).', at: h5.toISOString(), read: true },
+      { id: uid(), text: 'Seu deposito de R$ 100,00 ja caiu. Boas apostas!', at: h6.toISOString(), read: true },
+      { id: uid(), text: 'Seja bem-vindo ao Palpite Club! Que tal fazer seu primeiro deposito e comecar a apostar?', at: h7.toISOString(), read: true },
+    ];
     return s;
   },
 };
