@@ -794,6 +794,19 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   border-radius: 12px; cursor: pointer; flex-shrink: 0;
 }
 
+/* ---------- aposta status cards ---------- */
+.aposta-card {
+  border-radius: var(--radius-md); padding: 14px 10px;
+  text-align: center; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.aposta-card--aguardando { background: #3a3520; }
+.aposta-card--ganhou { background: #1e3a20; }
+.aposta-card--perdeu { background: #3a1e20; }
+.aposta-card-icon { font-size: 22px; }
+.aposta-card-title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: .3px; }
+.aposta-card-num { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; }
+
 .amigo-add-mini {
   width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--primary-deep);
   background: none; color: var(--primary-deep); font-size: 14px; font-weight: 700;

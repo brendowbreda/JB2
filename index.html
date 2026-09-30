@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=88">
+<link rel="stylesheet" href="styles.css?v=89">
 </head>
 <body>
 <div class="page">
@@ -656,23 +656,20 @@
         <a href="#" onclick="go('s-apostas');return false;">ver todas</a>
       </div>
       <div class="home-cards-row home-cards-row--3">
-        <div class="home-card home-card--freq" style="border-left:3px solid var(--wait)" onclick="go('s-apostas')">
-          <span class="home-card-title">Aguardando</span>
-          <div class="home-freq-row">
-            <strong class="home-freq-num" id="perfilAguardando" style="color:var(--wait)">0</strong>
-          </div>
+        <div class="aposta-card aposta-card--aguardando" onclick="go('s-apostas')">
+          <span class="aposta-card-icon">🕐</span>
+          <span class="aposta-card-title">Aguardando</span>
+          <strong class="aposta-card-num" id="perfilAguardando">0</strong>
         </div>
-        <div class="home-card home-card--freq" style="border-left:3px solid var(--win)" onclick="go('s-apostas')">
-          <span class="home-card-title">Ganhou</span>
-          <div class="home-freq-row">
-            <strong class="home-freq-num" id="perfilGanhou" style="color:var(--win)">0</strong>
-          </div>
+        <div class="aposta-card aposta-card--ganhou" onclick="go('s-apostas')">
+          <span class="aposta-card-icon">✅</span>
+          <span class="aposta-card-title">Ganhou</span>
+          <strong class="aposta-card-num" id="perfilGanhou">0</strong>
         </div>
-        <div class="home-card home-card--freq" style="border-left:3px solid var(--lose)" onclick="go('s-apostas')">
-          <span class="home-card-title">Perdeu</span>
-          <div class="home-freq-row">
-            <strong class="home-freq-num" id="perfilPerdeu" style="color:var(--lose)">0</strong>
-          </div>
+        <div class="aposta-card aposta-card--perdeu" onclick="go('s-apostas')">
+          <span class="aposta-card-icon">✖</span>
+          <span class="aposta-card-title">Perdeu</span>
+          <strong class="aposta-card-num" id="perfilPerdeu">0</strong>
         </div>
       </div>
 
