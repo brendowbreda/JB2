@@ -478,6 +478,18 @@ const Seed = {
       { id: uid(), from: 'Carla Souza', avatar: '🦊', text: 'convidou você para um bolão no Peru 🦃', at: nowIso() },
     ];
     const animal = animalByGroup(16);
+    s.bets.push({
+      id: uid(), animal: animalByGroup(13), modality: 'grupo', dezena: null,
+      amount: 20, horario: DRAW_TIMES[0].label,
+      placedAt: nowIso(), resolveAt: new Date(Date.now() + 3600000).toISOString(),
+      status: 'aguardando', payout: 360,
+    });
+    s.bets.push({
+      id: uid(), animal: animalByGroup(5), modality: 'dezena', dezena: '18',
+      amount: 10, horario: DRAW_TIMES[2].label,
+      placedAt: nowIso(), resolveAt: new Date(Date.now() + 7200000).toISOString(),
+      status: 'aguardando', payout: 600,
+    });
     for (let i = 0; i < 6; i++) {
       const won = i % 3 === 0;
       const placedAt = new Date(today); placedAt.setDate(placedAt.getDate() - i * 3);
@@ -1617,10 +1629,13 @@ function resultRowHtml(b) {
 function betRowHtml(b) {
   const cls = b.status === 'aguardando' ? 'wait' : b.status === 'ganhou' ? 'win' : 'lose';
   const label = b.status === 'aguardando' ? 'Aguardando' : b.status === 'ganhou' ? 'Ganhou' : 'Perdeu';
-  return `<div class="list-row">
-    <span class="list-row-icon">${b.animal.emoji}</span>
-    <div class="list-row-body"><strong>${b.animal.name} · ${MODALITY[b.modality].label}${b.dezena ? ' ' + b.dezena : ''}</strong><p>🪙 ${fmtPoints(b.amount)} · ${b.horario}</p></div>
-    <span class="status-badge ${cls}">${label}</span>
+  const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `<div class="bet-card-detail bet-card-detail--${b.status}">
+    <div class="bet-card-header"><span class="bet-card-mod">${MODALITY[b.modality].label}${b.dezena ? ' · nº ' + b.dezena : ''} · ${b.animal.name} ${b.animal.emoji}</span><span class="status-badge ${cls}">${label}</span></div>
+    <div class="bet-card-row"><span>Sorteio</span><span>${b.horario}</span></div>
+    <div class="bet-card-row"><span>Valor apostado</span><span>${fmtBRL(b.amount)}</span></div>
+    <div class="bet-card-row bet-card-row--prize"><span>Prêmio potencial</span><span>${fmtBRL(b.payout)}</span></div>
+    <div class="bet-card-date">${fmtDateTime(b.placedAt)}</div>
   </div>`;
 }
 function feedRowHtml(f) {
