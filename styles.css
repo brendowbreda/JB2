@@ -796,7 +796,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 /* ---------- achievements ---------- */
 .achv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.achv-grid.preview { grid-template-columns: repeat(4, 1fr); }
+.achv-grid.preview { display: flex; gap: 12px; }
+.achv-icon-only { font-size: 32px; cursor: pointer; }
 .achv-tile {
   background: var(--card);
   border-radius: var(--radius-md);

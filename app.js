@@ -1050,8 +1050,12 @@ const Render = {
       }
     }
     const preview = document.getElementById('perfilAchvPreview');
-    const unlocked = ACHIEVEMENTS.filter((a) => STATE.achievements[a.id]).slice(0, 4);
-    preview.innerHTML = (unlocked.length ? unlocked : ACHIEVEMENTS.slice(0, 4)).map((a) => achvTileHtml(a, !!STATE.achievements[a.id])).join('');
+    const unlocked = ACHIEVEMENTS.filter((a) => STATE.achievements[a.id]).slice(0, 5);
+    if (unlocked.length) {
+      preview.innerHTML = unlocked.map((a) => `<div class="achv-icon-only" title="${a.name}">${a.emoji}</div>`).join('');
+    } else {
+      preview.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhuma conquista ainda.</p>';
+    }
   },
   conquistas() {
     const unlockedCount = ACHIEVEMENTS.filter((a) => STATE.achievements[a.id]).length;
