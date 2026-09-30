@@ -749,6 +749,16 @@ const Amigos = {
 /* ---------------- account ---------------- */
 const Account = {
   editing: null,
+  fmtPhone(digits) {
+    var v = digits.slice(0, 11);
+    if (v.length > 6) return '(' + v.slice(0,2) + ') ' + v.slice(2, v.length - 4) + '-' + v.slice(v.length - 4);
+    if (v.length > 2) return '(' + v.slice(0,2) + ') ' + v.slice(2);
+    return v;
+  },
+  maskPhone(el) {
+    var v = el.value.replace(/\D/g, '').slice(0, 11);
+    el.value = this.fmtPhone(v);
+  },
   editField(field) {
     if (this.editing === field) {
       this.saveField(field);
@@ -760,7 +770,12 @@ const Account = {
     const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
     const btn = document.getElementById(field === 'email' ? 'contaEmailBtn' : 'contaTelBtn');
     const u = loadUsers()[CURRENT_EMAIL];
-    input.value = field === 'email' ? (u.email || '') : (u.phone || '');
+    if (field === 'email') {
+      input.value = u.email || '';
+    } else {
+      var p = (u.phone || '').replace(/\D/g, '');
+      input.value = Account.fmtPhone(p);
+    }
     display.style.display = 'none';
     input.style.display = 'block';
     input.focus();
@@ -780,7 +795,7 @@ const Account = {
     const val = input.value.trim();
     const users = loadUsers();
     if (field === 'email') users[CURRENT_EMAIL].email = val || users[CURRENT_EMAIL].email;
-    else users[CURRENT_EMAIL].phone = val;
+    else users[CURRENT_EMAIL].phone = val.replace(/\D/g, '');
     saveUsers(users);
     this.cancelEdit(field);
     Render.conta();
