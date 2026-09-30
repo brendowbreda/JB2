@@ -977,10 +977,10 @@ const Render = {
     var emptyTitle, emptySub, emptyCta;
     if (tab === 'aguardando') {
       emptyTitle = 'Nenhuma aposta pendente';
-      emptySub = 'Você não possui nenhum jogo aguardando resultado.<br>Após fazer sua aposta, ela fica disponível aqui aguardando o resultado.';
+      emptySub = 'Você não possui nenhum jogo aguardando resultado.';
     } else if (tab === 'ganhou') {
       emptyTitle = 'Você ainda não ganhou nenhuma aposta';
-      emptySub = 'Lembrete: Cada aposta é uma nova chance.<br>Vamos jogar?';
+      emptySub = 'Lembrete: Cada aposta é uma nova chance.';
     } else {
       emptyTitle = 'Nenhuma aposta perdida';
       emptySub = 'Quanto mais você tenta, mais perto fica da vitória.';
