@@ -1006,19 +1006,18 @@ const Render = {
     document.getElementById('perfilNome').textContent = u.name;
     const saldo = document.getElementById('perfilSaldo');
     if (saldo) saldo.textContent = fmtBRL(STATE.points);
-    const tier = tierFor(STATE.totalWagered);
-    document.getElementById('perfilTierChip').textContent = `${tier.icon} ${tier.name} · ${tier.label}`;
-    const next = nextTier(tier);
-    const bar = document.getElementById('tierProgressBar');
-    const label = document.getElementById('tierProgressLabel');
-    if (next) {
-      const span = next.min - tier.min;
-      const prog = Math.min(100, Math.round(((STATE.totalWagered - tier.min) / span) * 100));
-      bar.style.width = prog + '%';
-      label.textContent = `${fmtPoints(next.min - STATE.totalWagered)} pts apostados para virar ${next.icon} ${next.name}`;
-    } else {
-      bar.style.width = '100%';
-      label.textContent = 'Você atingiu a pedra máxima! 💎';
+    const saqueEl = document.getElementById('perfilSaque');
+    if (saqueEl) saqueEl.textContent = Number(STATE.points).toFixed(2).replace('.', ',');
+    const cpfEl = document.getElementById('perfilCpf');
+    if (cpfEl && u.cpf) {
+      const c = u.cpf.replace(/\D/g, '');
+      cpfEl.textContent = 'CPF: ' + c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+    const desdeEl = document.getElementById('perfilDesde');
+    if (desdeEl && u.createdAt) {
+      const dt = new Date(u.createdAt);
+      const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+      desdeEl.textContent = 'desde ' + dt.getDate() + ' de ' + meses[dt.getMonth()] + ' de ' + dt.getFullYear();
     }
     document.getElementById('statSemanas').textContent = STATE.streak;
     document.getElementById('statApostas').textContent = STATE.totalBets;

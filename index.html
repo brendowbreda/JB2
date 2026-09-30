@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=82">
+<link rel="stylesheet" href="styles.css?v=83">
 </head>
 <body>
 <div class="page">
@@ -595,13 +595,16 @@
         <h2>Perfil</h2>
         <button class="icon-btn" onclick="go('s-conta')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
       </div>
-      <div class="card profile-head">
-        <div class="avatar avatar-lg avatar-initials" id="perfilAvatar">BB</div>
-        <strong id="perfilNome">—</strong>
-        <span class="perfil-saldo" id="perfilSaldo">R$ 0,00</span>
-        <div class="tier-chip lg" id="perfilTierChip">🤍 Quartzo</div>
-        <div class="tier-progress"><div class="tier-progress-bar" id="tierProgressBar"></div></div>
-        <p class="tier-progress-label" id="tierProgressLabel"></p>
+      <div class="perfil-info-card">
+        <h2 class="perfil-nome-big" id="perfilNome">—</h2>
+        <p class="perfil-cpf" id="perfilCpf">CPF: ---</p>
+        <p class="perfil-desde" id="perfilDesde">desde ---</p>
+      </div>
+
+      <div class="perfil-saldo-card">
+        <span class="perfil-saldo-label">Saldo:</span>
+        <strong class="perfil-saldo-valor" id="perfilSaldo">R$ 0,00</strong>
+        <p class="perfil-saldo-sub">R$ <span id="perfilSaque">0,00</span> disponível para saque</p>
       </div>
 
       <div class="visao-row">
@@ -863,6 +866,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=42"></script>
+<script src="app.js?v=43"></script>
 </body>
 </html>
