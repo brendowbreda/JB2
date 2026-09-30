@@ -874,7 +874,7 @@ const Render = {
     const betsEl = document.getElementById('homeTotalWins');
     if (betsEl) betsEl.textContent = STATE.bets.filter(b => b.status === 'ganhou').length;
     var medalsEl = document.getElementById('homeTotalMedals');
-    if (medalsEl) medalsEl.textContent = (STATE.conquistas || []).filter(function(c) { return c.unlocked; }).length;
+    if (medalsEl) medalsEl.textContent = ACHIEVEMENTS.filter(function(a) { return STATE.achievements[a.id]; }).length;
 
     const results = document.getElementById('homeResultsPreview');
     if (results) {
@@ -1039,9 +1039,9 @@ const Render = {
     var pStreak = document.getElementById('perfilStreakCount');
     if (pStreak) pStreak.textContent = STATE.streak;
     var pWins = document.getElementById('perfilTotalWins');
-    if (pWins) pWins.textContent = STATE.totalWins || 0;
+    if (pWins) pWins.textContent = STATE.bets.filter(function(b) { return b.status === 'ganhou'; }).length;
     var pMedals = document.getElementById('perfilTotalMedals');
-    if (pMedals) pMedals.textContent = (STATE.conquistas || []).filter(function(c) { return c.unlocked; }).length;
+    if (pMedals) pMedals.textContent = ACHIEVEMENTS.filter(function(a) { return STATE.achievements[a.id]; }).length;
     const amigosList = document.getElementById('perfilAmigosList');
     if (amigosList) {
       if (STATE.friends.length) {
