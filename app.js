@@ -491,13 +491,12 @@ const Seed = {
       status: 'aguardando', payout: 600,
     });
     for (let i = 0; i < 6; i++) {
-      const won = i % 3 === 0;
       const placedAt = new Date(today); placedAt.setDate(placedAt.getDate() - i * 3);
       s.bets.push({
         id: uid(), animal, modality: 'grupo', dezena: null,
         amount: 50, horario: DRAW_TIMES[i % DRAW_TIMES.length].label,
         placedAt: placedAt.toISOString(), resolveAt: placedAt.toISOString(),
-        status: won ? 'ganhou' : 'perdeu', payout: won ? 900 : 0,
+        status: 'perdeu', payout: 0,
       });
     }
     return s;

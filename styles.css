@@ -637,7 +637,9 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   color: var(--ink-dim);
   cursor: pointer;
 }
-.tab.active { background: var(--ink); color: #fff; }
+.tab.active[data-tab="aguardando"] { background: #d4a017; color: #fff; }
+.tab.active[data-tab="ganhou"] { background: #2e7d32; color: #fff; }
+.tab.active[data-tab="perdeu"] { background: #c62828; color: #fff; }
 
 /* ---------- lists ---------- */
 .list { display: flex; flex-direction: column; gap: 10px; }
