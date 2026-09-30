@@ -1041,6 +1041,12 @@ const Render = {
         amigosList.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhum amigo ainda.</p>';
       }
     }
+    var aguardando = document.getElementById('perfilAguardando');
+    var ganhou = document.getElementById('perfilGanhou');
+    var perdeu = document.getElementById('perfilPerdeu');
+    if (aguardando) aguardando.textContent = STATE.bets.filter(function(b) { return b.status === 'pendente'; }).length;
+    if (ganhou) ganhou.textContent = STATE.bets.filter(function(b) { return b.status === 'ganhou'; }).length;
+    if (perdeu) perdeu.textContent = STATE.bets.filter(function(b) { return b.status === 'perdeu'; }).length;
   },
   conquistas() {
     const unlockedCount = ACHIEVEMENTS.filter((a) => STATE.achievements[a.id]).length;

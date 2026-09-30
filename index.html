@@ -647,6 +647,31 @@
         </button>
       </div>
 
+      <div class="section-head" style="margin-top:16px">
+        <h3>Minhas apostas</h3>
+        <a href="#" onclick="go('s-apostas');return false;">ver todas</a>
+      </div>
+      <div class="home-cards-row home-cards-row--3">
+        <div class="home-card home-card--freq" style="border-left:3px solid var(--wait)" onclick="go('s-apostas')">
+          <span class="home-card-title">Aguardando</span>
+          <div class="home-freq-row">
+            <strong class="home-freq-num" id="perfilAguardando" style="color:var(--wait)">0</strong>
+          </div>
+        </div>
+        <div class="home-card home-card--freq" style="border-left:3px solid var(--win)" onclick="go('s-apostas')">
+          <span class="home-card-title">Ganhou</span>
+          <div class="home-freq-row">
+            <strong class="home-freq-num" id="perfilGanhou" style="color:var(--win)">0</strong>
+          </div>
+        </div>
+        <div class="home-card home-card--freq" style="border-left:3px solid var(--lose)" onclick="go('s-apostas')">
+          <span class="home-card-title">Perdeu</span>
+          <div class="home-freq-row">
+            <strong class="home-freq-num" id="perfilPerdeu" style="color:var(--lose)">0</strong>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <section class="screen" id="s-conquistas">
@@ -924,6 +949,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=51"></script>
+<script src="app.js?v=52"></script>
 </body>
 </html>
