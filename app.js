@@ -1125,6 +1125,15 @@ const Render = {
       html += '<div class="freq-cal-legend"><span class="legend-active">Apostou</span><span class="legend-inactive">Não apostou</span></div>';
       cal.innerHTML = html;
     }
+
+    var achvGrid = document.getElementById('amigoAchvGrid');
+    if (achvGrid) {
+      var unlockedCount = conquistas;
+      achvGrid.innerHTML = ACHIEVEMENTS.map(function(a, i) {
+        var unlocked = i < unlockedCount;
+        return achvTileHtml(a, unlocked);
+      }).join('');
+    }
   },
   buscaAmigos() {
     const q = (document.getElementById('buscaAmigos')?.value || '').toLowerCase();
