@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=79">
+<link rel="stylesheet" href="styles.css?v=80">
 </head>
 <body>
 <div class="page">
@@ -258,17 +258,15 @@
       <div class="section-head">
         <h3>JOGAR AGORA</h3>
       </div>
-      <div class="home-cards-row">
-        <div class="home-card home-game-card home-game-card--green" onclick="Bet.start()">
-          <span class="home-game-title">Jogo do Bicho</span>
-          <span class="home-game-sub">Clique aqui</span>
-        </div>
-        <div class="home-card home-game-card" onclick="go('s-cotacoes')">
-          <span class="home-game-title">Cotação <em class="landing-green-italic blink" style="font-size:inherit">ao vivo</em></span>
-          <span class="home-game-sub">Confira os valores</span>
-          <span class="home-game-sub">Clique aqui</span>
+
+      <div class="home-bicho-banner" onclick="Bet.start()">
+        <img src="jogodobicho.png" alt="Jogo do Bicho" class="home-bicho-banner-img">
+        <div class="home-roleta-banner-text">
+          <span class="home-bicho-banner-title">Jogo do Bicho</span>
+          <span class="home-bicho-banner-sub">Clique aqui</span>
         </div>
       </div>
+      <button class="home-cotacao-btn" onclick="go('s-cotacoes')">Cotação <em class="landing-green-italic blink" style="font-size:inherit">ao vivo</em> — Confira os valores</button>
 
       <div class="home-loteria-banner" onclick="go('s-loteria')">
         <img src="loteria.png" alt="Loteria Federal" class="home-loteria-banner-img">
