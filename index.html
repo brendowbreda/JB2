@@ -608,15 +608,6 @@
         <p class="perfil-saque-row">R$ <span id="perfilSaque">0,00</span> disponível para saque <button class="perfil-saque-info" onclick="Modal.open('saqueInfoModal')">?</button></p>
       </div>
 
-      <!-- Modal info saque -->
-      <div class="modal-backdrop" id="saqueInfoModalBackdrop" onclick="Modal.close('saqueInfoModal')"></div>
-      <div class="modal-card" id="saqueInfoModal">
-        <h3 style="margin:0 0 12px;font-size:17px;font-weight:800">Disponível para saque</h3>
-        <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin:0 0 12px">Nem todo o saldo pode ser sacado.</p>
-        <p style="font-size:13px;color:var(--ink);line-height:1.6;margin:0 0 12px"><b>Pode sacar:</b> valores depositados por você e ganhos em apostas.</p>
-        <p style="font-size:13px;color:var(--ink);line-height:1.6;margin:0 0 16px"><b>Não pode sacar:</b> valores recebidos como bônus, presente ou de campanhas (ex: Frequência de Apostas). Esse valor vai direto para o seu saldo e <b>não pode ser sacado</b>. Use para aumentar suas apostas e ganhar muito mais!</p>
-        <button class="btn-primary" onclick="Modal.close('saqueInfoModal')">Entendi</button>
-      </div>
 
       <div class="visao-row">
         <div class="visao-streak">
@@ -848,6 +839,17 @@
   </div>
 
   <!-- Streak info -->
+  <!-- Modal info saque -->
+  <div class="modal-backdrop" id="saqueInfoModalBackdrop" onclick="Modal.close('saqueInfoModal')"></div>
+  <div class="modal-card" id="saqueInfoModal">
+    <h3>Disponível para saque</h3>
+    <p class="streak-subtitle">Entenda como funciona:</p>
+    <p class="streak-rules"><b>Pode sacar:</b> valores depositados por você e ganhos em apostas.</p>
+    <p class="streak-rules" style="margin-top:8px"><b>Não pode sacar:</b> valores recebidos como bônus, presente ou de campanhas (ex: Frequência de Apostas).</p>
+    <p class="streak-note">Esse valor vai direto para o seu saldo e <strong>não pode ser sacado.</strong> Use para aumentar suas apostas e ganhar muito mais! Se o seu palpite acertar, o prêmio ganho pode ser sacado normalmente.</p>
+    <button class="btn-outline" onclick="Modal.close('saqueInfoModal')">Entendi</button>
+  </div>
+
   <div class="modal-backdrop" id="streakModalBackdrop" onclick="Modal.close('streakModal')"></div>
   <div class="modal-card" id="streakModal">
     <div style="font-size:48px;margin-bottom:4px;"><img src="fogo.png" style="width:48px;height:auto;" alt="Fogo"></div>
