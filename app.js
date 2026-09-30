@@ -1036,6 +1036,12 @@ const Render = {
     document.getElementById('statApostas').textContent = STATE.totalBets;
     const amigosCount = document.getElementById('statAmigosCount');
     if (amigosCount) amigosCount.textContent = STATE.friends.length;
+    var pStreak = document.getElementById('perfilStreakCount');
+    if (pStreak) pStreak.textContent = STATE.streak;
+    var pWins = document.getElementById('perfilTotalWins');
+    if (pWins) pWins.textContent = STATE.totalWins || 0;
+    var pMedals = document.getElementById('perfilTotalMedals');
+    if (pMedals) pMedals.textContent = (STATE.conquistas || []).filter(function(c) { return c.unlocked; }).length;
     const amigosList = document.getElementById('perfilAmigosList');
     if (amigosList) {
       if (STATE.friends.length) {

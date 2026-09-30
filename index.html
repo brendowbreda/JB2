@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=86">
+<link rel="stylesheet" href="styles.css?v=87">
 </head>
 <body>
 <div class="page">
@@ -246,7 +246,7 @@
           </div>
         </div>
         <div class="home-card home-card--freq" onclick="go('s-conquistas')">
-          <span class="home-card-title">Medalhas</span>
+          <span class="home-card-title">Conquistas</span>
           <div class="home-freq-row">
             <img src="medalha.png" class="home-medal-img" alt="Medalha">
             <strong class="home-freq-num" id="homeTotalMedals">0</strong>
@@ -608,6 +608,30 @@
         <p class="perfil-saque-row">R$ <span id="perfilSaque">0,00</span> disponível para saque <button class="perfil-saque-info" onclick="Modal.open('saqueInfoModal')">?</button></p>
       </div>
 
+      <div class="home-cards-row home-cards-row--3" style="margin-bottom:16px">
+        <div class="home-card home-card--freq" onclick="Streak.showInfo()">
+          <span class="home-card-title">Frequência</span>
+          <div class="home-freq-row">
+            <img src="fogo.png" class="home-freq-fire" alt="Fogo">
+            <strong class="home-freq-num" id="perfilStreakCount">0</strong>
+          </div>
+        </div>
+        <div class="home-card home-card--freq" onclick="go('s-apostas')">
+          <span class="home-card-title">Vitórias</span>
+          <div class="home-freq-row">
+            <img src="trofeu.png" class="home-trophy-img" alt="Troféu">
+            <strong class="home-freq-num" id="perfilTotalWins">0</strong>
+          </div>
+        </div>
+        <div class="home-card home-card--freq" onclick="go('s-conquistas')">
+          <span class="home-card-title">Conquistas</span>
+          <div class="home-freq-row">
+            <img src="medalha.png" class="home-medal-img" alt="Medalha">
+            <strong class="home-freq-num" id="perfilTotalMedals">0</strong>
+          </div>
+        </div>
+      </div>
+
       <div class="section-head">
         <h3>Meus amigos</h3>
         <a href="#" onclick="go('s-amigos');return false;">ver todos</a>
@@ -873,6 +897,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=46"></script>
+<script src="app.js?v=47"></script>
 </body>
 </html>
