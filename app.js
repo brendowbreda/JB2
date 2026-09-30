@@ -1033,12 +1033,14 @@ const Render = {
     const amigosList = document.getElementById('perfilAmigosList');
     if (amigosList) {
       if (STATE.friends.length) {
-        amigosList.innerHTML = STATE.friends.slice(0, 5).map(f => {
+        var html = STATE.friends.slice(0, 4).map(f => {
           const parts = f.name.split(' ').filter(Boolean);
           const ini = parts.map(w => w[0]).slice(0,2).join('').toUpperCase();
           const sobrenome = parts.length > 1 ? parts[parts.length - 1] : parts[0];
           return `<div class="perfil-amigo-item" onclick="Render.amigoPerfil('${f.email}')"><div class="avatar avatar-initials">${ini}</div><span>${sobrenome}</span></div>`;
         }).join('');
+        html += `<div class="perfil-amigo-item" onclick="go('s-amigos')"><div class="avatar avatar-initials perfil-amigo-plus">+</div><span>Ver todos</span></div>`;
+        amigosList.innerHTML = html;
       } else {
         amigosList.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhum amigo ainda.</p>';
       }

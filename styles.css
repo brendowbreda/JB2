@@ -779,6 +779,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .perfil-amigo-item .avatar { width: 48px; height: 48px; font-size: 15px; }
 .perfil-amigo-item span { font-size: 11px; color: var(--ink-dim); max-width: 64px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.perfil-amigo-plus { background: var(--ink-dim); font-size: 22px; font-weight: 400; }
 .perfil-add-row {
   display: flex; gap: 10px; margin-top: 8px;
 }
