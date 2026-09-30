@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=99">
+<link rel="stylesheet" href="styles.css?v=100">
 </head>
 <body>
 <div class="page">
@@ -453,20 +453,39 @@
     <section class="screen" id="s-depositar">
       <div class="topbar-simple">
         <button class="icon-btn" onclick="go('s-carteira')">←</button>
-        <h2>Depositar pontos</h2>
+        <h2>Depositar</h2>
         <span class="spacer"></span>
       </div>
-      <p class="muted-note">🪙 Pontos Palpite não têm valor monetário — são a moeda do jogo, usada só pra apostar e subir de nível.</p>
+      <p class="dep-hint">Mínimo R$ 10,00 — máximo R$ 5.000,00</p>
       <div class="card">
-        <label class="field-label">Escolha um pacote</label>
-        <div class="amount-grid" id="depositAmounts"></div>
-        <div class="field">
-          <label>Ou digite um valor</label>
-          <input type="number" id="depositCustom" placeholder="Ex: 250" min="1">
+        <div class="dep-grid" id="depositAmounts"></div>
+        <div class="dep-custom">
+          <span class="dep-custom-prefix">R$</span>
+          <input type="text" id="depositCustom" placeholder="0,00" inputmode="decimal" oninput="Wallet.maskMoney(this)">
+        </div>
+        <div class="dep-security">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span>Seu depósito é processado por uma instituição de pagamento regulada pelo Banco Central.</span>
         </div>
         <button class="btn-primary" onclick="Wallet.deposit()">Depositar</button>
       </div>
     </section>
+
+    <div class="modal-backdrop" id="modal-pixBackdrop" onclick="Modal.close('modal-pix')"></div>
+    <div class="modal-card modal-pix-content" id="modal-pix">
+      <h3 class="pix-title">Pague com Pix</h3>
+      <p class="pix-sub">Escaneie o QR Code ou copie o código abaixo.</p>
+      <p class="pix-value" id="pixValue">R$ 0,00</p>
+      <div class="pix-qr" id="pixQr"></div>
+      <div class="pix-code-box">
+        <code class="pix-code" id="pixCode"></code>
+        <button class="pix-copy-btn" onclick="Wallet.copyPix()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copiar código
+        </button>
+      </div>
+      <button class="pix-cancel" onclick="Modal.close('modal-pix')">Cancelar pagamento</button>
+    </div>
 
     <section class="screen" id="s-sacar">
       <div class="topbar-simple">
@@ -954,6 +973,7 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=67"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="app.js?v=68"></script>
 </body>
 </html>

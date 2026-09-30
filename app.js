@@ -690,25 +690,59 @@ function currentScreenId() {
 }
 
 /* ---------------- wallet ---------------- */
-const DEPOSIT_PRESETS = [100, 300, 500];
+const DEPOSIT_PRESETS = [10, 30, 50, 100];
+const DEPOSIT_POPULAR = 30;
 const Wallet = {
+  selectedAmount: null,
+  fmtBRL(v) { return 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); },
+  maskMoney(el) {
+    var v = el.value.replace(/\D/g, '');
+    if (!v) { el.value = ''; Wallet.selectedAmount = null; return; }
+    var n = (parseInt(v, 10) / 100).toFixed(2);
+    el.value = n.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    Wallet.selectedAmount = parseFloat(n);
+    document.querySelectorAll('#depositAmounts .dep-tile').forEach(function(t) { t.classList.remove('selected'); });
+  },
   deposit() {
-    const custom = document.getElementById('depositCustom').value;
-    const amount = Number(custom) || Wallet.selectedAmount || 0;
-    if (!amount || amount <= 0) { toast('Escolha um valor.'); return; }
-    let bonus = 0;
-    if (STATE.streak >= 4) {
-      bonus = Math.round(amount * 0.10);
+    var custom = document.getElementById('depositCustom').value.replace(/\D/g, '');
+    var amount = custom ? parseInt(custom, 10) / 100 : Wallet.selectedAmount || 0;
+    if (!amount || amount < 10) { toast('Valor mínimo: R$ 10,00'); return; }
+    if (amount > 5000) { toast('Valor máximo: R$ 5.000,00'); return; }
+    Wallet.pendingAmount = amount;
+    Wallet.showPix(amount);
+  },
+  showPix(amount) {
+    document.getElementById('pixValue').textContent = Wallet.fmtBRL(amount);
+    var code = '00020126580014BR.GOV.BCB.PIX0136' + Wallet.genUUID() + '5802BR5913PALPITECLUBLTDA6009SAOPAULO62070503***6304' + Wallet.crc16();
+    document.getElementById('pixCode').textContent = code;
+    Wallet.pixCode = code;
+    var qrEl = document.getElementById('pixQr');
+    qrEl.innerHTML = '';
+    if (typeof QRCode !== 'undefined') {
+      new QRCode(qrEl, { text: code, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
+    } else {
+      qrEl.innerHTML = '<div style="width:200px;height:200px;background:#fff;border:2px solid #ddd;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#999;margin:0 auto">QR Code</div>';
     }
-    STATE.points += amount + bonus;
+    Modal.open('modal-pix');
+  },
+  copyPix() {
+    if (navigator.clipboard) navigator.clipboard.writeText(Wallet.pixCode);
+    toast('Código copiado!');
+  },
+  confirmPix() {
+    var amount = Wallet.pendingAmount || 0;
+    STATE.balance = (STATE.balance || 0) + amount;
     saveState();
-    if (bonus > 0) toast(`Depósito de 🪙${fmtPoints(amount)} + cashback de 🎁${fmtPoints(bonus)} pts!`);
-    else toast(`Depósito de 🪙 ${fmtPoints(amount)} pts realizado!`);
+    toast('Depósito de ' + Wallet.fmtBRL(amount) + ' confirmado!');
+    Modal.close('modal-pix');
     document.getElementById('depositCustom').value = '';
+    Wallet.selectedAmount = null;
     go('s-carteira');
     Render.carteira();
     Render.home();
   },
+  genUUID() { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); }); },
+  crc16() { return (Math.random().toString(16).slice(2, 6)).toUpperCase(); },
   withdraw() {
     const val = Number(document.getElementById('sacarValor').value);
     if (!val || val <= 0) { toast('Digite um valor válido.'); return; }
@@ -954,11 +988,15 @@ const Render = {
   },
   depositar() {
     const grid = document.getElementById('depositAmounts');
-    grid.innerHTML = DEPOSIT_PRESETS.map((v) => `<div class="amount-tile" onclick="Render.selectDeposit(${v}, this)">🪙 ${v}</div>`).join('');
+    grid.innerHTML = DEPOSIT_PRESETS.map(function(v) {
+      var pop = v === DEPOSIT_POPULAR ? '<span class="dep-popular">Mais escolhido</span>' : '';
+      return '<div class="dep-tile' + (v === DEPOSIT_POPULAR ? ' dep-tile--popular' : '') + '" onclick="Render.selectDeposit(' + v + ', this)">' + pop + '<span class="dep-tile-val">R$ ' + v + ',00</span></div>';
+    }).join('');
     Wallet.selectedAmount = null;
+    document.getElementById('depositCustom').value = '';
   },
   selectDeposit(v, el) {
-    document.querySelectorAll('#depositAmounts .amount-tile').forEach((t) => t.classList.remove('selected'));
+    document.querySelectorAll('#depositAmounts .dep-tile').forEach(function(t) { t.classList.remove('selected'); });
     el.classList.add('selected');
     Wallet.selectedAmount = v;
     document.getElementById('depositCustom').value = '';
