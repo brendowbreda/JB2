@@ -608,21 +608,6 @@
         <p class="perfil-saque-row">R$ <span id="perfilSaque">0,00</span> disponível para saque <button class="perfil-saque-info" onclick="Modal.open('saqueInfoModal')">?</button></p>
       </div>
 
-
-      <div class="visao-row">
-        <div class="visao-streak">
-          <div class="visao-fire">
-            <img src="fogo.png" class="visao-fire-icon" alt="Fogo">
-            <strong class="visao-fire-num" id="statSemanas">0</strong>
-          </div>
-          <span class="visao-fire-label">Semanas</span>
-        </div>
-        <div class="visao-stats">
-          <div class="visao-stat"><strong id="statApostas">0</strong><span>apostas feitas</span></div>
-          <div class="visao-stat"><strong id="statAmigosCount">0</strong><span>amigos</span></div>
-        </div>
-      </div>
-
       <div class="section-head">
         <h3>Meus amigos</h3>
         <a href="#" onclick="go('s-amigos');return false;">ver todos</a>
@@ -636,6 +621,20 @@
         <button class="perfil-qr-btn" onclick="Amigos.shareQR()">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="8" height="8" rx="1"/><rect x="14" y="2" width="8" height="8" rx="1"/><rect x="2" y="14" width="8" height="8" rx="1"/><rect x="14" y="14" width="4" height="4"/><line x1="22" y1="14" x2="22" y2="18"/><line x1="18" y1="22" x2="22" y2="22"/></svg>
         </button>
+      </div>
+
+      <div class="visao-row">
+        <div class="visao-streak">
+          <div class="visao-fire">
+            <img src="fogo.png" class="visao-fire-icon" alt="Fogo">
+            <strong class="visao-fire-num" id="statSemanas">0</strong>
+          </div>
+          <span class="visao-fire-label">Semanas</span>
+        </div>
+        <div class="visao-stats">
+          <div class="visao-stat"><strong id="statApostas">0</strong><span>apostas feitas</span></div>
+          <div class="visao-stat"><strong id="statAmigosCount">0</strong><span>amigos</span></div>
+        </div>
       </div>
 
       <div class="section-head">
