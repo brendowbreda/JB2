@@ -1013,6 +1013,13 @@ const Render = {
       const c = u.cpf.replace(/\D/g, '');
       cpfEl.textContent = 'CPF: ' + c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     }
+    const whatsEl = document.getElementById('perfilWhatsapp');
+    if (whatsEl && u.phone) {
+      const p = u.phone.replace(/\D/g, '');
+      if (p.length === 11) whatsEl.textContent = 'WhatsApp: (' + p.slice(0,2) + ') ' + p.slice(2,7) + '-' + p.slice(7);
+      else if (p.length === 10) whatsEl.textContent = 'WhatsApp: (' + p.slice(0,2) + ') ' + p.slice(2,6) + '-' + p.slice(6);
+      else whatsEl.textContent = 'WhatsApp: ' + u.phone;
+    }
     const desdeEl = document.getElementById('perfilDesde');
     if (desdeEl && u.createdAt) {
       const dt = new Date(u.createdAt);

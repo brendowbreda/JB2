@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=83">
+<link rel="stylesheet" href="styles.css?v=84">
 </head>
 <body>
 <div class="page">
@@ -595,16 +595,27 @@
         <h2>Perfil</h2>
         <button class="icon-btn" onclick="go('s-conta')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
       </div>
-      <div class="perfil-info-card">
+      <div class="perfil-info">
         <h2 class="perfil-nome-big" id="perfilNome">—</h2>
-        <p class="perfil-cpf" id="perfilCpf">CPF: ---</p>
-        <p class="perfil-desde" id="perfilDesde">desde ---</p>
+        <p class="perfil-sub" id="perfilCpf">CPF: ---</p>
+        <p class="perfil-sub" id="perfilWhatsapp">WhatsApp: ---</p>
+        <p class="perfil-sub perfil-desde" id="perfilDesde">desde ---</p>
       </div>
 
-      <div class="perfil-saldo-card">
+      <div class="perfil-saldo-block">
         <span class="perfil-saldo-label">Saldo:</span>
         <strong class="perfil-saldo-valor" id="perfilSaldo">R$ 0,00</strong>
-        <p class="perfil-saldo-sub">R$ <span id="perfilSaque">0,00</span> disponível para saque</p>
+        <p class="perfil-saque-row">R$ <span id="perfilSaque">0,00</span> disponível para saque <button class="perfil-saque-info" onclick="Modal.open('saqueInfoModal')">?</button></p>
+      </div>
+
+      <!-- Modal info saque -->
+      <div class="modal-backdrop" id="saqueInfoModalBackdrop" onclick="Modal.close('saqueInfoModal')"></div>
+      <div class="modal-card" id="saqueInfoModal">
+        <h3 style="margin:0 0 12px;font-size:17px;font-weight:800">Disponível para saque</h3>
+        <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin:0 0 12px">Nem todo o saldo pode ser sacado.</p>
+        <p style="font-size:13px;color:var(--ink);line-height:1.6;margin:0 0 12px"><b>Pode sacar:</b> valores depositados por você e ganhos em apostas.</p>
+        <p style="font-size:13px;color:var(--ink);line-height:1.6;margin:0 0 16px"><b>Não pode sacar:</b> valores recebidos como bônus, presente ou de campanhas (ex: Frequência de Apostas). Esse valor vai direto para o seu saldo e <b>não pode ser sacado</b>. Use para aumentar suas apostas e ganhar muito mais!</p>
+        <button class="btn-primary" onclick="Modal.close('saqueInfoModal')">Entendi</button>
       </div>
 
       <div class="visao-row">
@@ -866,6 +877,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=43"></script>
+<script src="app.js?v=44"></script>
 </body>
 </html>
