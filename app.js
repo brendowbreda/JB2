@@ -860,6 +860,8 @@ const Render = {
     }
     var walletEl = document.getElementById('homeWalletVal');
     if (walletEl) walletEl.textContent = 'R$ ' + Number(STATE.points).toFixed(2).replace('.', ',');
+    var homeSaque = document.getElementById('homeSaqueVal');
+    if (homeSaque) homeSaque.textContent = Number(STATE.points).toFixed(2).replace('.', ',');
     document.getElementById('streakCount').textContent = STATE.streak;
     const betsEl = document.getElementById('homeTotalWins');
     if (betsEl) betsEl.textContent = STATE.bets.filter(b => b.status === 'ganhou').length;
