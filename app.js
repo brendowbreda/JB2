@@ -974,19 +974,22 @@ const Render = {
     const map = { aguardando: 'aguardando', ganhou: 'ganhou', perdeu: 'perdeu' };
     const filtered = STATE.bets.filter((b) => b.status === map[tab]);
     const list = document.getElementById('apostasList');
-    var emptyIcon = tab === 'aguardando' ? '' : tab === 'ganhou' ? '' : '';
-    var emptyTitle = tab === 'aguardando' ? 'Nenhuma aposta pendente' : tab === 'ganhou' ? 'Você ainda não ganhou nenhuma aposta' : 'Nenhuma aposta perdida';
-    var emptySub = tab === 'aguardando'
-      ? 'Você não possui nenhum jogo aguardando resultado. Após fazer sua aposta, ela fica disponível aqui aguardando o resultado.'
-      : tab === 'ganhou'
-      ? 'Cada aposta é uma nova chance.<br>Faça seu palpite agora e boa sorte!'
-      : 'Quem nunca perdeu, nunca jogou. A sorte é assim: quanto mais você tenta, mais perto fica da vitória!';
-    var emptyBtns = tab === 'ganhou'
-      ? [{ label: 'Jogo do Bicho', action: "go('s-jogo')" }, { label: 'Roleta dos Bichos', action: "go('s-roleta')" }]
-      : tab === 'perdeu'
-      ? { label: 'Faça sua primeira aposta', action: "go('s-jogo')" }
-      : null;
-    list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState(emptyIcon, emptyTitle, emptySub, emptyBtns);
+    var emptyTitle, emptySub, emptyCta;
+    if (tab === 'aguardando') {
+      emptyTitle = 'Nenhuma aposta pendente';
+      emptySub = 'Você não possui nenhum jogo aguardando resultado.<br>Após fazer sua aposta, ela fica disponível aqui aguardando o resultado.';
+    } else if (tab === 'ganhou') {
+      emptyTitle = 'Você ainda não ganhou nenhuma aposta';
+      emptySub = 'Lembrete: Cada aposta é uma nova chance.<br>Vamos jogar?';
+    } else {
+      emptyTitle = 'Nenhuma aposta perdida';
+      emptySub = 'Quanto mais você tenta, mais perto fica da vitória.';
+    }
+    var gameButtons = '<div class="empty-game-btns">'
+      + '<button class="empty-game-btn empty-game-btn--jb" onclick="go(\'s-jogo\')"><span class="empty-game-btn-label">Jogar Agora</span><span class="empty-game-btn-name">Jogo do Bicho</span></button>'
+      + '<button class="empty-game-btn empty-game-btn--fed" onclick="go(\'s-federal\')"><span class="empty-game-btn-label">Jogar Agora</span><span class="empty-game-btn-name">Loteria Federal</span><span class="empty-game-btn-sub">Toda quarta-feira e domingo</span></button>'
+      + '</div>';
+    list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState('', emptyTitle, emptySub, gameButtons);
   },
   animalGrid() {
     const grid = document.getElementById('animalGrid');
@@ -1657,13 +1660,8 @@ function achvTileHtml(a, unlocked) {
     <span class="name">${a.name}</span>
   </div>`;
 }
-function emptyState(emoji, title, sub, btns) {
-  var btnHtml = '';
-  if (btns) {
-    var arr = Array.isArray(btns) ? btns : [btns];
-    btnHtml = '<div class="empty-state-btns">' + arr.map(function(b) { return '<button class="empty-state-btn" onclick="' + b.action + '">' + b.label + '</button>'; }).join('') + '</div>';
-  }
-  return '<div class="empty-state"><div class="mascot">' + emoji + '</div><strong>' + title + '</strong><p>' + sub + '</p>' + btnHtml + '</div>';
+function emptyState(emoji, title, sub, extraHtml) {
+  return '<div class="empty-state">' + (emoji ? '<div class="mascot">' + emoji + '</div>' : '') + '<strong>' + title + '</strong><p>' + sub + '</p>' + (extraHtml || '') + '</div>';
 }
 
 /* ---------------- boot ---------------- */

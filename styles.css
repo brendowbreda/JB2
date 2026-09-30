@@ -689,12 +689,18 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .empty-state { text-align: center; padding: 40px 20px; color: var(--ink-dim); }
 .empty-state .mascot { font-size: 44px; }
 .empty-state strong { display: block; margin: 10px 0 4px; color: var(--ink); }
-.empty-state-btns { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
-.empty-state-btn {
-  padding: 12px 24px;
-  background: var(--primary-deep); color: #fff; border: none; border-radius: 999px;
-  font-family: var(--font); font-weight: 700; font-size: 13px; cursor: pointer;
+.empty-state p { font-size: 13px; line-height: 1.5; }
+.empty-game-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.empty-game-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  width: 100%; padding: 14px 16px; border: none; border-radius: var(--radius-md);
+  font-family: var(--font); cursor: pointer; color: #fff;
 }
+.empty-game-btn-label { font-size: 11px; font-weight: 600; opacity: .8; text-transform: uppercase; letter-spacing: .5px; }
+.empty-game-btn-name { font-size: 16px; font-weight: 800; }
+.empty-game-btn-sub { font-size: 11px; opacity: .7; margin-top: 2px; }
+.empty-game-btn--jb { background: var(--primary-deep); }
+.empty-game-btn--fed { background: #0d1b3e; }
 
 /* ---------- pick list (bet wizard) ---------- */
 .pick-list { display: flex; flex-direction: column; gap: 10px; }
