@@ -748,6 +748,12 @@ const Amigos = {
     toast(`Você adicionou ${p.name} 🤝`);
     Render.buscaAmigos();
   },
+  shareQR() {
+    var u = loadUsers()[CURRENT_EMAIL];
+    var name = u ? u.name : 'Amigo';
+    var msg = encodeURIComponent('Vem jogar comigo no Palpite Club! 🎲🍀 Adiciona meu perfil: ' + name);
+    window.open('https://wa.me/?text=' + msg, '_blank');
+  },
 };
 
 /* ---------------- account ---------------- */
@@ -1033,10 +1039,11 @@ const Render = {
     const amigosList = document.getElementById('perfilAmigosList');
     if (amigosList) {
       if (STATE.friends.length) {
-        amigosList.innerHTML = STATE.friends.map(f => {
-          const ini = f.name.split(' ').filter(Boolean).map(w => w[0]).slice(0,2).join('').toUpperCase();
-          const first = f.name.split(' ')[0];
-          return `<div class="perfil-amigo-item" onclick="go('s-amigos')"><div class="avatar avatar-initials">${ini}</div><span>${first}</span></div>`;
+        amigosList.innerHTML = STATE.friends.slice(0, 5).map(f => {
+          const parts = f.name.split(' ').filter(Boolean);
+          const ini = parts.map(w => w[0]).slice(0,2).join('').toUpperCase();
+          const sobrenome = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+          return `<div class="perfil-amigo-item" onclick="go('s-amigos')"><div class="avatar avatar-initials">${ini}</div><span>${sobrenome}</span></div>`;
         }).join('');
       } else {
         amigosList.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhum amigo ainda.</p>';
