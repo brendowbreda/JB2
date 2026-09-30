@@ -801,6 +801,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 
 /* ---------- saque ---------- */
+.saque-hint { font-size: 13px; color: var(--ink-dim); text-align: center; margin: -4px 0 12px; }
 .saque-regras {
   display: flex; gap: 8px; align-items: flex-start; background: #fff8e1; border-radius: var(--radius-sm);
   padding: 10px 12px; margin-bottom: 16px;

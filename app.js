@@ -707,7 +707,7 @@ const Wallet = {
   deposit() {
     var custom = document.getElementById('depositCustom').value.replace(/\D/g, '');
     var amount = custom ? parseInt(custom, 10) / 100 : Wallet.selectedAmount || 0;
-    if (!amount || amount < 10) { toast('Valor mínimo: R$ 10,00'); return; }
+    if (!amount || amount < 5) { toast('Valor mínimo: R$ 5,00'); return; }
     if (amount > 5000) { toast('Valor máximo: R$ 5.000,00'); return; }
     Wallet.pendingAmount = amount;
     Wallet.showPix(amount);
@@ -791,7 +791,8 @@ const Wallet = {
   withdraw() {
     var raw = document.getElementById('saqueValor').value.replace(/\D/g, '');
     var amount = raw ? parseInt(raw, 10) / 100 : 0;
-    if (!amount || amount < 10) { toast('Valor mínimo: R$ 10,00'); return; }
+    if (!amount || amount < 5) { toast('Valor mínimo: R$ 5,00'); return; }
+    if (amount > 50000) { toast('Valor máximo por saque: R$ 50.000,00. Para valores maiores, solicite em mais de um saque.'); return; }
     if (amount > STATE.points) { toast('Saldo insuficiente.'); return; }
     var pixKey = document.getElementById('saquePixKey').value.trim();
     if (!pixKey) { toast('Informe sua chave Pix.'); return; }
