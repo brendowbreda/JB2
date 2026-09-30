@@ -1073,15 +1073,58 @@ const Render = {
     var friend = DEMO_PEOPLE.find(function(p) { return p.email === email; });
     if (!friend) return;
     go('s-amigo-perfil');
-    document.getElementById('amigoPerfilTitle').textContent = friend.name.split(' ')[0];
     document.getElementById('amigoPerfilNome').textContent = friend.name;
-    var streak = Math.floor(Math.random() * 12) + 1;
-    var wins = Math.floor(Math.random() * 10);
-    var conquistas = Math.floor(Math.random() * 6) + 1;
+    var seed = 0;
+    for (var i = 0; i < email.length; i++) seed += email.charCodeAt(i);
+    var streak = (seed % 10) + 2;
+    var wins = (seed % 8) + 1;
+    var conquistas = (seed % 5) + 2;
     document.getElementById('amigoPerfilDesde').textContent = 'aqui desde 2025';
     document.getElementById('amigoFreq').textContent = streak;
     document.getElementById('amigoWins').textContent = wins;
     document.getElementById('amigoConquistas').textContent = conquistas;
+
+    var amigosList = document.getElementById('amigoAmigosList');
+    if (amigosList) {
+      var others = DEMO_PEOPLE.filter(function(p) { return p.email !== email; }).slice(0, 4);
+      amigosList.innerHTML = others.map(function(f) {
+        var parts = f.name.split(' ').filter(Boolean);
+        var ini = parts.map(function(w) { return w[0]; }).slice(0,2).join('').toUpperCase();
+        var sobrenome = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+        var isMyFriend = STATE.friends.find(function(fr) { return fr.email === f.email; });
+        return '<div class="perfil-amigo-item">' +
+          '<div class="avatar avatar-initials" onclick="Render.amigoPerfil(\'' + f.email + '\')">' + ini + '</div>' +
+          '<span>' + sobrenome + '</span>' +
+          (!isMyFriend ? '<button class="amigo-add-mini" onclick="Amigos.add(\'' + f.email + '\')">+</button>' : '') +
+          '</div>';
+      }).join('');
+    }
+
+    var cal = document.getElementById('amigoCalendario');
+    if (cal) {
+      var now = new Date();
+      var year = now.getFullYear();
+      var month = now.getMonth();
+      var meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+      var firstDay = new Date(year, month, 1).getDay();
+      var activeDays = [];
+      for (var d = 1; d <= daysInMonth; d++) {
+        if ((seed + d * 7) % 3 !== 0 && d <= now.getDate()) activeDays.push(d);
+      }
+      var html = '<div class="freq-cal-header"><strong>' + meses[month] + ' ' + year + '</strong></div>';
+      html += '<div class="freq-cal-grid">';
+      var labels = ['D','S','T','Q','Q','S','S'];
+      for (var l = 0; l < 7; l++) html += '<div class="freq-cal-day-label">' + labels[l] + '</div>';
+      for (var e = 0; e < firstDay; e++) html += '<div class="freq-cal-day empty"></div>';
+      for (var d = 1; d <= daysInMonth; d++) {
+        var isActive = activeDays.indexOf(d) !== -1;
+        html += '<div class="freq-cal-day' + (isActive ? ' active' : '') + '">' + d + '</div>';
+      }
+      html += '</div>';
+      html += '<div class="freq-cal-legend"><span class="legend-active">Apostou</span><span class="legend-inactive">Não apostou</span></div>';
+      cal.innerHTML = html;
+    }
   },
   buscaAmigos() {
     const q = (document.getElementById('buscaAmigos')?.value || '').toLowerCase();

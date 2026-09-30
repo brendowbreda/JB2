@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=87">
+<link rel="stylesheet" href="styles.css?v=88">
 </head>
 <body>
 <div class="page">
@@ -697,7 +697,7 @@
     <section class="screen" id="s-amigo-perfil">
       <div class="topbar-simple">
         <button class="icon-btn" onclick="go('s-amigos')">←</button>
-        <h2 id="amigoPerfilTitle">Perfil</h2>
+        <h2></h2>
         <span class="spacer"></span>
       </div>
       <div class="perfil-info">
@@ -730,6 +730,16 @@
           </div>
         </div>
       </div>
+
+      <div class="section-head" style="margin-top:16px">
+        <h3>Amigos</h3>
+      </div>
+      <div class="perfil-amigos-list" id="amigoAmigosList"></div>
+
+      <div class="section-head" style="margin-top:16px">
+        <h3>Frequência de apostas</h3>
+      </div>
+      <div class="freq-calendar" id="amigoCalendario"></div>
     </section>
 
     <section class="screen" id="s-adicionar-amigos">
@@ -949,6 +959,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=52"></script>
+<script src="app.js?v=53"></script>
 </body>
 </html>
