@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=107">
+<link rel="stylesheet" href="styles.css?v=108">
 </head>
 <body>
 <div class="page">
@@ -651,7 +651,7 @@
     <section class="screen" id="s-perfil">
       <div class="topbar-simple">
         <button class="icon-btn" onclick="go('s-home')">←</button>
-        <h2>Perfil</h2>
+        <h2>Minha conta</h2>
         <button class="icon-btn" onclick="go('s-conta')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
       </div>
       <div class="perfil-info">
@@ -895,7 +895,6 @@
   <div class="drawer-overlay" id="drawerOverlay" onclick="Menu.close()"></div>
   <aside class="drawer" id="drawer">
     <div class="drawer-header">
-      <div class="avatar avatar-initials" id="drawerAvatar">BB</div>
       <div>
         <strong id="drawerName">—</strong>
         <span class="balance-pill">Saldo: <strong class="balance-value" id="drawerBalance">R$ 0,00</strong></span>
@@ -904,37 +903,24 @@
     </div>
 
     <button class="menu-item highlight" onclick="Menu.downloadApp()">
-      <span class="menu-icon">📲</span> Baixar aplicativo
+      Baixar aplicativo
     </button>
 
     <button class="menu-item" onclick="Menu.goTo('s-notificacoes')">
-      <span class="menu-icon">🔔</span> Notificações
+      Notificações
       <span class="menu-badge" id="menuNotifBadge" hidden></span>
     </button>
 
     <div class="menu-section">
-      <button class="menu-item" onclick="Menu.goTo('s-conta')"><span class="menu-icon">⚙️</span> Minha conta</button>
-      <button class="menu-item" onclick="Menu.goTo('s-carteira')"><span class="menu-icon">👛</span> Minha carteira</button>
-      <button class="menu-item" onclick="Menu.goTo('s-resultados')"><span class="menu-icon">🎲</span> Resultados</button>
-      <button class="menu-item" onclick="Menu.openMinhasApostas()"><span class="menu-icon">📋</span> Minhas apostas</button>
+      <button class="menu-item" onclick="Menu.goTo('s-perfil')">Minha conta</button>
+      <button class="menu-item" onclick="Menu.goTo('s-carteira')">Minha carteira</button>
+      <button class="menu-item" onclick="Menu.goTo('s-resultados')">Resultados</button>
+      <button class="menu-item" onclick="Menu.openMinhasApostas()">Minhas apostas</button>
     </div>
 
-    <div class="drawer-suporte-card">
-      <div class="drawer-suporte-row">
-        <div class="drawer-suporte-text">
-          <h3 class="drawer-suporte-title">Suporte</h3>
-          <p class="drawer-suporte-desc">Suporte <b>todos os dias</b><br>das 8h00 às 18h00</p>
-          <a class="btn-suporte" href="https://wa.me/5511999999999?text=Oi!%20Preciso%20de%20ajuda%20no%20Palpite%20Club." target="_blank" rel="noopener">FALAR COM SUPORTE</a>
-        </div>
-        <img src="suporte-celular.png" alt="Suporte" class="drawer-suporte-img">
-      </div>
-    </div>
+    <a class="menu-btn-suporte" href="https://wa.me/5511999999999?text=Oi!%20Preciso%20de%20ajuda%20no%20Palpite%20Club." target="_blank" rel="noopener">Falar com suporte</a>
 
-    <div class="drawer-grupo-card">
-      <h3 class="drawer-grupo-title">Grupo <span style="color:var(--primary-deep)">WhatsApp</span></h3>
-      <p class="drawer-grupo-desc">Receba diariamente <b>Palpites</b> e <b>Resultados</b>.</p>
-      <a class="btn-whatsapp drawer-grupo-btn" href="https://wa.me/5511999999999" target="_blank" rel="noopener">ENTRAR NO GRUPO</a>
-    </div>
+    <a class="menu-btn-whatsapp" href="https://wa.me/5511999999999" target="_blank" rel="noopener">Entrar no grupo do WhatsApp</a>
 
     <div class="menu-section text-links">
       <a href="#" onclick="Menu.goTo('s-termos');return false;">Termos de uso</a>
