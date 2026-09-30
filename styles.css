@@ -689,6 +689,11 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .empty-state { text-align: center; padding: 40px 20px; color: var(--ink-dim); }
 .empty-state .mascot { font-size: 44px; }
 .empty-state strong { display: block; margin: 10px 0 4px; color: var(--ink); }
+.empty-state-btn {
+  display: inline-block; margin-top: 18px; padding: 12px 28px;
+  background: var(--primary-deep); color: #fff; border: none; border-radius: 999px;
+  font-family: var(--font); font-weight: 700; font-size: 14px; cursor: pointer;
+}
 
 /* ---------- pick list (bet wizard) ---------- */
 .pick-list { display: flex; flex-direction: column; gap: 10px; }
