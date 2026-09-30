@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=103">
+<link rel="stylesheet" href="styles.css?v=104">
 </head>
 <body>
 <div class="page">
@@ -490,22 +490,20 @@
     <section class="screen" id="s-sacar">
       <div class="topbar-simple">
         <button class="icon-btn" onclick="go('s-carteira')">←</button>
-        <h2>Saque</h2>
+        <h2>Sacar</h2>
         <span class="spacer"></span>
       </div>
+      <p class="saque-hint">Disponível para saque: <strong id="saqueDisponivel">R$ 0,00</strong></p>
       <div class="card">
         <div class="saque-input-box">
           <span class="saque-prefix">R$</span>
-          <input type="text" id="saqueValor" placeholder="Valor do saque" inputmode="decimal" oninput="Wallet.maskSaque(this)">
+          <input type="text" id="saqueValor" placeholder="digite o valor" inputmode="decimal" oninput="Wallet.maskSaque(this)">
         </div>
-        <p class="saque-disponivel">Disponível para saque: <strong id="saqueDisponivel">R$ 0,00</strong></p>
         <p class="saque-taxa">Taxa de saque: <strong>R$ 2,50</strong></p>
-      </div>
-      <div class="saque-regras">
-        <strong>REGRAS DE SAQUE</strong>
-        <p>Os saques podem ser feitos para qualquer chave Pix, desde que sejam feitos para sua própria titularidade.</p>
-      </div>
-      <div class="card">
+        <div class="saque-regras">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span>Os saques podem ser feitos para qualquer chave Pix, desde que sejam feitos para sua própria titularidade.</span>
+        </div>
         <p class="saque-section-label">CHAVE PIX DE DESTINO</p>
         <div class="saque-pix-tabs">
           <button class="saque-pix-tab active" data-pix="cpf" onclick="Wallet.selectPixType('cpf')">CPF</button>

@@ -801,27 +801,26 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 
 /* ---------- saque ---------- */
+.saque-hint { font-size: 13px; color: var(--ink-dim); text-align: center; margin: -4px 0 12px; }
+.saque-hint strong { color: var(--primary-deep); font-weight: 800; }
 .saque-input-box {
-  display: flex; align-items: center; border: 2px solid var(--border); border-radius: var(--radius-md);
-  padding: 0 16px; background: #FAFAFD; margin-bottom: 12px;
+  display: flex; align-items: center; border: 2px solid var(--primary); border-radius: var(--radius-md);
+  padding: 0 16px; margin-bottom: 16px; background: #fff;
+  box-shadow: 0 2px 8px rgba(46,125,50,.12);
 }
-.saque-input-box:focus-within { border-color: var(--primary); }
 .saque-prefix { font-weight: 800; font-size: 20px; color: var(--primary-deep); margin-right: 8px; }
 .saque-input-box input {
   flex: 1; border: none; background: none; padding: 18px 0; font-family: var(--font);
-  font-size: 20px; font-weight: 700; color: var(--ink); outline: none;
+  font-size: 22px; font-weight: 800; color: var(--ink); outline: none;
 }
-.saque-disponivel { font-size: 14px; color: var(--ink-dim); margin: 0 0 4px; }
-.saque-disponivel strong { color: var(--primary-deep); font-weight: 800; }
-.saque-taxa { font-size: 13px; color: var(--ink-dim); margin: 0; }
+.saque-taxa { font-size: 13px; color: var(--ink-dim); margin: 0 0 14px; }
 .saque-taxa strong { color: var(--danger); font-weight: 800; }
 .saque-regras {
-  border-left: 4px solid var(--gold); background: var(--card);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 14px 16px; box-shadow: 0 2px 8px rgba(30,27,46,.05);
+  display: flex; gap: 8px; align-items: flex-start; background: #fff8e1; border-radius: var(--radius-sm);
+  padding: 10px 12px; margin-bottom: 16px;
 }
-.saque-regras strong { font-size: 13px; color: var(--ink); display: block; margin-bottom: 6px; letter-spacing: .3px; }
-.saque-regras p { font-size: 12px; color: var(--ink-dim); line-height: 1.5; margin: 0; font-style: italic; }
+.saque-regras span { font-size: 11px; color: #b8860b; line-height: 1.4; }
+.saque-regras svg { flex-shrink: 0; margin-top: 1px; }
 .saque-section-label { font-size: 12px; font-weight: 800; color: var(--ink); letter-spacing: .5px; margin: 0 0 10px; }
 .saque-pix-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
 .saque-pix-tab {
