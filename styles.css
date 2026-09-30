@@ -779,25 +779,25 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .modal-pix-content { text-align: center; padding: 28px 20px; max-height: 90vh; overflow-y: auto; border-radius: 28px 28px 0 0; }
 .pix-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
 .pix-sub { font-size: 13px; color: var(--ink-dim); margin-bottom: 12px; }
-.pix-value { font-size: 24px; font-weight: 800; color: var(--primary-deep); margin-bottom: 16px; }
-.pix-qr { margin-bottom: 16px; }
-.pix-qr canvas, .pix-qr div { margin: 0 auto; border-radius: 12px; }
-.pix-code-box { margin-bottom: 16px; }
+.modal-pix-content .pix-value { font-size: 32px; font-weight: 800; color: var(--primary-deep); margin-bottom: 20px; }
+.pix-qr { margin-bottom: 20px; display: flex; justify-content: center; }
+.pix-qr canvas, .pix-qr img { border-radius: 12px; background: #fff; padding: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.pix-code-box { margin-bottom: 12px; }
 .pix-code {
   display: block; font-size: 10px; word-break: break-all; color: var(--ink-dim);
-  background: var(--bg); padding: 10px; border-radius: var(--radius-sm); margin-bottom: 10px;
+  background: var(--bg); padding: 10px; border-radius: var(--radius-sm); margin-bottom: 12px;
   line-height: 1.5;
 }
 .pix-copy-btn {
-  display: inline-flex; align-items: center; gap: 6px; width: 100%;
-  justify-content: center; padding: 12px; border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm); background: var(--card); cursor: pointer;
-  font-family: var(--font); font-weight: 700; font-size: 14px; color: var(--ink);
+  display: flex; align-items: center; gap: 6px; width: 100%;
+  justify-content: center; padding: 14px; border: none;
+  border-radius: 999px; background: var(--primary-deep); cursor: pointer;
+  font-family: var(--font); font-weight: 700; font-size: 14px; color: #fff;
 }
 .pix-cancel {
-  width: 100%; padding: 12px; border: none; border-radius: 999px;
+  width: 100%; padding: 14px; border: none; border-radius: 999px;
   background: #ffebee; color: #c62828; font-family: var(--font);
-  font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 8px;
+  font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px;
 }
 
 .bet-summary { display: flex; flex-direction: column; gap: 8px; }
