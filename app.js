@@ -1030,10 +1030,6 @@ const Render = {
       const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
       desdeEl.textContent = 'desde ' + dt.getDate() + ' de ' + meses[dt.getMonth()] + ' de ' + dt.getFullYear();
     }
-    document.getElementById('statSemanas').textContent = STATE.streak;
-    document.getElementById('statApostas').textContent = STATE.totalBets;
-    const amigosCount = document.getElementById('statAmigosCount');
-    if (amigosCount) amigosCount.textContent = STATE.friends.length;
     var pStreak = document.getElementById('perfilStreakCount');
     if (pStreak) pStreak.textContent = STATE.streak;
     var pWins = document.getElementById('perfilTotalWins');
