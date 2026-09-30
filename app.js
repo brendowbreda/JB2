@@ -53,18 +53,16 @@ const TIERS = [
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', desc: 'Faça sua primeira aposta.' },
-  { id: 'corujao', name: 'Corujão', emoji: '🦉', desc: 'Aposte depois das 22h.' },
-  { id: 'amizade', name: 'Amizade', emoji: '🤝', desc: 'Adicione seu primeiro amigo.' },
-  { id: 'na-mosca', name: 'Na Mosca', emoji: '🏹', desc: 'Ganhe 5 apostas.' },
-  { id: 'criatura-da-noite', name: 'Criatura da Noite', emoji: '🌙', desc: 'Aposte entre 00h e 4h.' },
-  { id: 'festa-dos-amigos', name: 'Festa dos Amigos', emoji: '🎉', desc: 'Tenha 5 amigos.' },
-  { id: 'missao-cumprida', name: 'Missão Cumprida', emoji: '✅', desc: 'Complete sua primeira missão do dia.' },
-  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '🔥', desc: 'Mantenha 10 semanas de ofensiva seguidas.' },
-  { id: 'manha-da-sorte', name: 'Manhã da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta pela manhã (6h–12h).' },
-  { id: 'sorte-da-tarde', name: 'Sorte da Tarde', emoji: '🌤️', desc: 'Ganhe uma aposta à tarde (12h–18h).' },
-  { id: 'coruja-sortuda', name: 'Coruja Sortuda', emoji: '🦉', desc: 'Ganhe uma aposta à noite (18h–24h).' },
-  { id: 'nao-tem-erro', name: 'Não Tem Erro', emoji: '🍀', desc: 'Ganhe ao menos 1 vez por semana, 4 semanas seguidas.' },
+  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', desc: 'Faca sua primeira aposta.' },
+  { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faca 10 apostas no total.' },
+  { id: '10-apostas-semana', name: '10 na Semana', emoji: '⚡', desc: 'Faca 10 apostas em uma unica semana.' },
+  { id: '10-semanas', name: '10 Semanas', emoji: '🔥', desc: 'Mantenha 10 semanas de frequencia seguidas.' },
+  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Aposte todos os dias da semana.' },
+  { id: 'manha-da-sorte', name: 'Manha da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta pela manha (6h-12h).' },
+  { id: 'sorte-da-tarde', name: 'Sorte da Tarde', emoji: '🌤️', desc: 'Ganhe uma aposta a tarde (12h-18h).' },
+  { id: 'sorte-da-noite', name: 'Sorte da Noite', emoji: '🌙', desc: 'Ganhe uma aposta a noite (18h-24h).' },
+  { id: 'sorte-da-madrugada', name: 'Sorte da Madrugada', emoji: '🌌', desc: 'Ganhe uma aposta na madrugada (0h-5h).' },
+  { id: 'trevo-da-sorte', name: 'Trevo da Sorte', emoji: '🍀', desc: 'Ganhe apostas em todos os dias da semana.' },
 ];
 
 const MODALITY = {
@@ -197,7 +195,7 @@ function freshState() {
     achievements: {},
     friends: [],
     notifications: [
-      { id: uid(), text: 'Bem-vindo ao Palpite Club! Você ganhou 100 pontos de boas-vindas 🎉', at: nowIso(), read: false },
+      { id: uid(), text: 'Seja bem-vindo ao Palpite Club! Que tal fazer seu primeiro deposito e comecar a apostar?', at: nowIso(), read: false },
     ],
     feed: [],
     missionDoneToday: false,
@@ -465,11 +463,11 @@ const Seed = {
     s.bestStreak = 10;
     s.achievements = {
       'primeira-aposta': { at: nowIso() },
-      'amizade': { at: nowIso() },
-      'na-mosca': { at: nowIso() },
-      'festa-dos-amigos': { at: nowIso() },
+      '10-apostas': { at: nowIso() },
+      '10-apostas-semana': { at: nowIso() },
+      '10-semanas': { at: nowIso() },
       'semana-perfeita': { at: nowIso() },
-      'missao-cumprida': { at: nowIso() },
+      'manha-da-sorte': { at: nowIso() },
     };
     s.friends = DEMO_PEOPLE.slice(0, 5).map((p) => ({ ...p }));
     s.feed = [
@@ -540,6 +538,7 @@ const Achv = {
     if (STATE.achievements[id]) return;
     STATE.achievements[id] = { at: nowIso() };
     const def = ACHIEVEMENTS.find((a) => a.id === id);
+    STATE.notifications.unshift({ id: uid(), text: 'Conquista desbloqueada: ' + def.name + '!', at: nowIso(), read: false });
     saveState();
     document.getElementById('achvModalIcon').textContent = def.emoji;
     document.getElementById('achvModalName').textContent = def.name;
@@ -549,35 +548,42 @@ const Achv = {
   checkAll(context = {}) {
     const s = STATE;
     if (s.totalBets >= 1) this.unlock('primeira-aposta');
-    if (s.friends.length >= 1) this.unlock('amizade');
-    if (s.friends.length >= 5) this.unlock('festa-dos-amigos');
-    if (s.totalWins >= 5) this.unlock('na-mosca');
-    if (s.streak >= 10) this.unlock('semana-perfeita');
-    if (s.missionDoneToday) this.unlock('missao-cumprida');
+    if (s.totalBets >= 10) this.unlock('10-apostas');
+    if (s.streak >= 10) this.unlock('10-semanas');
 
-    if (context.betPlacedAt) {
-      const h = new Date(context.betPlacedAt).getHours();
-      if (h >= 22 || h < 0) this.unlock('corujao');
-      if (h >= 0 && h < 4) this.unlock('criatura-da-noite');
-    }
+    // 10 apostas na semana atual
+    var thisWeek = weekKey();
+    var betsThisWeek = s.bets.filter(function(b) { return weekKey(new Date(b.placedAt)) === thisWeek; }).length;
+    if (betsThisWeek >= 10) this.unlock('10-apostas-semana');
+
+    // Semana perfeita: apostou em todos os 7 dias da semana
+    var daysThisWeek = {};
+    s.bets.forEach(function(b) {
+      if (weekKey(new Date(b.placedAt)) === thisWeek) daysThisWeek[new Date(b.placedAt).getDay()] = true;
+    });
+    if (Object.keys(daysThisWeek).length >= 7) this.unlock('semana-perfeita');
+
     if (context.wonAt) {
-      const h = new Date(context.wonAt).getHours();
+      var h = new Date(context.wonAt).getHours();
       if (h >= 6 && h < 12) this.unlock('manha-da-sorte');
       else if (h >= 12 && h < 18) this.unlock('sorte-da-tarde');
-      else if (h >= 18 && h < 24) this.unlock('coruja-sortuda');
+      else if (h >= 18 && h < 24) this.unlock('sorte-da-noite');
+      else if (h >= 0 && h < 5) this.unlock('sorte-da-madrugada');
     }
-    // Não Tem Erro: won at least once a week for 4 straight weeks
-    const weekly = {};
-    s.bets.filter((b) => b.status === 'ganhou').forEach((b) => {
-      weekly[weekKey(new Date(b.placedAt))] = true;
+
+    // Trevo da Sorte: ganhou em todos os dias da semana (dom-sab)
+    var winDays = {};
+    s.bets.filter(function(b) { return b.status === 'ganhou'; }).forEach(function(b) {
+      winDays[new Date(b.placedAt).getDay()] = true;
     });
-    let streakWin = 0, cursor = new Date();
-    while (true) {
-      const wk = weekKey(cursor);
-      if (weekly[wk]) { streakWin++; cursor.setDate(cursor.getDate() - 7); }
-      else break;
+    if (Object.keys(winDays).length >= 7) this.unlock('trevo-da-sorte');
+
+    // Frequencia: notificar marcos de apostas na semana
+    if (betsThisWeek === 10 && !s._notif10week) {
+      s._notif10week = thisWeek;
+      var weekNum = s.streak || 1;
+      STATE.notifications.unshift({ id: uid(), text: 'Parabens! Voce fez 10 apostas essa semana (semana ' + weekNum + ' de 10 para ganhar R$ 100,00).', at: nowIso(), read: false });
     }
-    if (streakWin >= 4) this.unlock('nao-tem-erro');
   },
 };
 
@@ -677,7 +683,7 @@ function resolveDueBets() {
       }
       STATE.notifications.unshift({
         id: uid(),
-        text: won ? `Você ganhou no ${b.animal.name}! +${fmtPoints(b.payout)} pts` : `Resultado saiu: você não ganhou no ${b.animal.name}.`,
+        text: won ? 'Resultado saiu: parabens, voce ganhou ' + Wallet.fmtBRL(b.payout) + ' no ' + b.animal.name + '!' : 'Resultado saiu: nao foi dessa vez no ' + b.animal.name + '. Tente novamente!',
         at: nowIso(), read: false,
       });
     }
@@ -740,6 +746,7 @@ const Wallet = {
   confirmPix() {
     var amount = Wallet.pendingAmount || 0;
     STATE.balance = (STATE.balance || 0) + amount;
+    STATE.notifications.unshift({ id: uid(), text: 'Seu deposito de ' + Wallet.fmtBRL(amount) + ' ja caiu. Boas apostas!', at: nowIso(), read: false });
     saveState();
     toast('Depósito de ' + Wallet.fmtBRL(amount) + ' confirmado!');
     Modal.close('modal-pix');
@@ -799,6 +806,7 @@ const Wallet = {
     var total = amount - SAQUE_TAXA;
     if (total <= 0) { toast('O valor precisa ser maior que a taxa de R$ 2,50.'); return; }
     STATE.points -= amount;
+    STATE.notifications.unshift({ id: uid(), text: 'Seu saque de ' + Wallet.fmtBRL(total) + ' foi solicitado e aprovado.', at: nowIso(), read: false });
     saveState();
     document.getElementById('saqueResumoValor').textContent = Wallet.fmtBRL(amount);
     document.getElementById('saqueResumoTotal').textContent = Wallet.fmtBRL(total);
@@ -1012,10 +1020,10 @@ const Render = {
     saveState();
     list.innerHTML = STATE.notifications.length
       ? STATE.notifications.map((n) => `
-        <div class="list-row"><span class="list-row-icon">🔔</span>
+        <div class="list-row">
           <div class="list-row-body"><strong>${n.text}</strong><p>${fmtDateTime(n.at)}</p></div>
         </div>`).join('')
-      : emptyState('🔔', 'Sem notificações', 'Avisamos aqui quando seus resultados saírem.');
+      : emptyState('', 'Sem notificacoes', 'Avisamos aqui quando houver novidades.');
     this.topbars();
   },
   conta() {
