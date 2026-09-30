@@ -662,16 +662,49 @@
     <!-- ======================= AMIGOS ======================= -->
     <section class="screen" id="s-amigos">
       <div class="topbar-simple">
-        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <button class="icon-btn" onclick="go('s-perfil')">←</button>
         <h2>Amigos</h2>
         <button class="icon-btn" onclick="go('s-adicionar-amigos')">➕</button>
       </div>
-      <div class="tabs">
-        <button class="tab active" data-tab="feed" onclick="Amigos.showTab('feed')">Feed</button>
-        <button class="tab" data-tab="amigos" onclick="Amigos.showTab('amigos')">Meus amigos</button>
+      <div class="list" id="amigosFullList"></div>
+    </section>
+
+    <section class="screen" id="s-amigo-perfil">
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-amigos')">←</button>
+        <h2 id="amigoPerfilTitle">Perfil</h2>
+        <span class="spacer"></span>
       </div>
-      <div id="amigosFeedPane" class="list"></div>
-      <div id="amigosListPane" class="list" hidden></div>
+      <div class="perfil-info">
+        <h2 class="perfil-nome-big" id="amigoPerfilNome">—</h2>
+        <p class="perfil-sub perfil-desde" id="amigoPerfilDesde">aqui desde ---</p>
+      </div>
+      <div class="section-head" style="margin-top:20px">
+        <h3>Visão geral</h3>
+      </div>
+      <div class="home-cards-row home-cards-row--3">
+        <div class="home-card home-card--freq">
+          <span class="home-card-title">Frequência</span>
+          <div class="home-freq-row">
+            <img src="fogo.png" class="home-freq-fire" alt="Fogo">
+            <strong class="home-freq-num" id="amigoFreq">0</strong>
+          </div>
+        </div>
+        <div class="home-card home-card--freq">
+          <span class="home-card-title">Vitórias</span>
+          <div class="home-freq-row">
+            <img src="trofeu.png" class="home-trophy-img" alt="Troféu">
+            <strong class="home-freq-num" id="amigoWins">0</strong>
+          </div>
+        </div>
+        <div class="home-card home-card--freq">
+          <span class="home-card-title">Conquistas</span>
+          <div class="home-freq-row">
+            <img src="medalha.png" class="home-medal-img" alt="Medalha">
+            <strong class="home-freq-num" id="amigoConquistas">0</strong>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="screen" id="s-adicionar-amigos">
@@ -891,6 +924,6 @@
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
-<script src="app.js?v=50"></script>
+<script src="app.js?v=51"></script>
 </body>
 </html>

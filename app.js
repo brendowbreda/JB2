@@ -724,14 +724,6 @@ const Apostas = {
 
 /* ---------------- amigos ---------------- */
 const Amigos = {
-  currentTab: 'feed',
-  showTab(tab) {
-    this.currentTab = tab;
-    document.querySelectorAll('#s-amigos .tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === tab));
-    document.getElementById('amigosFeedPane').hidden = tab !== 'feed';
-    document.getElementById('amigosListPane').hidden = tab !== 'amigos';
-    Render.amigos();
-  },
   search() {
     Render.buscaAmigos();
   },
@@ -1043,7 +1035,7 @@ const Render = {
           const parts = f.name.split(' ').filter(Boolean);
           const ini = parts.map(w => w[0]).slice(0,2).join('').toUpperCase();
           const sobrenome = parts.length > 1 ? parts[parts.length - 1] : parts[0];
-          return `<div class="perfil-amigo-item" onclick="go('s-amigos')"><div class="avatar avatar-initials">${ini}</div><span>${sobrenome}</span></div>`;
+          return `<div class="perfil-amigo-item" onclick="Render.amigoPerfil('${f.email}')"><div class="avatar avatar-initials">${ini}</div><span>${sobrenome}</span></div>`;
         }).join('');
       } else {
         amigosList.innerHTML = '<p style="font-size:12px;color:var(--ink-faint);margin:4px 0;">Nenhum amigo ainda.</p>';
@@ -1056,17 +1048,34 @@ const Render = {
     document.getElementById('achvGrid').innerHTML = ACHIEVEMENTS.map((a) => achvTileHtml(a, !!STATE.achievements[a.id])).join('');
   },
   amigos() {
-    document.getElementById('amigosFeedPane').innerHTML = STATE.feed.length
-      ? STATE.feed.map((f) => feedRowHtml(f)).join('')
-      : emptyState('📣', 'Feed vazio', 'Adicione amigos para ver os palpites deles.');
-    document.getElementById('amigosListPane').innerHTML = STATE.friends.length
-      ? STATE.friends.map((f) => `
-        <div class="list-row friend-row">
-          <span class="avatar">${f.avatar}</span>
-          <div class="list-row-body"><strong>${f.name}</strong></div>
-          <button class="follow-btn following">Seguindo</button>
-        </div>`).join('')
-      : emptyState('🤝', 'Sem amigos ainda', 'Toque no + para adicionar amigos.');
+    var list = document.getElementById('amigosFullList');
+    if (!list) return;
+    if (STATE.friends.length) {
+      list.innerHTML = STATE.friends.map(function(f) {
+        var parts = f.name.split(' ').filter(Boolean);
+        var ini = parts.map(function(w) { return w[0]; }).slice(0,2).join('').toUpperCase();
+        return '<div class="list-row friend-row" onclick="Render.amigoPerfil(\'' + f.email + '\')" style="cursor:pointer">' +
+          '<div class="avatar avatar-initials">' + ini + '</div>' +
+          '<div class="list-row-body"><strong>' + f.name + '</strong></div>' +
+          '</div>';
+      }).join('');
+    } else {
+      list.innerHTML = emptyState('🤝', 'Sem amigos ainda', 'Toque no + para adicionar amigos.');
+    }
+  },
+  amigoPerfil(email) {
+    var friend = DEMO_PEOPLE.find(function(p) { return p.email === email; });
+    if (!friend) return;
+    go('s-amigo-perfil');
+    document.getElementById('amigoPerfilTitle').textContent = friend.name.split(' ')[0];
+    document.getElementById('amigoPerfilNome').textContent = friend.name;
+    var streak = Math.floor(Math.random() * 12) + 1;
+    var wins = Math.floor(Math.random() * 10);
+    var conquistas = Math.floor(Math.random() * 6) + 1;
+    document.getElementById('amigoPerfilDesde').textContent = 'aqui desde 2025';
+    document.getElementById('amigoFreq').textContent = streak;
+    document.getElementById('amigoWins').textContent = wins;
+    document.getElementById('amigoConquistas').textContent = conquistas;
   },
   buscaAmigos() {
     const q = (document.getElementById('buscaAmigos')?.value || '').toLowerCase();
