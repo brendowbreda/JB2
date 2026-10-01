@@ -1086,13 +1086,26 @@ const Render = {
     }
   },
   extratoFilter: 'todos',
+  apostasFilter: 'todos',
   carteira() {
     document.getElementById('carteiraSaldo').textContent = Wallet.fmtBRL(STATE.points);
     document.getElementById('carteiraSaqueVal').textContent = Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     this.renderExtrato();
+    this.renderApostas();
+  },
+  filterApostas(filter) {
+    this.apostasFilter = filter;
+    document.querySelectorAll('.apostas-filter').forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
+    this.renderApostas();
+  },
+  renderApostas() {
+    var filter = this.apostasFilter;
     var apostasEl = document.getElementById('apostasCarteira');
+    var bets = STATE.bets;
+    if (filter === 'apostas') bets = bets.filter(function(b) { return b.status !== 'ganhou'; });
+    else if (filter === 'vitorias') bets = bets.filter(function(b) { return b.status === 'ganhou'; });
     var betRows = [];
-    STATE.bets.forEach((b) => {
+    bets.forEach((b) => {
       if (b.status === 'ganhou') {
         betRows.push({ at: b.placedAt, html: '<div class="extrato-item extrato-item-win"><div class="extrato-top"><div><div class="extrato-title">Aposta</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(b.payout) + '</div></div></div>' });
       } else {
@@ -1100,7 +1113,8 @@ const Render = {
       }
     });
     betRows.sort((a, c) => new Date(c.at) - new Date(a.at));
-    apostasEl.innerHTML = betRows.length ? betRows.map((r) => r.html).join('') : emptyState('', 'Sem apostas', 'Faca uma aposta para ver aqui.');
+    var emptyMsg = filter === 'apostas' ? 'Nenhuma aposta encontrada.' : filter === 'vitorias' ? 'Nenhuma vitoria encontrada.' : 'Faca uma aposta para ver aqui.';
+    apostasEl.innerHTML = betRows.length ? betRows.map((r) => r.html).join('') : emptyState('', 'Sem apostas', emptyMsg);
   },
   filterExtrato(filter) {
     this.extratoFilter = filter;
