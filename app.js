@@ -195,7 +195,7 @@ function freshState() {
     achievements: {},
     friends: [],
     notifications: [
-      { id: uid(), text: 'Seja bem-vindo ao Palpite Club! Que tal fazer seu primeiro deposito e comecar a apostar?', at: nowIso(), read: false },
+      { id: uid(), html: '<strong>Seja bem-vindo ao Palpite Club!</strong><br>Vamos fazer seu primeiro deposito para comecar?', at: nowIso(), read: false },
     ],
     feed: [],
     missionDoneToday: false,
@@ -505,13 +505,13 @@ const Seed = {
     var h6 = new Date(today); h6.setHours(h6.getHours() - 6);
     var h7 = new Date(today); h7.setHours(h7.getHours() - 7);
     s.notifications = [
-      { id: uid(), text: 'Seu saque de R$ 47,50 foi solicitado e aprovado.', at: h1.toISOString(), read: false },
-      { id: uid(), text: 'Conquista desbloqueada: Manha da Sorte!', at: h2.toISOString(), read: false },
-      { id: uid(), text: 'Resultado saiu: parabens, voce ganhou R$ 360,00 no Galo!', at: h3.toISOString(), read: true },
-      { id: uid(), text: 'Resultado saiu: nao foi dessa vez no Cachorro. Tente novamente!', at: h4.toISOString(), read: true },
-      { id: uid(), text: 'Parabens! Voce fez 10 apostas essa semana (semana 10 de 10 para ganhar R$ 100,00).', at: h5.toISOString(), read: true },
-      { id: uid(), text: 'Seu deposito de R$ 100,00 ja caiu. Boas apostas!', at: h6.toISOString(), read: true },
-      { id: uid(), text: 'Seja bem-vindo ao Palpite Club! Que tal fazer seu primeiro deposito e comecar a apostar?', at: h7.toISOString(), read: true },
+      { id: uid(), html: 'Saque <strong>R$ 47,50</strong> solicitado e aprovado.', at: h1.toISOString(), read: false },
+      { id: uid(), html: 'Conquista desbloqueada:<br><strong>Manha da Sorte</strong><br><button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: h2.toISOString(), read: false },
+      { id: uid(), html: 'Resultado saiu:<br><span class="notif-win">Parabens, voce ganhou <strong>R$ 360,00</strong></span>', at: h3.toISOString(), read: true },
+      { id: uid(), html: 'Resultado saiu:<br><span class="notif-loss">Nao foi dessa vez. Tente novamente!</span>', at: h4.toISOString(), read: true },
+      { id: uid(), html: '<strong>Parabens!</strong><br>10 apostas (+R$ 1,00) essa semana<br>10 de 10 para ganhar <strong>R$ 100,00</strong>', at: h5.toISOString(), read: true },
+      { id: uid(), html: 'Seu deposito de <strong>R$ 100,00</strong> ja caiu.', at: h6.toISOString(), read: true },
+      { id: uid(), html: '<strong>Seja bem-vindo ao Palpite Club!</strong><br>Vamos fazer seu primeiro deposito para comecar?', at: h7.toISOString(), read: true },
     ];
     return s;
   },
@@ -554,7 +554,7 @@ const Achv = {
     if (STATE.achievements[id]) return;
     STATE.achievements[id] = { at: nowIso() };
     const def = ACHIEVEMENTS.find((a) => a.id === id);
-    STATE.notifications.unshift({ id: uid(), text: 'Conquista desbloqueada: ' + def.name + '!', at: nowIso(), read: false });
+    STATE.notifications.unshift({ id: uid(), html: 'Conquista desbloqueada:<br><strong>' + def.name + '</strong><br><button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: nowIso(), read: false });
     saveState();
     document.getElementById('achvModalIcon').textContent = def.emoji;
     document.getElementById('achvModalName').textContent = def.name;
@@ -598,7 +598,7 @@ const Achv = {
     if (betsThisWeek === 10 && !s._notif10week) {
       s._notif10week = thisWeek;
       var weekNum = s.streak || 1;
-      STATE.notifications.unshift({ id: uid(), text: 'Parabens! Voce fez 10 apostas essa semana (semana ' + weekNum + ' de 10 para ganhar R$ 100,00).', at: nowIso(), read: false });
+      STATE.notifications.unshift({ id: uid(), html: '<strong>Parabens!</strong><br>10 apostas (+R$ 1,00) essa semana<br>' + weekNum + ' de 10 para ganhar <strong>R$ 100,00</strong>', at: nowIso(), read: false });
     }
   },
 };
@@ -699,7 +699,9 @@ function resolveDueBets() {
       }
       STATE.notifications.unshift({
         id: uid(),
-        text: won ? 'Resultado saiu: parabens, voce ganhou ' + Wallet.fmtBRL(b.payout) + ' no ' + b.animal.name + '!' : 'Resultado saiu: nao foi dessa vez no ' + b.animal.name + '. Tente novamente!',
+        html: won
+          ? 'Resultado saiu:<br><span class="notif-win">Parabens, voce ganhou <strong>' + Wallet.fmtBRL(b.payout) + '</strong></span>'
+          : 'Resultado saiu:<br><span class="notif-loss">Nao foi dessa vez. Tente novamente!</span>',
         at: nowIso(), read: false,
       });
     }
@@ -762,7 +764,7 @@ const Wallet = {
   confirmPix() {
     var amount = Wallet.pendingAmount || 0;
     STATE.balance = (STATE.balance || 0) + amount;
-    STATE.notifications.unshift({ id: uid(), text: 'Seu deposito de ' + Wallet.fmtBRL(amount) + ' ja caiu. Boas apostas!', at: nowIso(), read: false });
+    STATE.notifications.unshift({ id: uid(), html: 'Seu deposito de <strong>' + Wallet.fmtBRL(amount) + '</strong> ja caiu.', at: nowIso(), read: false });
     saveState();
     toast('Depósito de ' + Wallet.fmtBRL(amount) + ' confirmado!');
     Modal.close('modal-pix');
@@ -822,7 +824,7 @@ const Wallet = {
     var total = amount - SAQUE_TAXA;
     if (total <= 0) { toast('O valor precisa ser maior que a taxa de R$ 2,50.'); return; }
     STATE.points -= amount;
-    STATE.notifications.unshift({ id: uid(), text: 'Seu saque de ' + Wallet.fmtBRL(total) + ' foi solicitado e aprovado.', at: nowIso(), read: false });
+    STATE.notifications.unshift({ id: uid(), html: 'Saque <strong>' + Wallet.fmtBRL(total) + '</strong> solicitado e aprovado.', at: nowIso(), read: false });
     saveState();
     document.getElementById('saqueResumoValor').textContent = Wallet.fmtBRL(amount);
     document.getElementById('saqueResumoTotal').textContent = Wallet.fmtBRL(total);
@@ -1035,10 +1037,10 @@ const Render = {
     STATE.notifications.forEach((n) => (n.read = true));
     saveState();
     list.innerHTML = STATE.notifications.length
-      ? STATE.notifications.map((n) => `
-        <div class="list-row">
-          <div class="list-row-body"><strong>${n.text}</strong><p>${fmtDateTime(n.at)}</p></div>
-        </div>`).join('')
+      ? STATE.notifications.map(function(n) {
+          var content = n.html || ('<strong>' + n.text + '</strong>');
+          return '<div class="notif-card"><div class="notif-body">' + content + '</div><p class="notif-time">' + fmtDateTime(n.at) + '</p></div>';
+        }).join('')
       : emptyState('', 'Sem notificacoes', 'Avisamos aqui quando houver novidades.');
     this.topbars();
   },
