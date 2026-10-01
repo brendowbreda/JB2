@@ -53,12 +53,12 @@ const TIERS = [
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', desc: 'Faca sua primeira aposta.' },
-  { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faca 10 apostas no total.' },
-  { id: '10-apostas-semana', name: '10 na Semana', emoji: '⚡', desc: 'Faca 10 apostas em uma unica semana.' },
-  { id: '10-semanas', name: '10 Semanas', emoji: '🔥', desc: 'Mantenha 10 semanas de frequencia seguidas.' },
+  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', desc: 'Faça sua primeira aposta.' },
+  { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faça 10 apostas no total.' },
+  { id: '10-apostas-semana', name: '10 na Semana', emoji: '⚡', desc: 'Faça 10 apostas em uma única semana.' },
+  { id: '10-semanas', name: '10 Semanas', emoji: '🔥', desc: 'Mantenha 10 semanas de frequência seguidas.' },
   { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Aposte todos os dias da semana.' },
-  { id: 'manha-da-sorte', name: 'Manha da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta pela manha (6h-12h).' },
+  { id: 'manha-da-sorte', name: 'Manhã da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta pela manhã (6h-12h).' },
   { id: 'sorte-da-tarde', name: 'Sorte da Tarde', emoji: '🌤️', desc: 'Ganhe uma aposta a tarde (12h-18h).' },
   { id: 'sorte-da-noite', name: 'Sorte da Noite', emoji: '🌙', desc: 'Ganhe uma aposta a noite (18h-24h).' },
   { id: 'sorte-da-madrugada', name: 'Sorte da Madrugada', emoji: '🌌', desc: 'Ganhe uma aposta na madrugada (0h-5h).' },
@@ -196,7 +196,7 @@ function freshState() {
     achievements: {},
     friends: [],
     notifications: [
-      { id: uid(), html: '<strong>Seja bem-vindo ao Palpite Club!</strong><br>Vamos fazer seu primeiro deposito para comecar?', at: nowIso(), read: false },
+      { id: uid(), html: '<strong>Seja bem-vindo ao Palpite Club!</strong><br>Vamos fazer seu primeiro depósito para começar?', at: nowIso(), read: false },
     ],
     feed: [],
     missionDoneToday: false,
@@ -529,12 +529,12 @@ const Seed = {
     ];
     s.notifications = [
       { id: uid(), html: 'Saque <strong>R$ 47,50</strong> solicitado e aprovado.', at: h1.toISOString(), read: false },
-      { id: uid(), html: 'Conquista desbloqueada:<br><strong>Manha da Sorte</strong> <button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: h2.toISOString(), read: false },
-      { id: uid(), html: 'Resultado saiu:<br><span class="notif-win">Parabens, voce ganhou <strong>R$ 360,00</strong></span>', at: h3.toISOString(), read: true },
-      { id: uid(), html: 'Resultado saiu:<br><span class="notif-loss">Nao foi dessa vez. Tente novamente!</span>', at: h4.toISOString(), read: true },
-      { id: uid(), html: '<strong>Parabens!</strong><br>10 apostas (+R$ 1,00) essa semana<br>10 de 10 para ganhar <strong>R$ 100,00</strong>', at: h5.toISOString(), read: true },
-      { id: uid(), html: 'Seu deposito de <strong>R$ 100,00</strong> ja caiu.', at: h6.toISOString(), read: true },
-      { id: uid(), html: '<strong>Seja bem-vindo ao Palpite Club!</strong><br>Vamos fazer seu primeiro deposito para comecar?', at: h7.toISOString(), read: true },
+      { id: uid(), html: 'Conquista desbloqueada:<br><strong>Manhã da Sorte</strong> <button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: h2.toISOString(), read: false },
+      { id: uid(), html: 'Resultado saiu:<br><span class="notif-win">Parabéns, você ganhou <strong>R$ 360,00</strong></span>', at: h3.toISOString(), read: true },
+      { id: uid(), html: 'Resultado saiu:<br><span class="notif-loss">Não foi dessa vez. Tente novamente!</span>', at: h4.toISOString(), read: true },
+      { id: uid(), html: '<strong>Parabéns!</strong><br>10 apostas (+R$ 1,00) essa semana<br>10 de 10 para ganhar <strong>R$ 100,00</strong>', at: h5.toISOString(), read: true },
+      { id: uid(), html: 'Seu depósito de <strong>R$ 100,00</strong> já caiu.', at: h6.toISOString(), read: true },
+      { id: uid(), html: '<strong>Seja bem-vindo ao Palpite Club!</strong><br>Vamos fazer seu primeiro depósito para começar?', at: h7.toISOString(), read: true },
     ];
     return s;
   },
@@ -621,7 +621,7 @@ const Achv = {
     if (betsThisWeek === 10 && !s._notif10week) {
       s._notif10week = thisWeek;
       var weekNum = s.streak || 1;
-      STATE.notifications.unshift({ id: uid(), html: '<strong>Parabens!</strong><br>10 apostas (+R$ 1,00) essa semana<br>' + weekNum + ' de 10 para ganhar <strong>R$ 100,00</strong>', at: nowIso(), read: false });
+      STATE.notifications.unshift({ id: uid(), html: '<strong>Parabéns!</strong><br>10 apostas (+R$ 1,00) essa semana<br>' + weekNum + ' de 10 para ganhar <strong>R$ 100,00</strong>', at: nowIso(), read: false });
     }
   },
 };
@@ -723,8 +723,8 @@ function resolveDueBets() {
       STATE.notifications.unshift({
         id: uid(),
         html: won
-          ? 'Resultado saiu:<br><span class="notif-win">Parabens, voce ganhou <strong>' + Wallet.fmtBRL(b.payout) + '</strong></span>'
-          : 'Resultado saiu:<br><span class="notif-loss">Nao foi dessa vez. Tente novamente!</span>',
+          ? 'Resultado saiu:<br><span class="notif-win">Parabéns, você ganhou <strong>' + Wallet.fmtBRL(b.payout) + '</strong></span>'
+          : 'Resultado saiu:<br><span class="notif-loss">Não foi dessa vez. Tente novamente!</span>',
         at: nowIso(), read: false,
       });
     }
@@ -789,7 +789,7 @@ const Wallet = {
     STATE.balance = (STATE.balance || 0) + amount;
     if (!STATE.transactions) STATE.transactions = [];
     STATE.transactions.push({ id: uid(), type: 'deposit', amount: amount, at: nowIso() });
-    STATE.notifications.unshift({ id: uid(), html: 'Seu deposito de <strong>' + Wallet.fmtBRL(amount) + '</strong> ja caiu.', at: nowIso(), read: false });
+    STATE.notifications.unshift({ id: uid(), html: 'Seu depósito de <strong>' + Wallet.fmtBRL(amount) + '</strong> já caiu.', at: nowIso(), read: false });
     saveState();
     toast('Depósito de ' + Wallet.fmtBRL(amount) + ' confirmado!');
     Modal.close('modal-pix');
@@ -1068,7 +1068,7 @@ const Render = {
           var content = n.html || ('<strong>' + n.text + '</strong>');
           return '<div class="notif-card"><div class="notif-body">' + content + '</div><p class="notif-time">' + fmtDateTime(n.at) + '</p></div>';
         }).join('')
-      : emptyState('', 'Sem notificacoes', 'Avisamos aqui quando houver novidades.');
+      : emptyState('', 'Sem notificações', 'Avisamos aqui quando houver novidades.');
     this.topbars();
   },
   conta() {
@@ -1113,7 +1113,7 @@ const Render = {
       }
     });
     betRows.sort((a, c) => new Date(c.at) - new Date(a.at));
-    var emptyMsg = filter === 'apostas' ? 'Nenhuma aposta encontrada.' : filter === 'vitorias' ? 'Nenhuma vitoria encontrada.' : 'Faca uma aposta para ver aqui.';
+    var emptyMsg = filter === 'apostas' ? 'Nenhuma aposta encontrada.' : filter === 'vitorias' ? 'Nenhuma vitória encontrada.' : 'Faça uma aposta para ver aqui.';
     apostasEl.innerHTML = betRows.length ? betRows.map((r) => r.html).join('') : emptyState('', 'Sem apostas', emptyMsg);
   },
   filterExtrato(filter) {
@@ -1129,14 +1129,14 @@ const Render = {
     var txnRows = [];
     filtered.forEach(function(t) {
       if (t.type === 'deposit') {
-        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Deposito</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
+        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Depósito</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
       } else if (t.type === 'withdrawal') {
         txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Saque</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
       }
     });
     txnRows.sort((a, c) => new Date(c.at) - new Date(a.at));
-    var emptyMsg = filter === 'deposit' ? 'Nenhum deposito encontrado.' : filter === 'withdrawal' ? 'Nenhum saque encontrado.' : 'Deposite para comecar a jogar.';
-    extratoList.innerHTML = txnRows.length ? txnRows.map((r) => r.html).join('') : emptyState('', 'Sem transacoes', emptyMsg);
+    var emptyMsg = filter === 'deposit' ? 'Nenhum depósito encontrado.' : filter === 'withdrawal' ? 'Nenhum saque encontrado.' : 'Deposite para começar a jogar.';
+    extratoList.innerHTML = txnRows.length ? txnRows.map((r) => r.html).join('') : emptyState('', 'Sem transações', emptyMsg);
   },
   depositar() {
     const grid = document.getElementById('depositAmounts');
