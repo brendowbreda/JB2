@@ -1842,7 +1842,7 @@ function betRowHtml(b) {
   const label = b.status === 'aguardando' ? 'Aguardando' : b.status === 'ganhou' ? 'Ganhou' : 'Perdeu';
   const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   return `<div class="bet-card-detail bet-card-detail--${b.status}">
-    <div class="bet-card-header"><span class="bet-card-mod">${MODALITY[b.modality].label}${b.dezena ? ' · nº ' + b.dezena : ''}</span><span class="status-badge ${cls}">${label}</span></div>
+    <div class="bet-card-header"><span class="bet-card-mod">${MODALITY[b.modality].label}</span><span class="status-badge ${cls}">${label}</span></div>
     <div class="bet-card-row"><span>Sorteio</span><span>${b.horario}</span></div>
     <div class="bet-card-row"><span>Valor apostado</span><span>${fmtBRL(b.amount)}</span></div>
     <div class="bet-card-row bet-card-row--prize"><span>Prêmio potencial</span><span>${fmtBRL(b.payout)}</span></div>
