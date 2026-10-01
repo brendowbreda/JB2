@@ -972,39 +972,49 @@ const Account = {
     var v = el.value.replace(/\D/g, '').slice(0, 11);
     el.value = this.fmtPhone(v);
   },
-  editField(field) {
-    if (this.editing === field) return;
-    if (this.editing) this.autoSave(this.editing);
-    this.editing = field;
-    const display = document.getElementById(field === 'email' ? 'contaEmailDisplay' : 'contaTelDisplay');
-    const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
-    const u = loadUsers()[CURRENT_EMAIL];
-    if (field === 'email') {
-      input.value = u.email || '';
-    } else {
-      var p = (u.phone || '').replace(/\D/g, '');
-      input.value = Account.fmtPhone(p);
-    }
-    display.style.display = 'none';
-    input.style.display = 'block';
-    input.focus();
-    input.onblur = function() { Account.autoSave(field); };
+  openEmailModal() {
+    var u = loadUsers()[CURRENT_EMAIL];
+    document.getElementById('emailAtualDisplay').value = (u.email || '').toUpperCase();
+    document.getElementById('emailNovo').value = '';
+    document.getElementById('emailConfirma').value = '';
+    document.getElementById('emailError').textContent = '';
+    Modal.open('emailModal');
   },
-  autoSave(field) {
-    if (this.editing !== field) return;
-    const display = document.getElementById(field === 'email' ? 'contaEmailDisplay' : 'contaTelDisplay');
-    const input = document.getElementById(field === 'email' ? 'contaEmailInput' : 'contaTelInput');
-    const val = input.value.trim();
-    const users = loadUsers();
-    if (field === 'email') users[CURRENT_EMAIL].email = val || users[CURRENT_EMAIL].email;
-    else users[CURRENT_EMAIL].phone = val.replace(/\D/g, '');
+  changeEmail() {
+    var novo = document.getElementById('emailNovo').value.trim();
+    var confirma = document.getElementById('emailConfirma').value.trim();
+    var errorEl = document.getElementById('emailError');
+    if (!novo) { errorEl.textContent = 'Digite o novo e-mail.'; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(novo)) { errorEl.textContent = 'E-mail inválido.'; return; }
+    if (novo.toLowerCase() !== confirma.toLowerCase()) { errorEl.textContent = 'Os e-mails não coincidem.'; return; }
+    var users = loadUsers();
+    users[CURRENT_EMAIL].email = novo;
     saveUsers(users);
-    display.style.display = 'block';
-    input.style.display = 'none';
-    input.onblur = null;
-    this.editing = null;
+    Modal.close('emailModal');
     Render.conta();
-    toast('Salvo!');
+    toast('E-mail alterado com sucesso!');
+  },
+  openTelModal() {
+    var u = loadUsers()[CURRENT_EMAIL];
+    var p = (u.phone || '').replace(/\D/g, '');
+    document.getElementById('telAtualDisplay').value = Account.fmtPhone(p);
+    document.getElementById('telNovo').value = '';
+    document.getElementById('telConfirma').value = '';
+    document.getElementById('telError').textContent = '';
+    Modal.open('telModal');
+  },
+  changeTel() {
+    var novo = document.getElementById('telNovo').value.replace(/\D/g, '');
+    var confirma = document.getElementById('telConfirma').value.replace(/\D/g, '');
+    var errorEl = document.getElementById('telError');
+    if (!novo || novo.length < 10) { errorEl.textContent = 'Digite um telefone válido (mínimo 10 dígitos).'; return; }
+    if (novo !== confirma) { errorEl.textContent = 'Os telefones não coincidem.'; return; }
+    var users = loadUsers();
+    users[CURRENT_EMAIL].phone = novo;
+    saveUsers(users);
+    Modal.close('telModal');
+    Render.conta();
+    toast('Telefone alterado com sucesso!');
   },
   confirmDelete() {
     const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');

@@ -172,6 +172,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   font-family: var(--font); outline: none;
 }
 .senha-input:focus { border-color: var(--primary); }
+.senha-input[readonly] { background: var(--accent-tint); color: var(--ink-dim); cursor: default; }
 .senha-error { font-size: 12px; color: var(--danger); margin: 8px 0 0; min-height: 16px; }
 .senha-form .btn-primary { margin-top: 12px; }
 .btn-secondary {
