@@ -1014,6 +1014,34 @@ const Account = {
     if (ap) ap.textContent = STATE.bets.filter(b => b.status === 'pendente').length;
     Modal.open('deleteModal');
   },
+  toggleSenha() {
+    var form = document.getElementById('senhaForm');
+    var visible = form.style.display !== 'none';
+    form.style.display = visible ? 'none' : 'block';
+    if (!visible) {
+      document.getElementById('senhaAtual').value = '';
+      document.getElementById('senhaNova').value = '';
+      document.getElementById('senhaConfirma').value = '';
+      document.getElementById('senhaError').textContent = '';
+    }
+  },
+  changePassword() {
+    var atual = document.getElementById('senhaAtual').value;
+    var nova = document.getElementById('senhaNova').value;
+    var confirma = document.getElementById('senhaConfirma').value;
+    var errorEl = document.getElementById('senhaError');
+    var users = loadUsers();
+    var user = users[CURRENT_EMAIL];
+    if (!atual) { errorEl.textContent = 'Digite sua senha atual.'; return; }
+    if (user.password !== atual) { errorEl.textContent = 'Senha atual incorreta.'; return; }
+    if (!nova || nova.length < 6) { errorEl.textContent = 'A nova senha deve ter no mínimo 6 caracteres.'; return; }
+    if (nova !== confirma) { errorEl.textContent = 'As senhas não coincidem.'; return; }
+    user.password = nova;
+    saveUsers(users);
+    errorEl.textContent = '';
+    document.getElementById('senhaForm').style.display = 'none';
+    toast('Senha alterada com sucesso!');
+  },
   deleteConfirmed() {
     const users = loadUsers();
     delete users[CURRENT_EMAIL];
