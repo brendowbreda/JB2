@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=110">
+<link rel="stylesheet" href="styles.css?v=111">
 </head>
 <body>
 <div class="page">
@@ -434,20 +434,23 @@
         <h2>Minha carteira</h2>
         <span class="spacer"></span>
       </div>
-      <div class="card wallet-balance">
-        <span>Saldo disponível</span>
-        <strong>🪙 <span id="carteiraSaldo">0</span> pts</strong>
+      <div class="carteira-saldo-block">
+        <span class="carteira-saldo-label">Saldo:</span>
+        <strong class="carteira-saldo-valor" id="carteiraSaldo">R$ 0,00</strong>
+        <p class="carteira-saque-row">R$ <span id="carteiraSaqueVal">0,00</span> disponível para saque <button class="perfil-saque-info" onclick="Modal.open('saqueInfoModal')">?</button></p>
       </div>
-      <div class="cta-row two">
-        <button class="cta-btn cta-deposit" onclick="go('s-depositar')">
-          <span class="cta-icon">➕</span><span>Depositar</span>
+      <div class="carteira-actions-row">
+        <button class="carteira-action-btn carteira-action-deposit" onclick="go('s-depositar')">
+          <svg class="carteira-action-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          <span>Depositar</span>
         </button>
-        <button class="cta-btn cta-withdraw" onclick="go('s-sacar')">
-          <span class="cta-icon">💸</span><span>Sacar</span>
+        <button class="carteira-action-btn carteira-action-sacar" onclick="go('s-sacar')">
+          <svg class="carteira-action-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 19 19 12"/></svg>
+          <span>Sacar</span>
         </button>
       </div>
       <div class="section-head"><h3>Extrato</h3></div>
-      <div class="list" id="extratoList"></div>
+      <div class="extrato-list" id="extratoList"></div>
     </section>
 
     <section class="screen" id="s-depositar">
@@ -992,6 +995,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=76"></script>
+<script src="app.js?v=77"></script>
 </body>
 </html>

@@ -188,6 +188,7 @@ function freshState() {
     totalBets: 0,
     totalWins: 0,
     bets: [],
+    transactions: [],
     weeks: {},
     streak: 0,
     bestStreak: 0,
@@ -488,8 +489,8 @@ const Seed = {
       placedAt: nowIso(), resolveAt: new Date(Date.now() + 7200000).toISOString(),
       status: 'aguardando', payout: 600,
     });
-    for (let i = 0; i < 6; i++) {
-      const placedAt = new Date(today); placedAt.setDate(placedAt.getDate() - i * 3);
+    for (let i = 0; i < 4; i++) {
+      const placedAt = new Date(today); placedAt.setDate(placedAt.getDate() - (i + 1) * 3);
       s.bets.push({
         id: uid(), animal, modality: 'grupo', dezena: null,
         amount: 50, horario: DRAW_TIMES[i % DRAW_TIMES.length].label,
@@ -497,6 +498,20 @@ const Seed = {
         status: 'perdeu', payout: 0,
       });
     }
+    var winDate1 = new Date(today); winDate1.setDate(winDate1.getDate() - 2);
+    s.bets.push({
+      id: uid(), animal: animalByGroup(13), modality: 'grupo', dezena: null,
+      amount: 30, horario: DRAW_TIMES[1].label,
+      placedAt: winDate1.toISOString(), resolveAt: winDate1.toISOString(),
+      status: 'ganhou', payout: 540,
+    });
+    var winDate2 = new Date(today); winDate2.setDate(winDate2.getDate() - 7);
+    s.bets.push({
+      id: uid(), animal: animalByGroup(5), modality: 'dezena', dezena: '18',
+      amount: 20, horario: DRAW_TIMES[0].label,
+      placedAt: winDate2.toISOString(), resolveAt: winDate2.toISOString(),
+      status: 'ganhou', payout: 1200,
+    });
     var h1 = new Date(today); h1.setHours(h1.getHours() - 1);
     var h2 = new Date(today); h2.setHours(h2.getHours() - 2);
     var h3 = new Date(today); h3.setHours(h3.getHours() - 3);
@@ -504,6 +519,14 @@ const Seed = {
     var h5 = new Date(today); h5.setHours(h5.getHours() - 5);
     var h6 = new Date(today); h6.setHours(h6.getHours() - 6);
     var h7 = new Date(today); h7.setHours(h7.getHours() - 7);
+    var d1 = new Date(today); d1.setDate(d1.getDate() - 1);
+    var d2 = new Date(today); d2.setDate(d2.getDate() - 5);
+    var d3 = new Date(today); d3.setDate(d3.getDate() - 12);
+    s.transactions = [
+      { id: uid(), type: 'deposit', amount: 100, at: d3.toISOString() },
+      { id: uid(), type: 'deposit', amount: 500, at: d2.toISOString() },
+      { id: uid(), type: 'withdrawal', amount: 200, total: 197.50, at: d1.toISOString() },
+    ];
     s.notifications = [
       { id: uid(), html: 'Saque <strong>R$ 47,50</strong> solicitado e aprovado.', at: h1.toISOString(), read: false },
       { id: uid(), html: 'Conquista desbloqueada:<br><strong>Manha da Sorte</strong> <button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: h2.toISOString(), read: false },
@@ -764,6 +787,8 @@ const Wallet = {
   confirmPix() {
     var amount = Wallet.pendingAmount || 0;
     STATE.balance = (STATE.balance || 0) + amount;
+    if (!STATE.transactions) STATE.transactions = [];
+    STATE.transactions.push({ id: uid(), type: 'deposit', amount: amount, at: nowIso() });
     STATE.notifications.unshift({ id: uid(), html: 'Seu deposito de <strong>' + Wallet.fmtBRL(amount) + '</strong> ja caiu.', at: nowIso(), read: false });
     saveState();
     toast('Depósito de ' + Wallet.fmtBRL(amount) + ' confirmado!');
@@ -824,6 +849,8 @@ const Wallet = {
     var total = amount - SAQUE_TAXA;
     if (total <= 0) { toast('O valor precisa ser maior que a taxa de R$ 2,50.'); return; }
     STATE.points -= amount;
+    if (!STATE.transactions) STATE.transactions = [];
+    STATE.transactions.push({ id: uid(), type: 'withdrawal', amount: amount, total: total, at: nowIso() });
     STATE.notifications.unshift({ id: uid(), html: 'Saque <strong>' + Wallet.fmtBRL(total) + '</strong> solicitado e aprovado.', at: nowIso(), read: false });
     saveState();
     document.getElementById('saqueResumoValor').textContent = Wallet.fmtBRL(amount);
@@ -979,7 +1006,7 @@ const Render = {
     ['homeAvatar', 'drawerAvatar', 'perfilAvatar'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = initials; });
     const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
     ['homeBalance', 'drawerBalance'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = fmtBRL(STATE.points); });
-    const carteiraSaldoEl = document.getElementById('carteiraSaldo'); if (carteiraSaldoEl) carteiraSaldoEl.textContent = fmtPoints(STATE.points);
+    const carteiraSaldoEl = document.getElementById('carteiraSaldo'); if (carteiraSaldoEl) carteiraSaldoEl.textContent = fmtBRL(STATE.points);
     const tierChip = document.getElementById('homeTierChip');
     if (tierChip) tierChip.textContent = `${tier.icon} ${tier.name}`;
     const unread = STATE.notifications.filter((n) => !n.read).length;
@@ -1059,14 +1086,25 @@ const Render = {
     }
   },
   carteira() {
+    document.getElementById('carteiraSaldo').textContent = Wallet.fmtBRL(STATE.points);
+    document.getElementById('carteiraSaqueVal').textContent = Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     const list = document.getElementById('extratoList');
     const rows = [];
     STATE.bets.forEach((b) => {
-      rows.push({ at: b.placedAt, html: listRow('🎯', `Aposta — ${b.animal.name}`, fmtDateTime(b.placedAt), `-${fmtPoints(b.amount)}`, 'neg') });
-      if (b.status === 'ganhou') rows.push({ at: b.resolveAt, html: listRow('🏆', `Prêmio — ${b.animal.name}`, fmtDateTime(b.resolveAt), `+${fmtPoints(b.payout)}`, 'pos') });
+      var winHtml = '';
+      if (b.status === 'ganhou') winHtml = '<div class="extrato-win">Voce ganhou + ' + Wallet.fmtBRL(b.payout) + '</div>';
+      rows.push({ at: b.placedAt, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Aposta — ' + b.animal.name + '</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(b.amount) + '</div></div>' + winHtml + '</div>' });
+    });
+    var txns = STATE.transactions || [];
+    txns.forEach(function(t) {
+      if (t.type === 'deposit') {
+        rows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Deposito</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
+      } else if (t.type === 'withdrawal') {
+        rows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Saque</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
+      }
     });
     rows.sort((a, c) => new Date(c.at) - new Date(a.at));
-    list.innerHTML = rows.length ? rows.map((r) => r.html).join('') : emptyState('👛', 'Sem transações', 'Deposite pontos para começar a jogar.');
+    list.innerHTML = rows.length ? rows.map((r) => r.html).join('') : emptyState('', 'Sem transacoes', 'Deposite para comecar a jogar.');
   },
   depositar() {
     const grid = document.getElementById('depositAmounts');

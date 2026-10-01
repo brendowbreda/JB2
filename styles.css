@@ -871,13 +871,36 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .success-screen h2 { margin: 10px 0 2px; }
 .success-screen p { color: var(--ink-dim); font-size: 14px; margin-bottom: 14px; }
 
-/* ---------- wallet ---------- */
-.wallet-balance {
-  display: flex; align-items: center; justify-content: space-between;
-  background: linear-gradient(135deg, var(--primary-tint), #fff);
+/* ---------- wallet / carteira ---------- */
+.carteira-saldo-block { padding: 12px 4px 0; }
+.carteira-saldo-label { font-size: 13px; color: var(--ink-dim); display: block; margin-bottom: 4px; }
+.carteira-saldo-valor { font-size: 28px; font-weight: 800; color: var(--primary-deep); display: block; }
+.carteira-saque-row { font-size: 12px; color: var(--ink-dim); margin: 6px 0 0; display: flex; align-items: center; gap: 6px; }
+.carteira-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.carteira-action-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: none; border-radius: 14px; padding: 14px 12px;
+  font-family: var(--font); font-weight: 700; font-size: 14px;
+  color: #fff; cursor: pointer;
 }
-.wallet-balance span { font-size: 13px; color: var(--ink-dim); font-weight: 700; }
-.wallet-balance strong { font-size: 22px; }
+.carteira-action-btn:active { opacity: .85; }
+.carteira-action-icon { width: 22px; height: 22px; }
+.carteira-action-deposit { background: #1b6b3a; }
+.carteira-action-sacar { background: #8b1a1a; }
+
+.extrato-list { display: flex; flex-direction: column; gap: 8px; }
+.extrato-item {
+  background: var(--card); border-radius: var(--radius-md); padding: 14px 16px;
+  box-shadow: 0 2px 10px rgba(30,27,46,0.05);
+}
+.extrato-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.extrato-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.extrato-amount { font-size: 14px; font-weight: 800; white-space: nowrap; }
+.extrato-amount.neg { color: var(--danger); }
+.extrato-amount.pos { color: var(--primary-deep); }
+.extrato-date { font-size: 12px; color: var(--ink-dim); margin-top: 3px; }
+.extrato-win { font-size: 13px; font-weight: 700; color: var(--primary-deep); margin-top: 6px; }
+
 .muted-note { font-size: 12.5px; color: var(--ink-dim); background: var(--accent-tint); padding: 12px 14px; border-radius: var(--radius-sm); }
 
 /* ---------- profile ---------- */
