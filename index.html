@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=125">
+<link rel="stylesheet" href="styles.css?v=126">
 </head>
 <body>
 <div class="page">
@@ -431,18 +431,6 @@
           </div>
           <button class="conta-edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
         </div>
-      </div>
-      <div class="senha-form" id="senhaForm" style="display:none">
-        <h3 class="senha-form-title">Alterar senha</h3>
-        <label class="senha-label">Senha atual</label>
-        <input type="password" class="senha-input" id="senhaAtual" placeholder="Digite sua senha atual">
-        <label class="senha-label">Nova senha</label>
-        <input type="password" class="senha-input" id="senhaNova" placeholder="Digite a nova senha">
-        <label class="senha-label">Confirme a nova senha</label>
-        <input type="password" class="senha-input" id="senhaConfirma" placeholder="Confirme a nova senha">
-        <p class="senha-error" id="senhaError"></p>
-        <button class="btn-primary" onclick="Account.changePassword()">Salvar nova senha</button>
-        <button class="btn-secondary" onclick="Account.toggleSenha()">Cancelar</button>
       </div>
       <button class="btn-danger-text" onclick="Account.confirmDelete()">Encerrar minha conta</button>
     </section>
@@ -1023,10 +1011,27 @@
     <button class="btn-encerrar" onclick="Account.deleteConfirmed()">Encerrar conta</button>
   </div>
 
+  <!-- Senha modal -->
+  <div class="modal-backdrop" id="senhaModalBackdrop" onclick="Modal.close('senhaModal')"></div>
+  <div class="modal-card" id="senhaModal">
+    <h3>Alterar senha</h3>
+    <div class="senha-form-body">
+      <label class="senha-label">Senha atual</label>
+      <input type="password" class="senha-input" id="senhaAtual" placeholder="Digite sua senha atual">
+      <label class="senha-label">Nova senha</label>
+      <input type="password" class="senha-input" id="senhaNova" placeholder="Digite a nova senha">
+      <label class="senha-label">Confirme a nova senha</label>
+      <input type="password" class="senha-input" id="senhaConfirma" placeholder="Confirme a nova senha">
+      <p class="senha-error" id="senhaError"></p>
+      <button class="btn-primary" onclick="Account.changePassword()">Salvar nova senha</button>
+      <button class="btn-secondary" onclick="Modal.close('senhaModal')">Cancelar</button>
+    </div>
+  </div>
+
   <div class="toast-container" id="toastContainer"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=90"></script>
+<script src="app.js?v=91"></script>
 </body>
 </html>

@@ -1015,15 +1015,11 @@ const Account = {
     Modal.open('deleteModal');
   },
   toggleSenha() {
-    var form = document.getElementById('senhaForm');
-    var visible = form.style.display !== 'none';
-    form.style.display = visible ? 'none' : 'block';
-    if (!visible) {
-      document.getElementById('senhaAtual').value = '';
-      document.getElementById('senhaNova').value = '';
-      document.getElementById('senhaConfirma').value = '';
-      document.getElementById('senhaError').textContent = '';
-    }
+    document.getElementById('senhaAtual').value = '';
+    document.getElementById('senhaNova').value = '';
+    document.getElementById('senhaConfirma').value = '';
+    document.getElementById('senhaError').textContent = '';
+    Modal.open('senhaModal');
   },
   changePassword() {
     var atual = document.getElementById('senhaAtual').value;
@@ -1039,7 +1035,7 @@ const Account = {
     user.password = nova;
     saveUsers(users);
     errorEl.textContent = '';
-    document.getElementById('senhaForm').style.display = 'none';
+    Modal.close('senhaModal');
     toast('Senha alterada com sucesso!');
   },
   deleteConfirmed() {

@@ -163,11 +163,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   padding: 4px 0; margin-top: 2px; background: transparent; outline: none;
 }
 .conta-label { display: block; font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
-.senha-form {
-  background: var(--card); border-radius: var(--radius-md); padding: 20px 16px; margin-top: 12px;
-  box-shadow: 0 2px 10px rgba(30,27,46,0.06);
-}
-.senha-form-title { font-size: 16px; font-weight: 800; color: var(--ink); margin: 0 0 16px; }
+.senha-form-body { text-align: left; }
 .senha-label { display: block; font-size: 12px; font-weight: 700; color: var(--ink-dim); margin: 12px 0 4px; }
 .senha-label:first-of-type { margin-top: 0; }
 .senha-input {
