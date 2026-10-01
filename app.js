@@ -1088,23 +1088,29 @@ const Render = {
   carteira() {
     document.getElementById('carteiraSaldo').textContent = Wallet.fmtBRL(STATE.points);
     document.getElementById('carteiraSaqueVal').textContent = Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    const list = document.getElementById('extratoList');
-    const rows = [];
-    STATE.bets.forEach((b) => {
-      var winHtml = '';
-      if (b.status === 'ganhou') winHtml = '<div class="extrato-win">Voce ganhou + ' + Wallet.fmtBRL(b.payout) + '</div>';
-      rows.push({ at: b.placedAt, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Aposta — ' + b.animal.name + '</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(b.amount) + '</div></div>' + winHtml + '</div>' });
-    });
+    var extratoList = document.getElementById('extratoList');
     var txns = STATE.transactions || [];
+    var txnRows = [];
     txns.forEach(function(t) {
       if (t.type === 'deposit') {
-        rows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Deposito</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
+        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Deposito</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
       } else if (t.type === 'withdrawal') {
-        rows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Saque</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
+        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Saque</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
       }
     });
-    rows.sort((a, c) => new Date(c.at) - new Date(a.at));
-    list.innerHTML = rows.length ? rows.map((r) => r.html).join('') : emptyState('', 'Sem transacoes', 'Deposite para comecar a jogar.');
+    txnRows.sort((a, c) => new Date(c.at) - new Date(a.at));
+    extratoList.innerHTML = txnRows.length ? txnRows.map((r) => r.html).join('') : emptyState('', 'Sem transacoes', 'Deposite para comecar a jogar.');
+    var apostasEl = document.getElementById('apostasCarteira');
+    var betRows = [];
+    STATE.bets.forEach((b) => {
+      if (b.status === 'ganhou') {
+        betRows.push({ at: b.placedAt, html: '<div class="extrato-item extrato-item-win"><div class="extrato-top"><div><div class="extrato-title">Aposta — ' + b.animal.name + ' <span class="extrato-badge-win">voce ganhou</span></div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(b.payout) + '</div></div></div>' });
+      } else {
+        betRows.push({ at: b.placedAt, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Aposta — ' + b.animal.name + '</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(b.amount) + '</div></div></div>' });
+      }
+    });
+    betRows.sort((a, c) => new Date(c.at) - new Date(a.at));
+    apostasEl.innerHTML = betRows.length ? betRows.map((r) => r.html).join('') : emptyState('', 'Sem apostas', 'Faca uma aposta para ver aqui.');
   },
   depositar() {
     const grid = document.getElementById('depositAmounts');
