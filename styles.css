@@ -1052,8 +1052,10 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   box-shadow: 0 3px 12px rgba(30,27,46,0.05);
 }
 .achv-tile .emoji { font-size: 26px; display: block; }
+.achv-tile .achv-img { width: 64px; height: 64px; object-fit: contain; display: block; margin: 0 auto; }
 .achv-tile .name { font-size: 10.5px; font-weight: 800; margin-top: 6px; display: block; line-height: 1.25; }
 .achv-tile.locked { opacity: 0.4; filter: grayscale(1); }
+.achv-modal-img { width: 80px; height: 80px; object-fit: contain; }
 
 /* ---------- friends ---------- */
 .friend-row { display: flex; align-items: center; gap: 12px; }

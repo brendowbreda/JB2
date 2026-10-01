@@ -53,7 +53,7 @@ const TIERS = [
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', desc: 'Faça sua primeira aposta.' },
+  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', img: 'img/conquista-primeira-aposta.png', desc: 'Faça sua primeira aposta.' },
   { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faça 10 apostas no total.' },
   { id: '10-apostas-semana', name: '10 na Semana', emoji: '⚡', desc: 'Faça 10 apostas em uma única semana.' },
   { id: '10-semanas', name: '10 Semanas', emoji: '🔥', desc: 'Mantenha 10 semanas de frequência seguidas.' },
@@ -579,7 +579,8 @@ const Achv = {
     const def = ACHIEVEMENTS.find((a) => a.id === id);
     STATE.notifications.unshift({ id: uid(), html: 'Conquista desbloqueada:<br><strong>' + def.name + '</strong> <button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: nowIso(), read: false });
     saveState();
-    document.getElementById('achvModalIcon').textContent = def.emoji;
+    var iconEl = document.getElementById('achvModalIcon');
+    if (def.img) { iconEl.innerHTML = '<img class="achv-modal-img" src="' + def.img + '" alt="' + def.name + '">'; } else { iconEl.textContent = def.emoji; }
     document.getElementById('achvModalName').textContent = def.name;
     document.getElementById('achvModalDesc').textContent = def.desc;
     Modal.open('achvModal');
@@ -1856,10 +1857,8 @@ function feedRowHtml(f) {
   </div>`;
 }
 function achvTileHtml(a, unlocked) {
-  return `<div class="achv-tile ${unlocked ? '' : 'locked'}" title="${a.desc}">
-    <span class="emoji">${a.emoji}</span>
-    <span class="name">${a.name}</span>
-  </div>`;
+  var icon = a.img ? '<img class="achv-img" src="' + a.img + '" alt="' + a.name + '">' : '<span class="emoji">' + a.emoji + '</span>';
+  return '<div class="achv-tile ' + (unlocked ? '' : 'locked') + '" title="' + a.desc + '">' + icon + '<span class="name">' + a.name + '</span></div>';
 }
 function emptyState(emoji, title, sub, extraHtml) {
   return '<div class="empty-state">' + (emoji ? '<div class="mascot">' + emoji + '</div>' : '') + '<strong>' + title + '</strong><p>' + sub + '</p>' + (extraHtml || '') + '</div>';
