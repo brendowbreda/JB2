@@ -902,7 +902,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   flex: 1; border: none; background: none; padding: 10px 6px; border-radius: 999px;
   font-family: var(--font); font-weight: 700; font-size: 13px; color: var(--ink-dim); cursor: pointer;
 }
-.apostas-filter.active[data-filter="aguardando"] { background: var(--ink); color: #fff; }
+.apostas-filter.active[data-filter="aguardando"] { background: #d4a017; color: #fff; }
 .apostas-filter.active[data-filter="ganhou"] { background: #1b6b3a; color: #fff; }
 .apostas-filter.active[data-filter="perdeu"] { background: #c62828; color: #fff; }
 .extrato-list { display: flex; flex-direction: column; gap: 8px; }
