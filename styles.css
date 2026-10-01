@@ -893,7 +893,9 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   flex: 1; border: none; background: none; padding: 10px 6px; border-radius: 999px;
   font-family: var(--font); font-weight: 700; font-size: 13px; color: var(--ink-dim); cursor: pointer;
 }
-.extrato-filter.active { background: var(--primary-deep); color: #fff; }
+.extrato-filter.active[data-filter="todos"] { background: var(--ink); color: #fff; }
+.extrato-filter.active[data-filter="deposit"] { background: #1b6b3a; color: #fff; }
+.extrato-filter.active[data-filter="withdrawal"] { background: #c62828; color: #fff; }
 .extrato-list { display: flex; flex-direction: column; gap: 8px; }
 .extrato-item {
   background: var(--card); border-radius: var(--radius-md); padding: 14px 16px;
