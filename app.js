@@ -506,7 +506,7 @@ const Seed = {
     var h7 = new Date(today); h7.setHours(h7.getHours() - 7);
     s.notifications = [
       { id: uid(), html: 'Saque <strong>R$ 47,50</strong> solicitado e aprovado.', at: h1.toISOString(), read: false },
-      { id: uid(), html: 'Conquista desbloqueada:<br><strong>Manha da Sorte</strong><br><button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: h2.toISOString(), read: false },
+      { id: uid(), html: 'Conquista desbloqueada:<br><strong>Manha da Sorte</strong> <button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: h2.toISOString(), read: false },
       { id: uid(), html: 'Resultado saiu:<br><span class="notif-win">Parabens, voce ganhou <strong>R$ 360,00</strong></span>', at: h3.toISOString(), read: true },
       { id: uid(), html: 'Resultado saiu:<br><span class="notif-loss">Nao foi dessa vez. Tente novamente!</span>', at: h4.toISOString(), read: true },
       { id: uid(), html: '<strong>Parabens!</strong><br>10 apostas (+R$ 1,00) essa semana<br>10 de 10 para ganhar <strong>R$ 100,00</strong>', at: h5.toISOString(), read: true },
@@ -554,7 +554,7 @@ const Achv = {
     if (STATE.achievements[id]) return;
     STATE.achievements[id] = { at: nowIso() };
     const def = ACHIEVEMENTS.find((a) => a.id === id);
-    STATE.notifications.unshift({ id: uid(), html: 'Conquista desbloqueada:<br><strong>' + def.name + '</strong><br><button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: nowIso(), read: false });
+    STATE.notifications.unshift({ id: uid(), html: 'Conquista desbloqueada:<br><strong>' + def.name + '</strong> <button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: nowIso(), read: false });
     saveState();
     document.getElementById('achvModalIcon').textContent = def.emoji;
     document.getElementById('achvModalName').textContent = def.name;
