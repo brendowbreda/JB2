@@ -1077,6 +1077,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .achv-tile.locked .name { color: var(--ink-dim); }
 .achv-modal-icon-wrap { font-size: 56px; margin-bottom: 4px; }
 .achv-modal-img { width: 96px; height: 96px; object-fit: contain; }
+.achv-obs { display: block; font-size: 12px; color: var(--ink-dim); margin-top: 6px; font-weight: 400; font-style: italic; }
 .achv-status-ok { display: inline-block; font-size: 12px; font-weight: 700; color: var(--primary-deep); background: var(--primary-tint); padding: 4px 12px; border-radius: 999px; margin-top: 6px; }
 .achv-status-locked { display: inline-block; font-size: 12px; font-weight: 700; color: var(--ink-dim); background: var(--accent-tint); padding: 4px 12px; border-radius: 999px; margin-top: 6px; }
 

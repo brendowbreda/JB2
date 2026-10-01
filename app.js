@@ -54,7 +54,7 @@ const TIERS = [
 
 const ACHIEVEMENTS = [
   { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', img: 'img/conquista-primeira-aposta.png', desc: 'Faça sua primeira aposta (mínimo R$ 1,00).' },
-  { id: 'semana-de-jogo', name: 'Semana de Jogo', emoji: '📅', desc: 'Jogue todos os 7 dias da semana. Cada aposta precisa ser de no mínimo R$ 1,00.' },
+  { id: 'semana-de-jogo', name: 'Semana de Jogo', emoji: '📅', desc: 'Jogue os 7 dias da semana.', obs: 'Cada aposta precisa ser de no mínimo R$ 1,00.' },
   { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faça 10 apostas em uma única semana. Mostre que você é frequente!' },
   { id: '10x10', name: '10x10', emoji: '💰', desc: 'Faça 10 apostas por semana durante 10 semanas seguidas. Prêmio: R$ 100,00!' },
   { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Ganhe 10 apostas em uma única semana. Sorte de verdade!' },
@@ -593,7 +593,8 @@ const Achv = {
     if (def.img) { iconEl.innerHTML = '<img class="achv-modal-img" src="' + def.img + '" alt="' + def.name + '">'; } else { iconEl.textContent = def.emoji; }
     document.getElementById('achvModalTitle').textContent = isUnlock ? 'Conquista desbloqueada!' : def.name;
     document.getElementById('achvModalName').textContent = isUnlock ? def.name : '';
-    document.getElementById('achvModalDesc').textContent = def.desc;
+    var descEl = document.getElementById('achvModalDesc');
+    descEl.innerHTML = def.desc + (def.obs ? '<small class="achv-obs">' + def.obs + '</small>' : '');
     var statusEl = document.getElementById('achvModalStatus');
     var unlocked = STATE.achievements[def.id];
     if (unlocked) {
