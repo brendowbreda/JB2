@@ -1087,7 +1087,7 @@ const Render = {
   },
   extratoFilter: 'todos',
   extratoLimit: 5,
-  apostasFilter: 'todos',
+  apostasFilter: 'aguardando',
   apostasLimit: 5,
   carteira() {
     document.getElementById('carteiraSaldo').textContent = Wallet.fmtBRL(STATE.points);
@@ -1105,18 +1105,12 @@ const Render = {
     var filter = this.apostasFilter;
     var apostasEl = document.getElementById('apostasCarteira');
     var bets = STATE.bets;
-    if (filter === 'apostas') bets = bets.filter(function(b) { return b.status !== 'ganhou'; });
-    else if (filter === 'vitorias') bets = bets.filter(function(b) { return b.status === 'ganhou'; });
-    var betRows = [];
-    bets.forEach((b) => {
-      if (b.status === 'ganhou') {
-        betRows.push({ at: b.placedAt, html: '<div class="extrato-item extrato-item-win"><div class="extrato-top"><div><div class="extrato-title">Aposta</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(b.payout) + '</div></div></div>' });
-      } else {
-        betRows.push({ at: b.placedAt, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Aposta</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(b.amount) + '</div></div></div>' });
-      }
-    });
+    if (filter === 'aguardando') bets = bets.filter(function(b) { return b.status === 'aguardando'; });
+    else if (filter === 'ganhou') bets = bets.filter(function(b) { return b.status === 'ganhou'; });
+    else if (filter === 'perdeu') bets = bets.filter(function(b) { return b.status === 'perdeu'; });
+    var betRows = bets.map(function(b) { return { at: b.placedAt, html: betRowHtml(b) }; });
     betRows.sort((a, c) => new Date(c.at) - new Date(a.at));
-    var emptyMsg = filter === 'apostas' ? 'Nenhuma aposta encontrada.' : filter === 'vitorias' ? 'Nenhuma vitória encontrada.' : 'Faça uma aposta para ver aqui.';
+    var emptyMsg = filter === 'aguardando' ? 'Nenhuma aposta aguardando resultado.' : filter === 'ganhou' ? 'Nenhuma vitória encontrada.' : filter === 'perdeu' ? 'Nenhuma aposta perdida.' : 'Faça uma aposta para ver aqui.';
     var total = betRows.length;
     var visible = betRows.slice(0, this.apostasLimit);
     var html = visible.map((r) => r.html).join('');
