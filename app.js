@@ -1086,7 +1086,9 @@ const Render = {
     }
   },
   extratoFilter: 'todos',
+  extratoLimit: 5,
   apostasFilter: 'todos',
+  apostasLimit: 5,
   carteira() {
     document.getElementById('carteiraSaldo').textContent = Wallet.fmtBRL(STATE.points);
     document.getElementById('carteiraSaqueVal').textContent = Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -1095,6 +1097,7 @@ const Render = {
   },
   filterApostas(filter) {
     this.apostasFilter = filter;
+    this.apostasLimit = 5;
     document.querySelectorAll('.apostas-filter').forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
     this.renderApostas();
   },
@@ -1114,10 +1117,15 @@ const Render = {
     });
     betRows.sort((a, c) => new Date(c.at) - new Date(a.at));
     var emptyMsg = filter === 'apostas' ? 'Nenhuma aposta encontrada.' : filter === 'vitorias' ? 'Nenhuma vitória encontrada.' : 'Faça uma aposta para ver aqui.';
-    apostasEl.innerHTML = betRows.length ? betRows.map((r) => r.html).join('') : emptyState('', 'Sem apostas', emptyMsg);
+    var total = betRows.length;
+    var visible = betRows.slice(0, this.apostasLimit);
+    var html = visible.map((r) => r.html).join('');
+    if (total > this.apostasLimit) html += '<button class="ver-mais-btn" onclick="Render.apostasLimit=' + total + ';Render.renderApostas()">Ver mais (' + (total - this.apostasLimit) + ')</button>';
+    apostasEl.innerHTML = total ? html : emptyState('', 'Sem apostas', emptyMsg);
   },
   filterExtrato(filter) {
     this.extratoFilter = filter;
+    this.extratoLimit = 5;
     document.querySelectorAll('.extrato-filter').forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
     this.renderExtrato();
   },
@@ -1136,7 +1144,11 @@ const Render = {
     });
     txnRows.sort((a, c) => new Date(c.at) - new Date(a.at));
     var emptyMsg = filter === 'deposit' ? 'Nenhum depósito encontrado.' : filter === 'withdrawal' ? 'Nenhum saque encontrado.' : 'Deposite para começar a jogar.';
-    extratoList.innerHTML = txnRows.length ? txnRows.map((r) => r.html).join('') : emptyState('', 'Sem transações', emptyMsg);
+    var total = txnRows.length;
+    var visible = txnRows.slice(0, this.extratoLimit);
+    var html = visible.map((r) => r.html).join('');
+    if (total > this.extratoLimit) html += '<button class="ver-mais-btn" onclick="Render.extratoLimit=' + total + ';Render.renderExtrato()">Ver mais (' + (total - this.extratoLimit) + ')</button>';
+    extratoList.innerHTML = total ? html : emptyState('', 'Sem transações', emptyMsg);
   },
   depositar() {
     const grid = document.getElementById('depositAmounts');
