@@ -905,9 +905,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .extrato-amount.neg { color: var(--danger); }
 .extrato-amount.pos { color: var(--primary-deep); }
 .extrato-date { font-size: 12px; color: var(--ink-dim); margin-top: 3px; }
-.extrato-win { font-size: 13px; font-weight: 700; color: var(--primary-deep); margin-top: 6px; }
-.extrato-badge-win { font-size: 11px; font-weight: 700; color: var(--primary-deep); background: var(--primary-tint); padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
-.extrato-item-win { border-left: 3px solid var(--primary-deep); }
+.extrato-item-win { background: var(--primary-tint); border-left: 3px solid var(--primary-deep); }
 
 .muted-note { font-size: 12.5px; color: var(--ink-dim); background: var(--accent-tint); padding: 12px 14px; border-radius: var(--radius-sm); }
 

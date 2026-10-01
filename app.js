@@ -1094,9 +1094,9 @@ const Render = {
     var betRows = [];
     STATE.bets.forEach((b) => {
       if (b.status === 'ganhou') {
-        betRows.push({ at: b.placedAt, html: '<div class="extrato-item extrato-item-win"><div class="extrato-top"><div><div class="extrato-title">Aposta — ' + b.animal.name + ' <span class="extrato-badge-win">voce ganhou</span></div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(b.payout) + '</div></div></div>' });
+        betRows.push({ at: b.placedAt, html: '<div class="extrato-item extrato-item-win"><div class="extrato-top"><div><div class="extrato-title">Aposta</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(b.payout) + '</div></div></div>' });
       } else {
-        betRows.push({ at: b.placedAt, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Aposta — ' + b.animal.name + '</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(b.amount) + '</div></div></div>' });
+        betRows.push({ at: b.placedAt, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Aposta</div><div class="extrato-date">' + fmtDateTime(b.placedAt) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(b.amount) + '</div></div></div>' });
       }
     });
     betRows.sort((a, c) => new Date(c.at) - new Date(a.at));
