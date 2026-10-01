@@ -54,15 +54,17 @@ const TIERS = [
 
 const ACHIEVEMENTS = [
   { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', img: 'img/conquista-primeira-aposta.png', desc: 'Faça sua primeira aposta.' },
-  { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faça 10 apostas no total.' },
-  { id: '10-apostas-semana', name: '10 na Semana', emoji: '⚡', desc: 'Faça 10 apostas em uma única semana.' },
-  { id: '10-semanas', name: '10 Semanas', emoji: '🔥', desc: 'Mantenha 10 semanas de frequência seguidas.' },
-  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Aposte todos os dias da semana.' },
+  { id: 'semana-de-jogo', name: 'Semana de Jogo', emoji: '📅', desc: 'Jogue todos os dias da semana.' },
+  { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faça 10 apostas em uma semana.' },
+  { id: '10x10', name: '10x10', emoji: '💰', desc: '10 apostas por semana em 10 semanas. Prêmio: R$ 100,00!' },
+  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Ganhe 10 vezes em uma semana.' },
   { id: 'manha-da-sorte', name: 'Manhã da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta pela manhã (6h-12h).' },
-  { id: 'sorte-da-tarde', name: 'Sorte da Tarde', emoji: '🌤️', desc: 'Ganhe uma aposta a tarde (12h-18h).' },
-  { id: 'sorte-da-noite', name: 'Sorte da Noite', emoji: '🌙', desc: 'Ganhe uma aposta a noite (18h-24h).' },
-  { id: 'sorte-da-madrugada', name: 'Sorte da Madrugada', emoji: '🌌', desc: 'Ganhe uma aposta na madrugada (0h-5h).' },
-  { id: 'trevo-da-sorte', name: 'Trevo da Sorte', emoji: '🍀', desc: 'Ganhe apostas em todos os dias da semana.' },
+  { id: 'velocidade-maxima', name: 'Velocidade Máxima', emoji: '⚡', desc: '3 vitórias no mesmo dia.' },
+  { id: 'coruja-sortuda', name: 'Coruja Sortuda', emoji: '🦉', desc: 'Aposte entre 22h e 6h.' },
+  { id: 'na-mosca', name: 'Na Mosca', emoji: '🎯', desc: 'Acerte uma milhar.' },
+  { id: 'sorte-acomodada', name: 'Sorte Acomodada', emoji: '🍀', desc: 'Ganhe uma vez por dia em 7 dias seguidos.' },
+  { id: 'amizade-e-tudo', name: 'Amizade é Tudo', emoji: '🤝', desc: 'Indique um amigo.' },
+  { id: 'festa-dos-amigos', name: 'Festa dos Amigos', emoji: '🎉', desc: 'Indique 10 amigos.' },
 ];
 
 const MODALITY = {
@@ -464,11 +466,11 @@ const Seed = {
     s.bestStreak = 10;
     s.achievements = {
       'primeira-aposta': { at: nowIso() },
+      'semana-de-jogo': { at: nowIso() },
       '10-apostas': { at: nowIso() },
-      '10-apostas-semana': { at: nowIso() },
-      '10-semanas': { at: nowIso() },
-      'semana-perfeita': { at: nowIso() },
       'manha-da-sorte': { at: nowIso() },
+      'coruja-sortuda': { at: nowIso() },
+      'amizade-e-tudo': { at: nowIso() },
     };
     s.friends = DEMO_PEOPLE.slice(0, 5).map((p) => ({ ...p }));
     s.feed = [
@@ -588,35 +590,69 @@ const Achv = {
   checkAll(context = {}) {
     const s = STATE;
     if (s.totalBets >= 1) this.unlock('primeira-aposta');
-    if (s.totalBets >= 10) this.unlock('10-apostas');
-    if (s.streak >= 10) this.unlock('10-semanas');
 
-    // 10 apostas na semana atual
     var thisWeek = weekKey();
     var betsThisWeek = s.bets.filter(function(b) { return weekKey(new Date(b.placedAt)) === thisWeek; }).length;
-    if (betsThisWeek >= 10) this.unlock('10-apostas-semana');
 
-    // Semana perfeita: apostou em todos os 7 dias da semana
+    // Semana de Jogo: apostou em todos os 7 dias da semana
     var daysThisWeek = {};
     s.bets.forEach(function(b) {
       if (weekKey(new Date(b.placedAt)) === thisWeek) daysThisWeek[new Date(b.placedAt).getDay()] = true;
     });
-    if (Object.keys(daysThisWeek).length >= 7) this.unlock('semana-perfeita');
+    if (Object.keys(daysThisWeek).length >= 7) this.unlock('semana-de-jogo');
 
+    // 10 Apostas: 10 apostas em uma semana
+    if (betsThisWeek >= 10) this.unlock('10-apostas');
+
+    // 10x10: 10 apostas por semana em 10 semanas
+    if (s.streak >= 10 && betsThisWeek >= 10) this.unlock('10x10');
+
+    // Semana Perfeita: ganhar 10 vezes em uma semana
+    var winsThisWeek = s.bets.filter(function(b) { return b.status === 'ganhou' && weekKey(new Date(b.placedAt)) === thisWeek; }).length;
+    if (winsThisWeek >= 10) this.unlock('semana-perfeita');
+
+    // Manhã da Sorte
     if (context.wonAt) {
       var h = new Date(context.wonAt).getHours();
       if (h >= 6 && h < 12) this.unlock('manha-da-sorte');
-      else if (h >= 12 && h < 18) this.unlock('sorte-da-tarde');
-      else if (h >= 18 && h < 24) this.unlock('sorte-da-noite');
-      else if (h >= 0 && h < 5) this.unlock('sorte-da-madrugada');
     }
 
-    // Trevo da Sorte: ganhou em todos os dias da semana (dom-sab)
-    var winDays = {};
+    // Velocidade Máxima: 3 vitórias no mesmo dia
+    var winsByDay = {};
     s.bets.filter(function(b) { return b.status === 'ganhou'; }).forEach(function(b) {
-      winDays[new Date(b.placedAt).getDay()] = true;
+      var dk = new Date(b.placedAt).toISOString().slice(0, 10);
+      winsByDay[dk] = (winsByDay[dk] || 0) + 1;
     });
-    if (Object.keys(winDays).length >= 7) this.unlock('trevo-da-sorte');
+    if (Object.values(winsByDay).some(function(c) { return c >= 3; })) this.unlock('velocidade-maxima');
+
+    // Coruja Sortuda: apostar entre 22h e 6h
+    var hasNightBet = s.bets.some(function(b) {
+      var bh = new Date(b.placedAt).getHours();
+      return bh >= 22 || bh < 6;
+    });
+    if (hasNightBet) this.unlock('coruja-sortuda');
+
+    // Na Mosca: acertar milhar (modality milhar e ganhou)
+    if (s.bets.some(function(b) { return b.modality === 'milhar' && b.status === 'ganhou'; })) this.unlock('na-mosca');
+
+    // Sorte Acomodada: ganhar uma vez por dia em 7 dias seguidos
+    var winDates = [];
+    s.bets.filter(function(b) { return b.status === 'ganhou'; }).forEach(function(b) {
+      var d = new Date(b.placedAt).toISOString().slice(0, 10);
+      if (winDates.indexOf(d) === -1) winDates.push(d);
+    });
+    winDates.sort();
+    var consecutive = 1;
+    for (var i = 1; i < winDates.length; i++) {
+      var prev = new Date(winDates[i - 1]); prev.setDate(prev.getDate() + 1);
+      if (prev.toISOString().slice(0, 10) === winDates[i]) { consecutive++; if (consecutive >= 7) { this.unlock('sorte-acomodada'); break; } }
+      else consecutive = 1;
+    }
+
+    // Amizade é Tudo: ter 1 amigo
+    if (s.friends && s.friends.length >= 1) this.unlock('amizade-e-tudo');
+    // Festa dos Amigos: ter 10 amigos
+    if (s.friends && s.friends.length >= 10) this.unlock('festa-dos-amigos');
 
     // Frequencia: notificar marcos de apostas na semana
     if (betsThisWeek === 10 && !s._notif10week) {
