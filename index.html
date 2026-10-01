@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=123">
+<link rel="stylesheet" href="styles.css?v=124">
 </head>
 <body>
 <div class="page">
@@ -736,7 +736,6 @@
         <h2>Conquistas</h2>
         <span class="spacer"></span>
       </div>
-      <p class="muted-note" id="conquistasProgress"></p>
       <div class="achv-grid" id="achvGrid"></div>
     </section>
 
@@ -955,14 +954,15 @@
     <button class="btn-primary" onclick="Modal.close('appModal')">Entendi</button>
   </div>
 
-  <!-- Achievement unlock modal -->
+  <!-- Achievement modal (unlock + detail) -->
   <div class="modal-backdrop" id="achvModalBackdrop" onclick="Modal.close('achvModal')"></div>
   <div class="modal-card" id="achvModal">
-    <div class="mascot" id="achvModalIcon">🏅</div>
-    <h3>Conquista desbloqueada!</h3>
+    <div class="achv-modal-icon-wrap" id="achvModalIcon">🏅</div>
+    <h3 id="achvModalTitle">Conquista desbloqueada!</h3>
     <strong id="achvModalName"></strong>
     <p id="achvModalDesc"></p>
-    <button class="btn-primary" onclick="Modal.close('achvModal')">Show de bola!</button>
+    <p class="achv-modal-status" id="achvModalStatus"></p>
+    <button class="btn-primary" onclick="Modal.close('achvModal')">Fechar</button>
   </div>
 
   <!-- Streak info -->
@@ -1007,6 +1007,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=88"></script>
+<script src="app.js?v=89"></script>
 </body>
 </html>

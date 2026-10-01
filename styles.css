@@ -1048,13 +1048,18 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   background: none;
   padding: 10px 4px;
   text-align: center;
+  cursor: pointer;
 }
+.achv-tile:active { transform: scale(0.93); }
 .achv-tile .emoji { font-size: 48px; display: block; height: 72px; line-height: 72px; }
 .achv-tile .achv-img { width: 72px; height: 72px; object-fit: contain; display: block; margin: 0 auto; }
 .achv-tile .name { font-size: 11px; font-weight: 800; margin-top: 8px; display: block; line-height: 1.3; color: var(--ink); }
 .achv-tile.locked { opacity: 0.3; filter: grayscale(1); }
 .achv-tile.locked .name { color: var(--ink-dim); }
-.achv-modal-img { width: 80px; height: 80px; object-fit: contain; }
+.achv-modal-icon-wrap { font-size: 56px; margin-bottom: 4px; }
+.achv-modal-img { width: 96px; height: 96px; object-fit: contain; }
+.achv-status-ok { display: inline-block; font-size: 12px; font-weight: 700; color: var(--primary-deep); background: var(--primary-tint); padding: 4px 12px; border-radius: 999px; margin-top: 6px; }
+.achv-status-locked { display: inline-block; font-size: 12px; font-weight: 700; color: var(--ink-dim); background: var(--accent-tint); padding: 4px 12px; border-radius: 999px; margin-top: 6px; }
 
 /* ---------- friends ---------- */
 .friend-row { display: flex; align-items: center; gap: 12px; }

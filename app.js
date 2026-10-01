@@ -53,18 +53,18 @@ const TIERS = [
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', img: 'img/conquista-primeira-aposta.png', desc: 'Faça sua primeira aposta.' },
-  { id: 'semana-de-jogo', name: 'Semana de Jogo', emoji: '📅', desc: 'Jogue todos os dias da semana.' },
-  { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faça 10 apostas em uma semana.' },
-  { id: '10x10', name: '10x10', emoji: '💰', desc: '10 apostas por semana em 10 semanas. Prêmio: R$ 100,00!' },
-  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Ganhe 10 vezes em uma semana.' },
-  { id: 'manha-da-sorte', name: 'Manhã da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta pela manhã (6h-12h).' },
-  { id: 'velocidade-maxima', name: 'Velocidade Máxima', emoji: '⚡', desc: '3 vitórias no mesmo dia.' },
-  { id: 'coruja-sortuda', name: 'Coruja Sortuda', emoji: '🦉', desc: 'Aposte entre 22h e 6h.' },
-  { id: 'na-mosca', name: 'Na Mosca', emoji: '🎯', desc: 'Acerte uma milhar.' },
-  { id: 'sorte-acomodada', name: 'Sorte Acomodada', emoji: '🍀', desc: 'Ganhe uma vez por dia em 7 dias seguidos.' },
-  { id: 'amizade-e-tudo', name: 'Amizade é Tudo', emoji: '🤝', desc: 'Indique um amigo.' },
-  { id: 'festa-dos-amigos', name: 'Festa dos Amigos', emoji: '🎉', desc: 'Indique 10 amigos.' },
+  { id: 'primeira-aposta', name: 'Primeira Aposta', emoji: '🎯', img: 'img/conquista-primeira-aposta.png', desc: 'Faça sua primeira aposta (mínimo R$ 1,00).' },
+  { id: 'semana-de-jogo', name: 'Semana de Jogo', emoji: '📅', desc: 'Jogue todos os 7 dias da semana. Cada aposta precisa ser de no mínimo R$ 1,00.' },
+  { id: '10-apostas', name: '10 Apostas', emoji: '🏅', desc: 'Faça 10 apostas em uma única semana. Mostre que você é frequente!' },
+  { id: '10x10', name: '10x10', emoji: '💰', desc: 'Faça 10 apostas por semana durante 10 semanas seguidas. Prêmio: R$ 100,00!' },
+  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Ganhe 10 apostas em uma única semana. Sorte de verdade!' },
+  { id: 'manha-da-sorte', name: 'Manhã da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta feita no período da manhã (entre 6h e 12h).' },
+  { id: 'velocidade-maxima', name: 'Velocidade Máxima', emoji: '⚡', desc: 'Consiga 3 vitórias no mesmo dia. Velocidade e sorte!' },
+  { id: 'coruja-sortuda', name: 'Coruja Sortuda', emoji: '🦉', desc: 'Faça uma aposta entre 22h e 6h da manhã. A sorte não dorme!' },
+  { id: 'na-mosca', name: 'Na Mosca', emoji: '🎯', desc: 'Acerte uma aposta na modalidade milhar. Precisão máxima!' },
+  { id: 'sorte-acomodada', name: 'Sorte Acomodada', emoji: '🍀', desc: 'Ganhe pelo menos uma aposta por dia durante 7 dias seguidos.' },
+  { id: 'amizade-e-tudo', name: 'Amizade é Tudo', emoji: '🤝', desc: 'Indique seu primeiro amigo para o Palpite Club.' },
+  { id: 'festa-dos-amigos', name: 'Festa dos Amigos', emoji: '🎉', desc: 'Indique 10 amigos para o Palpite Club. Quanto mais, melhor!' },
 ];
 
 const MODALITY = {
@@ -581,10 +581,27 @@ const Achv = {
     const def = ACHIEVEMENTS.find((a) => a.id === id);
     STATE.notifications.unshift({ id: uid(), html: 'Conquista desbloqueada:<br><strong>' + def.name + '</strong> <button class="notif-achv-btn" onclick="go(\'s-conquistas\')">Ver conquista</button>', at: nowIso(), read: false });
     saveState();
+    this._showModal(def, true);
+  },
+  detail(id) {
+    var def = ACHIEVEMENTS.find(function(a) { return a.id === id; });
+    if (!def) return;
+    this._showModal(def, false);
+  },
+  _showModal(def, isUnlock) {
     var iconEl = document.getElementById('achvModalIcon');
     if (def.img) { iconEl.innerHTML = '<img class="achv-modal-img" src="' + def.img + '" alt="' + def.name + '">'; } else { iconEl.textContent = def.emoji; }
-    document.getElementById('achvModalName').textContent = def.name;
+    document.getElementById('achvModalTitle').textContent = isUnlock ? 'Conquista desbloqueada!' : def.name;
+    document.getElementById('achvModalName').textContent = isUnlock ? def.name : '';
     document.getElementById('achvModalDesc').textContent = def.desc;
+    var statusEl = document.getElementById('achvModalStatus');
+    var unlocked = STATE.achievements[def.id];
+    if (unlocked) {
+      var d = new Date(unlocked.at);
+      statusEl.innerHTML = '<span class="achv-status-ok">Desbloqueada em ' + d.toLocaleDateString('pt-BR') + '</span>';
+    } else {
+      statusEl.innerHTML = '<span class="achv-status-locked">Bloqueada</span>';
+    }
     Modal.open('achvModal');
   },
   checkAll(context = {}) {
@@ -1330,8 +1347,6 @@ const Render = {
     if (perdeu) perdeu.textContent = STATE.bets.filter(function(b) { return b.status === 'perdeu'; }).length;
   },
   conquistas() {
-    const unlockedCount = ACHIEVEMENTS.filter((a) => STATE.achievements[a.id]).length;
-    document.getElementById('conquistasProgress').textContent = `${unlockedCount} de ${ACHIEVEMENTS.length} conquistas desbloqueadas`;
     document.getElementById('achvGrid').innerHTML = ACHIEVEMENTS.map((a) => achvTileHtml(a, !!STATE.achievements[a.id])).join('');
   },
   amigos() {
@@ -1894,7 +1909,7 @@ function feedRowHtml(f) {
 }
 function achvTileHtml(a, unlocked) {
   var icon = a.img ? '<img class="achv-img" src="' + a.img + '" alt="' + a.name + '">' : '<span class="emoji">' + a.emoji + '</span>';
-  return '<div class="achv-tile ' + (unlocked ? '' : 'locked') + '" title="' + a.desc + '">' + icon + '<span class="name">' + a.name + '</span></div>';
+  return '<div class="achv-tile ' + (unlocked ? '' : 'locked') + '" onclick="Achv.detail(\'' + a.id + '\')">' + icon + '<span class="name">' + a.name + '</span></div>';
 }
 function emptyState(emoji, title, sub, extraHtml) {
   return '<div class="empty-state">' + (emoji ? '<div class="mascot">' + emoji + '</div>' : '') + '<strong>' + title + '</strong><p>' + sub + '</p>' + (extraHtml || '') + '</div>';
