@@ -1085,21 +1085,11 @@ const Render = {
       else el('contaTelDisplay').textContent = u.phone || '—';
     }
   },
+  extratoFilter: 'todos',
   carteira() {
     document.getElementById('carteiraSaldo').textContent = Wallet.fmtBRL(STATE.points);
     document.getElementById('carteiraSaqueVal').textContent = Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    var extratoList = document.getElementById('extratoList');
-    var txns = STATE.transactions || [];
-    var txnRows = [];
-    txns.forEach(function(t) {
-      if (t.type === 'deposit') {
-        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Deposito</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
-      } else if (t.type === 'withdrawal') {
-        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Saque</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
-      }
-    });
-    txnRows.sort((a, c) => new Date(c.at) - new Date(a.at));
-    extratoList.innerHTML = txnRows.length ? txnRows.map((r) => r.html).join('') : emptyState('', 'Sem transacoes', 'Deposite para comecar a jogar.');
+    this.renderExtrato();
     var apostasEl = document.getElementById('apostasCarteira');
     var betRows = [];
     STATE.bets.forEach((b) => {
@@ -1111,6 +1101,28 @@ const Render = {
     });
     betRows.sort((a, c) => new Date(c.at) - new Date(a.at));
     apostasEl.innerHTML = betRows.length ? betRows.map((r) => r.html).join('') : emptyState('', 'Sem apostas', 'Faca uma aposta para ver aqui.');
+  },
+  filterExtrato(filter) {
+    this.extratoFilter = filter;
+    document.querySelectorAll('.extrato-filter').forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
+    this.renderExtrato();
+  },
+  renderExtrato() {
+    var filter = this.extratoFilter;
+    var extratoList = document.getElementById('extratoList');
+    var txns = STATE.transactions || [];
+    var filtered = filter === 'todos' ? txns : txns.filter(function(t) { return t.type === filter; });
+    var txnRows = [];
+    filtered.forEach(function(t) {
+      if (t.type === 'deposit') {
+        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Deposito</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount pos">+ ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
+      } else if (t.type === 'withdrawal') {
+        txnRows.push({ at: t.at, html: '<div class="extrato-item"><div class="extrato-top"><div><div class="extrato-title">Saque</div><div class="extrato-date">' + fmtDateTime(t.at) + '</div></div><div class="extrato-amount neg">- ' + Wallet.fmtBRL(t.amount) + '</div></div></div>' });
+      }
+    });
+    txnRows.sort((a, c) => new Date(c.at) - new Date(a.at));
+    var emptyMsg = filter === 'deposit' ? 'Nenhum deposito encontrado.' : filter === 'withdrawal' ? 'Nenhum saque encontrado.' : 'Deposite para comecar a jogar.';
+    extratoList.innerHTML = txnRows.length ? txnRows.map((r) => r.html).join('') : emptyState('', 'Sem transacoes', emptyMsg);
   },
   depositar() {
     const grid = document.getElementById('depositAmounts');

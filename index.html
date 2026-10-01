@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=112">
+<link rel="stylesheet" href="styles.css?v=113">
 </head>
 <body>
 <div class="page">
@@ -450,6 +450,11 @@
         </button>
       </div>
       <div class="section-head"><h3>Extrato</h3></div>
+      <div class="extrato-filters">
+        <button class="extrato-filter active" data-filter="todos" onclick="Render.filterExtrato('todos')">Todos</button>
+        <button class="extrato-filter" data-filter="deposit" onclick="Render.filterExtrato('deposit')">Depositos</button>
+        <button class="extrato-filter" data-filter="withdrawal" onclick="Render.filterExtrato('withdrawal')">Saques</button>
+      </div>
       <div class="extrato-list" id="extratoList"></div>
       <div class="section-head"><h3>Minhas apostas</h3></div>
       <div class="extrato-list" id="apostasCarteira"></div>
@@ -997,6 +1002,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=78"></script>
+<script src="app.js?v=79"></script>
 </body>
 </html>
