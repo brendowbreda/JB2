@@ -796,10 +796,10 @@ const Wizard = {
 
     if (this.step === 1) this.renderDate(body, footer);
     else if (this.step === 2) this.renderMod(body, footer);
-    else if (this.step === 3) this.renderLot(body, footer);
-    else if (this.step === 4) this.renderInput(body, footer);
-    else if (this.step === 5) this.renderPlace(body, footer);
-    else if (this.step === 6) this.renderAmount(body, footer);
+    else if (this.step === 3) this.renderInput(body, footer);
+    else if (this.step === 4) this.renderPlace(body, footer);
+    else if (this.step === 5) this.renderAmount(body, footer);
+    else if (this.step === 6) this.renderLot(body, footer);
     else if (this.step === 7) this.renderConfirm(body, footer);
     else if (this.step === 8) this.renderSuccess(body, footer);
   },
@@ -848,8 +848,7 @@ const Wizard = {
     this.digits = [];
     this.palpites = [];
     this.selectedAnimals = [];
-    this.step = 3;
-    this.render();
+    this.next();
   },
 
   renderLot(body, footer) {
@@ -866,8 +865,7 @@ const Wizard = {
   },
   pickLot(id) {
     this.draft.loteria = LOTERIAS.find(function(l) { return l.id === id; });
-    this.step = 4;
-    this.render();
+    this.next();
   },
 
   renderInput(body, footer) {
@@ -923,8 +921,7 @@ const Wizard = {
   numContinue() {
     if (this.palpites.length === 0) return;
     this.draft.palpites = this.palpites.slice();
-    this.step = 5;
-    this.render();
+    this.next();
   },
 
   renderAnimalPick(body, footer) {
@@ -972,8 +969,7 @@ const Wizard = {
     if (this.palpites.length === 0) return;
     this.draft.palpites = this.palpites.slice();
     this.draft.animal = animalByGroup(this.draft._lastAnimalG || ANIMALS[0].g);
-    this.step = 5;
-    this.render();
+    this.next();
   },
 
   renderPlace(body, footer) {
@@ -990,14 +986,14 @@ const Wizard = {
   pickPlace(label) {
     var mod = this.draft.modality;
     this.draft.tier = mod.tiers.find(function(t) { return t.label === label; });
-    this.step = 6;
-    this.render();
+    this.next();
   },
 
   renderAmount(body, footer) {
     var self = this;
     var amounts = [1, 5, 10, 50];
     var sel = this.draft.amount;
+    var numPalpites = this.draft.palpites ? this.draft.palpites.length : 1;
     var grid = amounts.map(function(v) {
       var s = sel === v ? ' selected' : '';
       var pop = v === 5 ? '<span class="wiz-pop-badge">Mais escolhido</span>' : '';
@@ -1005,23 +1001,47 @@ const Wizard = {
     }).join('');
     var inputVal = this.draft.customAmount || '';
     var mult = this.draft.tier ? this.draft.tier.value : this.draft.modality.mult;
+    var multNum = parseFloat(String(mult).replace(/\./g, '').replace(',', '.')) || 0;
+    var amt = sel || parseFloat(String(inputVal).replace(',', '.')) || 0;
+
+    var splitHtml = '';
+    if (numPalpites > 1 && amt > 0) {
+      var splitMode = this.draft.splitMode || 'each';
+      var selEach = splitMode === 'each' ? ' selected' : '';
+      var selAll = splitMode === 'all' ? ' selected' : '';
+      var totalEach = amt * numPalpites;
+      var perAll = (amt / numPalpites);
+      splitHtml = '<p class="wiz-split-title">Como dividir o valor entre os ' + numPalpites + ' palpites?</p>' +
+        '<div class="wiz-split-option' + selEach + '" onclick="Wizard.pickSplit(\'each\')">' +
+        '<strong>Cada Palpite</strong>' +
+        '<p>Você paga <strong>' + Wallet.fmtBRL(amt) + '</strong> em cada um dos seus <strong>' + numPalpites + '</strong> palpites. Total apostado <strong>' + Wallet.fmtBRL(totalEach) + '</strong>.</p></div>' +
+        '<div class="wiz-split-option' + selAll + '" onclick="Wizard.pickSplit(\'all\')">' +
+        '<strong>Todos os Palpites</strong>' +
+        '<p>Os <strong>' + Wallet.fmtBRL(amt) + '</strong> são divididos entre os <strong>' + numPalpites + '</strong> palpites — <strong>' + Wallet.fmtBRL(perAll) + '</strong> para cada palpite. Total apostado <strong>' + Wallet.fmtBRL(amt) + '</strong>.</p></div>';
+    }
+
+    var prizeAmt = numPalpites > 1 && this.draft.splitMode === 'all' ? amt / numPalpites : amt;
     var prize = '';
-    if (sel || inputVal) {
-      var amt = sel || parseFloat(String(inputVal).replace(',', '.')) || 0;
-      var multNum = parseFloat(String(mult).replace(/\./g, '').replace(',', '.')) || 0;
-      var prizeVal = amt * multNum;
-      prize = '<div class="wiz-prize-row"><span class="wiz-prize-label">Prêmio estimado</span><span class="wiz-prize-value">' + Wallet.fmtBRL(prizeVal) + '</span></div>';
+    if (amt > 0) {
+      var prizeVal = prizeAmt * multNum;
+      var prizeLabel = numPalpites > 1 ? 'Prêmio estimado<br><small>(por palpite)</small>' : 'Prêmio estimado';
+      prize = '<div class="wiz-prize-row"><span class="wiz-prize-label">' + prizeLabel + '</span><span class="wiz-prize-value">' + Wallet.fmtBRL(prizeVal) + '</span></div>';
     }
     body.innerHTML = '<h2>Quanto quer apostar?</h2>' +
       '<p class="wiz-sub">Mínimo R$ 0,10 — máximo R$ 5.000,00 por bilhete.</p>' +
       '<div class="wiz-amount-grid">' + grid + '</div>' +
       '<input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="wizAmountInput" value="' + (inputVal ? 'R$  ' + inputVal : '') + '" oninput="Wizard.amountInput(this)">' +
-      prize;
+      splitHtml + prize;
     footer.innerHTML = '<button class="btn-primary" onclick="Wizard.amountContinue()">Continuar</button>';
+  },
+  pickSplit(mode) {
+    this.draft.splitMode = mode;
+    this.render();
   },
   pickAmount(v) {
     this.draft.amount = v;
     this.draft.customAmount = '';
+    if (!this.draft.splitMode) this.draft.splitMode = 'each';
     this.render();
   },
   amountInput(el) {
@@ -1035,24 +1055,28 @@ const Wizard = {
   amountContinue() {
     if (!this.draft.amount || this.draft.amount <= 0) { toast('Escolha um valor válido.'); return; }
     if (this.draft.amount > STATE.points) { toast('Saldo insuficiente. Deposite mais.'); return; }
-    this.step = 7;
-    this.render();
+    this.next();
   },
 
   renderConfirm(body, footer) {
     var d = this.draft;
     var mult = d.tier ? d.tier.value : d.modality.mult;
     var multNum = parseFloat(String(mult).replace(/\./g, '').replace(',', '.')) || 0;
-    var prize = d.amount * multNum;
+    var numP = d.palpites.length;
+    var splitMode = d.splitMode || 'each';
+    var totalBet = splitMode === 'each' ? d.amount * numP : d.amount;
+    var perPalpite = splitMode === 'each' ? d.amount : d.amount / numP;
+    var prize = perPalpite * multNum;
+    var splitLabel = numP > 1 ? (splitMode === 'each' ? 'Cada Palpite' : 'Todos os Palpites') : '—';
     body.innerHTML = '<h2>Confirme sua aposta</h2>' +
       '<div class="wiz-confirm-card">' +
       '<div class="wiz-confirm-row"><span>Modalidade</span><span>' + d.modality.name + '</span></div>' +
       '<div class="wiz-confirm-row"><span>Sorteio</span><span>' + d.loteria.name + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Palpites (' + d.palpites.length + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Colocação</span><span>' + d.tier.label + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Divisão do valor</span><span>Cada Palpite</span></div>' +
-      '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(d.amount) + '</span></div>' +
-      '<div class="wiz-confirm-row total"><span>Prêmio estimado</span><span>' + Wallet.fmtBRL(prize) + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Palpites (' + numP + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Colocação</span><span>' + (d.tier ? d.tier.label : '—') + '</span></div>' +
+      (numP > 1 ? '<div class="wiz-confirm-row"><span>Divisão do valor</span><span>' + splitLabel + '</span></div>' : '') +
+      '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(totalBet) + '</span></div>' +
+      '<div class="wiz-confirm-row total"><span>Prêmio estimado (por palpite)</span><span>' + Wallet.fmtBRL(prize) + '</span></div>' +
       '</div>';
     footer.innerHTML = '<button class="btn-primary" onclick="Wizard.confirmBet()">Confirmar Aposta</button>';
   },
@@ -1064,21 +1088,25 @@ const Wizard = {
     var animal = isGroup ? animalByGroup(parseInt(d.palpites[0]) || 1) : null;
     var modKey = mod.id === 'grupo' || mod.id === 'duque-grupo' || mod.id === 'terno-grupo' ? 'grupo' : 'dezena';
     var mult = parseFloat(String(d.tier ? d.tier.value : mod.mult).replace(/\./g, '').replace(',', '.')) || 0;
+    var numP = d.palpites.length;
+    var splitMode = d.splitMode || 'each';
+    var totalBet = splitMode === 'each' ? d.amount * numP : d.amount;
+    var perPalpite = splitMode === 'each' ? d.amount : d.amount / numP;
     var placedAt = nowIso();
     var bet = {
       id: uid(),
       animal: animal || animalByGroup(1),
       modality: modKey,
       dezena: isGroup ? null : d.palpites[0],
-      amount: d.amount,
+      amount: totalBet,
       horario: d.loteria.name,
       placedAt: placedAt,
       resolveAt: new Date(Date.now() + 25000 + Math.random() * 20000).toISOString(),
       status: 'aguardando',
-      payout: d.amount * mult,
+      payout: perPalpite * mult,
     };
-    STATE.points -= d.amount;
-    STATE.totalWagered += d.amount;
+    STATE.points -= totalBet;
+    STATE.totalWagered += totalBet;
     STATE.totalBets += 1;
     STATE.bets.unshift(bet);
     Streak.markThisWeek();
@@ -1094,7 +1122,11 @@ const Wizard = {
   renderSuccess(body, footer) {
     var d = this.draft;
     var mult = parseFloat(String(d.tier ? d.tier.value : d.modality.mult).replace(/\./g, '').replace(',', '.')) || 0;
-    var prize = d.amount * mult;
+    var numP = d.palpites.length;
+    var splitMode = d.splitMode || 'each';
+    var totalBet = splitMode === 'each' ? d.amount * numP : d.amount;
+    var perPalpite = splitMode === 'each' ? d.amount : d.amount / numP;
+    var prize = perPalpite * mult;
     body.innerHTML = '<div class="wiz-success">' +
       '<div class="wiz-success-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' +
       '<h2>Aposta confirmada!</h2>' +
@@ -1102,10 +1134,10 @@ const Wizard = {
       '<div class="wiz-confirm-card">' +
       '<div class="wiz-confirm-row"><span>Modalidade</span><span>' + d.modality.name + '</span></div>' +
       '<div class="wiz-confirm-row"><span>Sorteio</span><span>' + d.loteria.name + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Palpites (' + d.palpites.length + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Colocação</span><span>' + d.tier.label + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(d.amount) + '</span></div>' +
-      '<div class="wiz-confirm-row total"><span>Prêmio estimado</span><span>' + Wallet.fmtBRL(prize) + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Palpites (' + numP + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Colocação</span><span>' + (d.tier ? d.tier.label : '—') + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(totalBet) + '</span></div>' +
+      '<div class="wiz-confirm-row total"><span>Prêmio estimado (por palpite)</span><span>' + Wallet.fmtBRL(prize) + '</span></div>' +
       '</div></div>';
     footer.innerHTML = '<button class="btn-primary" onclick="go(\'s-home\')">Voltar para o site</button>';
   },

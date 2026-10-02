@@ -871,6 +871,16 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   background: var(--card); color: var(--ink); font-family: var(--font); margin-top: 10px;
 }
 .wiz-amount-input:focus { border-color: var(--primary); outline: none; }
+.wiz-split-title { font-size: 14px; font-weight: 600; color: var(--ink); margin: 18px 0 10px; }
+.wiz-split-option {
+  background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-md);
+  padding: 14px 16px; cursor: pointer; margin-bottom: 10px;
+}
+.wiz-split-option strong { font-size: 15px; font-weight: 700; color: var(--ink); display: block; margin-bottom: 4px; }
+.wiz-split-option p { font-size: 13px; color: var(--ink-dim); margin: 0; line-height: 1.45; }
+.wiz-split-option.selected { border-color: var(--primary); background: var(--primary-tint); }
+.wiz-split-option.selected strong { color: var(--primary-deep); }
+
 .wiz-prize-row {
   display: flex; justify-content: space-between; align-items: center;
   background: var(--primary-tint); border-radius: var(--radius-md);
