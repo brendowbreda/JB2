@@ -1336,7 +1336,22 @@ const Render = {
     var pWins = document.getElementById('perfilTotalWins');
     if (pWins) pWins.textContent = STATE.bets.filter(function(b) { return b.status === 'ganhou'; }).length;
     var pMedals = document.getElementById('perfilTotalMedals');
-    if (pMedals) pMedals.textContent = ACHIEVEMENTS.filter(function(a) { return STATE.achievements[a.id]; }).length;
+    var unlocked = ACHIEVEMENTS.filter(function(a) { return STATE.achievements[a.id]; });
+    if (pMedals) pMedals.textContent = unlocked.length;
+    var pcHead = document.getElementById('perfilConquistasHead');
+    var pcGrid = document.getElementById('perfilConquistasGrid');
+    var pcMore = document.getElementById('perfilConquistasMore');
+    if (pcGrid) {
+      if (unlocked.length > 0) {
+        if (pcHead) pcHead.style.display = '';
+        pcGrid.innerHTML = unlocked.slice(0, 3).map(function(a) { return achvTileHtml(a, true); }).join('');
+        if (pcMore) pcMore.className = unlocked.length > 3 ? '' : 'hidden';
+      } else {
+        if (pcHead) pcHead.style.display = 'none';
+        pcGrid.innerHTML = '';
+        if (pcMore) pcMore.className = 'hidden';
+      }
+    }
     const amigosList = document.getElementById('perfilAmigosList');
     if (amigosList) {
       if (STATE.friends.length) {
