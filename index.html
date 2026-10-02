@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=132">
+<link rel="stylesheet" href="styles.css?v=133">
 </head>
 <body>
 <div class="page">
@@ -563,24 +563,22 @@
 
     <!-- ======================= RESULTADOS ======================= -->
     <section class="screen" id="s-resultados">
-      <div class="res-dark">
-        <div class="res-header">
-          <button class="res-close" onclick="go('s-home')">✕</button>
-          <h2 class="res-title">Resultados</h2>
-          <p class="res-subtitle">Confira os resultados atualizados em tempo real.</p>
-        </div>
-        <div class="res-date-row">
-          <span class="res-date-icon">📅</span>
-          <span class="res-date-text" id="resDateText">Hoje, 1 de outubro</span>
-          <span class="res-date-lock">🔒</span>
-        </div>
-        <div class="res-location-row">
-          <span class="res-loc-icon">📍</span>
-          <span class="res-loc-text">Rio de Janeiro</span>
-          <span class="res-loc-arrow">▾</span>
-        </div>
-        <div class="res-draws" id="resDrawsList"></div>
+      <div class="topbar-simple">
+        <button class="icon-btn" onclick="go('s-home')">←</button>
+        <h2>Resultados</h2>
+        <span class="spacer"></span>
       </div>
+      <p class="res-subtitle">Confira os resultados atualizados em tempo real.</p>
+      <div class="res-date-row">
+        <span class="res-date-icon">📅</span>
+        <span class="res-date-text" id="resDateText">Hoje, 1 de outubro</span>
+      </div>
+      <div class="res-location-row">
+        <span class="res-loc-icon">📍</span>
+        <span class="res-loc-text">Rio de Janeiro</span>
+        <span class="res-loc-arrow">▾</span>
+      </div>
+      <div class="res-draws" id="resDrawsList"></div>
     </section>
 
     <!-- ======================= MINHAS APOSTAS ======================= -->
