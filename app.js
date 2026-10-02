@@ -790,6 +790,8 @@ const Wizard = {
     var pct = (this.step / 8) * 100;
     document.getElementById('wizProgressFill').style.width = pct + '%';
     document.getElementById('wizStepLabel').textContent = 'PASSO ' + this.step + ' DE 8';
+    var backBtn = document.getElementById('wizBackBtn');
+    if (backBtn) backBtn.style.visibility = this.step <= 1 || this.step === 8 ? 'hidden' : 'visible';
     var body = document.getElementById('wizBody');
     var footer = document.getElementById('wizFooter');
     footer.innerHTML = '';

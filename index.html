@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=145">
+<link rel="stylesheet" href="styles.css?v=146">
 </head>
 <body>
 <div class="page">
@@ -600,9 +600,12 @@
     <!-- ======================= JOGAR (wizard 8 passos) ======================= -->
     <section class="screen" id="s-wizard">
       <div class="wiz-header">
+        <div class="wiz-topbar">
+          <button class="icon-btn" id="wizBackBtn" onclick="Wizard.back()">←</button>
+          <span class="wiz-step-label" id="wizStepLabel">PASSO 1 DE 8</span>
+          <button class="icon-btn" onclick="Wizard.close()">✕</button>
+        </div>
         <div class="wiz-progress"><div class="wiz-progress-fill" id="wizProgressFill"></div></div>
-        <p class="wiz-step-label" id="wizStepLabel">PASSO 1 DE 8</p>
-        <button class="wiz-close" onclick="Wizard.close()">✕</button>
       </div>
       <div class="wiz-body" id="wizBody"></div>
       <div class="wiz-footer" id="wizFooter"></div>
@@ -1014,6 +1017,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=112"></script>
+<script src="app.js?v=113"></script>
 </body>
 </html>
