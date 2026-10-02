@@ -61,10 +61,7 @@ const ACHIEVEMENTS = [
   { id: 'manha-da-sorte', name: 'Manhã da Sorte', emoji: '☀️', img: 'img/conquista-manha-da-sorte.png', desc: 'Ganhe uma aposta feita no período da manhã.', obs: 'Entre 6h e 12h.' },
   { id: 'velocidade-maxima', name: 'Velocidade Máxima', emoji: '⚡', img: 'img/conquista-velocidade-maxima.png', desc: 'Consiga 3 vitórias no mesmo dia.', obs: 'Velocidade e sorte!' },
   { id: 'coruja-sortuda', name: 'Coruja Sortuda', emoji: '🦉', img: 'img/conquista-coruja-sortuda.png', desc: 'Faça uma aposta entre 22h e 6h da manhã.', obs: 'A sorte não dorme!' },
-  { id: 'na-mosca', name: 'Na Mosca', emoji: '🎯', desc: 'Acerte uma aposta na modalidade milhar. Precisão máxima!' },
-  { id: 'sorte-acomodada', name: 'Sorte Acomodada', emoji: '🍀', desc: 'Ganhe pelo menos uma aposta por dia durante 7 dias seguidos.' },
-  { id: 'amizade-e-tudo', name: 'Amizade é Tudo', emoji: '🤝', desc: 'Indique seu primeiro amigo para o Palpite Club.' },
-  { id: 'festa-dos-amigos', name: 'Festa dos Amigos', emoji: '🎉', desc: 'Indique 10 amigos para o Palpite Club. Quanto mais, melhor!' },
+  { id: 'amizade-e-tudo', name: 'Amizade é Tudo', emoji: '🤝', img: 'img/conquista-amizade-e-tudo.png', desc: 'Indique seu primeiro amigo para o Palpite Club.' },
 ];
 
 const MODALITY = {
@@ -650,27 +647,8 @@ const Achv = {
     });
     if (hasNightBet) this.unlock('coruja-sortuda');
 
-    // Na Mosca: acertar milhar (modality milhar e ganhou)
-    if (s.bets.some(function(b) { return b.modality === 'milhar' && b.status === 'ganhou'; })) this.unlock('na-mosca');
-
-    // Sorte Acomodada: ganhar uma vez por dia em 7 dias seguidos
-    var winDates = [];
-    s.bets.filter(function(b) { return b.status === 'ganhou'; }).forEach(function(b) {
-      var d = new Date(b.placedAt).toISOString().slice(0, 10);
-      if (winDates.indexOf(d) === -1) winDates.push(d);
-    });
-    winDates.sort();
-    var consecutive = 1;
-    for (var i = 1; i < winDates.length; i++) {
-      var prev = new Date(winDates[i - 1]); prev.setDate(prev.getDate() + 1);
-      if (prev.toISOString().slice(0, 10) === winDates[i]) { consecutive++; if (consecutive >= 7) { this.unlock('sorte-acomodada'); break; } }
-      else consecutive = 1;
-    }
-
     // Amizade é Tudo: ter 1 amigo
     if (s.friends && s.friends.length >= 1) this.unlock('amizade-e-tudo');
-    // Festa dos Amigos: ter 10 amigos
-    if (s.friends && s.friends.length >= 10) this.unlock('festa-dos-amigos');
 
     // Frequencia: notificar marcos de apostas na semana
     if (betsThisWeek === 10 && !s._notif10week) {
