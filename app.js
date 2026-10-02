@@ -719,49 +719,342 @@ const Achv = {
 };
 
 /* ---------------- bet flow ---------------- */
-const Bet = {
+const LOTERIAS = [
+  { id: 'instantanea', name: 'Instantânea', badge: 'Loteria da casa' },
+  { id: 'rj', name: 'Rio de Janeiro', badge: '6 horários' },
+  { id: 'sp', name: 'São Paulo' },
+  { id: 'nacional', name: 'Nacional' },
+  { id: 'brasilia', name: 'Brasília' },
+  { id: 'mg', name: 'Minas Gerais' },
+  { id: 'pe', name: 'Pernambuco' },
+  { id: 'ce', name: 'Ceará' },
+  { id: 'go', name: 'Goiás' },
+  { id: 'rn', name: 'Rio Grande do Norte' },
+  { id: 'pb', name: 'Paraíba' },
+];
+
+const ANIMAL_IMGS = [
+  '','01-avestruz','02-aguia','03-burro','04-borboleta','05-cachorro','06-cabra',
+  '07-carneiro','08-camelo','09-cobra','10-coelho','11-cavalo','12-elefante',
+  '13-galo','14-gato','15-jacare','16-leao','17-macaco','18-porco',
+  '19-pavao','20-peru','21-touro','22-tigre','23-urso','24-veado','25-vaca'
+];
+
+const MOD_DIGITS = {
+  milhar: 4, 'milhar-centena': 4, 'milhar-invertida': 4,
+  centena: 3, 'centena-invertida': 3,
+  dezena: 2, 'dezena-invertida': 2,
+};
+
+const Wizard = {
+  step: 1,
   draft: {},
+  digits: [],
+  palpites: [],
+  selectedAnimals: [],
+
   start() {
+    this.step = 1;
     this.draft = {};
-    go('s-jogar-bicho');
+    this.digits = [];
+    this.palpites = [];
+    this.selectedAnimals = [];
+    go('s-wizard');
+  },
+  close() { go('s-home'); },
+  next() { this.step++; this.render(); },
+  back() {
+    if (this.step > 1) { this.step--; this.render(); }
+    else this.close();
+  },
+
+  render() {
+    var pct = (this.step / 8) * 100;
+    document.getElementById('wizProgressFill').style.width = pct + '%';
+    document.getElementById('wizStepLabel').textContent = 'PASSO ' + this.step + ' DE 8';
+    var body = document.getElementById('wizBody');
+    var footer = document.getElementById('wizFooter');
+    footer.innerHTML = '';
+
+    if (this.step === 1) this.renderDate(body, footer);
+    else if (this.step === 2) this.renderMod(body, footer);
+    else if (this.step === 3) this.renderLot(body, footer);
+    else if (this.step === 4) this.renderInput(body, footer);
+    else if (this.step === 5) this.renderPlace(body, footer);
+    else if (this.step === 6) this.renderAmount(body, footer);
+    else if (this.step === 7) this.renderConfirm(body, footer);
+    else if (this.step === 8) this.renderSuccess(body, footer);
+  },
+
+  renderDate(body, footer) {
+    var days = [];
+    var dayNames = ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
+    for (var i = 0; i < 6; i++) {
+      var d = new Date(); d.setDate(d.getDate() + i);
+      var label = i === 0 ? 'HOJE' : i === 1 ? 'AMANHÃ' : dayNames[d.getDay()];
+      days.push({ label: label, day: pad2(d.getDate()) + '/' + pad2(d.getMonth() + 1), date: d.toISOString().slice(0,10), selected: this.draft.date === d.toISOString().slice(0,10) || (i === 0 && !this.draft.date) });
+    }
+    if (!this.draft.date) this.draft.date = days[0].date;
+    body.innerHTML = '<h2>Quando você quer apostar?</h2>' +
+      '<div class="wiz-date-grid">' + days.map(function(d) {
+        return '<div class="wiz-date-tile' + (d.selected ? ' selected' : '') + '" onclick="Wizard.pickDate(\'' + d.date + '\')">' +
+          '<span class="wiz-date-day">' + d.label + '</span>' +
+          '<span class="wiz-date-num">' + d.day + '</span></div>';
+      }).join('') + '</div>';
+    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.next()">Continuar</button>' +
+      '<p class="wiz-note">Deixe agendado para os próximos dias e não perca nenhum sorteio.</p>';
+  },
+  pickDate(d) { this.draft.date = d; this.render(); },
+
+  renderMod(body, footer) {
+    var numMods = COTACOES.filter(function(c) { return !['grupo','duque-grupo','terno-grupo'].includes(c.id); });
+    var grpMods = COTACOES.filter(function(c) { return ['grupo','duque-grupo','terno-grupo'].includes(c.id); });
+    var html = '<h2>Escolha a modalidade</h2><div class="wiz-mod-list">';
+    numMods.forEach(function(c) {
+      var badge = c.id === 'milhar' ? '<span class="wiz-mod-badge">Mais apostada</span>' : '';
+      html += '<button class="wiz-mod-row" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
+        '<span><span class="wiz-mod-name">' + c.name + '</span>' + badge + '</span>' +
+        '<span class="wiz-mod-mult">' + c.mult + '</span></button>';
+    });
+    grpMods.forEach(function(c) {
+      var badge = c.id === 'grupo' ? '<span class="wiz-mod-badge gold">Destaque</span>' : '';
+      html += '<button class="wiz-mod-row" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
+        '<span><span class="wiz-mod-name">' + c.name + '</span>' + badge + '</span>' +
+        '<span class="wiz-mod-mult">' + c.mult + '</span></button>';
+    });
+    html += '</div>';
+    body.innerHTML = html;
+  },
+  pickMod(id) {
+    this.draft.modality = COTACOES.find(function(c) { return c.id === id; });
+    this.digits = [];
+    this.palpites = [];
+    this.selectedAnimals = [];
+    this.step = 3;
+    this.render();
+  },
+
+  renderLot(body, footer) {
+    var html = '<h2>Escolha uma loteria / sorteio</h2>' +
+      '<p class="wiz-sub">Além das loterias nacional e estaduais, temos a <strong>Instantânea</strong> — a loteria da casa, com resultado a cada minuto.</p>' +
+      '<div class="wiz-lot-list">';
+    LOTERIAS.forEach(function(l) {
+      var badge = l.badge ? '<span class="wiz-lot-badge">' + l.badge + '</span>' : '';
+      html += '<button class="wiz-lot-row" onclick="Wizard.pickLot(\'' + l.id + '\')">' +
+        '<span><span class="wiz-lot-name">' + l.name + '</span>' + badge + '</span></button>';
+    });
+    html += '</div>';
+    body.innerHTML = html;
+  },
+  pickLot(id) {
+    this.draft.loteria = LOTERIAS.find(function(l) { return l.id === id; });
+    this.step = 4;
+    this.render();
+  },
+
+  renderInput(body, footer) {
+    var mod = this.draft.modality;
+    var isGroup = ['grupo','duque-grupo','terno-grupo'].includes(mod.id);
+    if (isGroup) this.renderAnimalPick(body, footer);
+    else this.renderNumpad(body, footer);
+  },
+
+  renderNumpad(body, footer) {
+    var mod = this.draft.modality;
+    var numDigits = MOD_DIGITS[mod.id] || 4;
+    var slots = '';
+    for (var i = 0; i < numDigits; i++) {
+      var val = this.digits[i] || '–';
+      var cls = this.digits[i] !== undefined ? ' filled' : '';
+      slots += '<div class="wiz-digit-slot' + cls + '">' + val + '</div>';
+    }
+    var tags = this.palpites.map(function(p) { return '<span class="wiz-palpite-tag">' + p + '</span>'; }).join('');
+    var desc = mod.name;
+    var sub = '';
+    if (mod.id === 'milhar-centena') {
+      sub = 'Vá digitando os números. A cada ' + numDigits + ' dígitos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.<br><br>Acertando os 4 números, você ganha a Milhar e a Centena juntas. Acertando só os 3 últimos, ganha a Centena.';
+    } else {
+      sub = 'Vá digitando os números. A cada ' + numDigits + ' dígitos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.';
+    }
+    body.innerHTML = '<h2>' + desc + '</h2><p class="wiz-sub">' + sub + '</p>' +
+      '<div class="wiz-palpites-label"><span>SEUS PALPITES</span><span>' + this.palpites.length + ' de 10</span></div>' +
+      '<div class="wiz-palpites-list">' + tags + '</div>' +
+      '<div class="wiz-numpad"><div class="wiz-digits">' + slots + '</div>' +
+      '<div class="wiz-numpad-grid">' +
+      [1,2,3,4,5,6,7,8,9].map(function(n) { return '<button class="wiz-numpad-key" onclick="Wizard.numKey(' + n + ')">' + n + '</button>'; }).join('') +
+      '<button class="wiz-numpad-key fn" onclick="Wizard.numClear()">Limpar</button>' +
+      '<button class="wiz-numpad-key" onclick="Wizard.numKey(0)">0</button>' +
+      '<button class="wiz-numpad-key fn" onclick="Wizard.numBack()">⌫</button>' +
+      '</div></div>';
+    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.numContinue()"' + (this.palpites.length === 0 ? ' disabled style="opacity:.5;pointer-events:none"' : '') + '>Continuar</button>';
+  },
+  numKey(n) {
+    var mod = this.draft.modality;
+    var numDigits = MOD_DIGITS[mod.id] || 4;
+    if (this.digits.length < numDigits) {
+      this.digits.push(n);
+      if (this.digits.length === numDigits && this.palpites.length < 10) {
+        this.palpites.push(this.digits.join(''));
+        this.digits = [];
+      }
+      this.render();
+    }
+  },
+  numBack() { this.digits.pop(); this.render(); },
+  numClear() { this.digits = []; this.render(); },
+  numContinue() {
+    if (this.palpites.length === 0) return;
+    this.draft.palpites = this.palpites.slice();
+    this.step = 5;
+    this.render();
+  },
+
+  renderAnimalPick(body, footer) {
+    var mod = this.draft.modality;
+    var needed = mod.id === 'grupo' ? 1 : mod.id === 'duque-grupo' ? 2 : 3;
+    var desc = mod.name;
+    var sub = '';
+    if (mod.id === 'grupo') sub = 'No Grupo você não digita números — escolha o bicho em que quer apostar. Cada um representa 4 dezenas.';
+    else if (mod.id === 'duque-grupo') sub = 'Escolha 2 bichos. A cada 2 escolhidos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.';
+    else sub = 'Escolha 3 bichos. A cada 3 escolhidos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.';
+    var self = this;
+    var tags = this.palpites.map(function(p) { return '<span class="wiz-palpite-tag">' + p + '</span>'; }).join('');
+    var grid = ANIMALS.map(function(a) {
+      var sel = self.selectedAnimals.indexOf(a.g) !== -1 ? ' selected' : '';
+      var dzs = dezenasFor(a.g).join('·');
+      var imgFile = ANIMAL_IMGS[a.g];
+      return '<div class="wiz-animal-tile' + sel + '" onclick="Wizard.pickAnimal(' + a.g + ')">' +
+        '<img src="bichos/' + imgFile + '.png" alt="' + a.name + '">' +
+        '<div class="wiz-animal-info"><span class="wiz-animal-num">' + pad2(a.g) + '</span>' +
+        '<span class="wiz-animal-name">' + a.name + '</span>' +
+        '<span class="wiz-animal-dzs">' + dzs + '</span></div></div>';
+    }).join('');
+    body.innerHTML = '<h2>' + desc + '</h2><p class="wiz-sub">' + sub + '</p>' +
+      '<div class="wiz-palpites-label"><span>SEUS PALPITES</span><span>' + this.palpites.length + ' de 10</span></div>' +
+      '<div class="wiz-palpites-list">' + tags + '</div>' +
+      '<div class="wiz-animal-grid">' + grid + '</div>';
+    var canContinue = (mod.id === 'grupo' && this.palpites.length > 0) || (mod.id !== 'grupo' && this.palpites.length > 0);
+    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.animalContinue()"' + (!canContinue ? ' disabled style="opacity:.5;pointer-events:none"' : '') + '>Continuar</button>';
   },
   pickAnimal(g) {
-    this.draft.animal = animalByGroup(g);
-    go('s-jogar-modalidade');
+    var mod = this.draft.modality;
+    var needed = mod.id === 'grupo' ? 1 : mod.id === 'duque-grupo' ? 2 : 3;
+    var idx = this.selectedAnimals.indexOf(g);
+    if (idx !== -1) { this.selectedAnimals.splice(idx, 1); this.render(); return; }
+    this.selectedAnimals.push(g);
+    this.draft._lastAnimalG = g;
+    if (this.selectedAnimals.length === needed && this.palpites.length < 10) {
+      var names = this.selectedAnimals.map(function(gg) { return animalByGroup(gg).name; });
+      this.palpites.push(names.join(' + '));
+      this.selectedAnimals = [];
+    }
+    this.render();
   },
-  pickModalidade(mod) {
-    this.draft.modality = mod;
-    if (mod === 'dezena') go('s-jogar-dezena');
-    else go('s-jogar-horario');
+  animalContinue() {
+    if (this.palpites.length === 0) return;
+    this.draft.palpites = this.palpites.slice();
+    this.draft.animal = animalByGroup(this.draft._lastAnimalG || ANIMALS[0].g);
+    this.step = 5;
+    this.render();
   },
-  pickDezena(dz) {
-    this.draft.dezena = dz;
-    go('s-jogar-horario');
+
+  renderPlace(body, footer) {
+    var mod = this.draft.modality;
+    var tiers = mod.tiers || [];
+    var self = this;
+    body.innerHTML = '<h2>Colocação</h2>' +
+      '<div class="wiz-place-list">' + tiers.map(function(t) {
+        var sel = self.draft.tier && self.draft.tier.label === t.label ? ' selected' : '';
+        return '<button class="wiz-place-row' + sel + '" onclick="Wizard.pickPlace(\'' + t.label + '\')">' + t.label + '</button>';
+      }).join('') + '</div>';
+    footer.innerHTML = '';
   },
-  pickHorario(h) {
-    this.draft.horario = h;
-    go('s-jogar-valor');
+  pickPlace(label) {
+    var mod = this.draft.modality;
+    this.draft.tier = mod.tiers.find(function(t) { return t.label === label; });
+    this.step = 6;
+    this.render();
   },
-  review() {
-    const custom = document.getElementById('betCustomAmount').value;
-    const amount = Number(custom) || this.draft.amount || 0;
-    if (!amount || amount <= 0) { toast('Escolha um valor válido.'); return; }
-    if (amount > STATE.points) { toast('Saldo insuficiente. Deposite mais pontos.'); return; }
-    this.draft.amount = amount;
-    go('s-jogar-confirmar');
+
+  renderAmount(body, footer) {
+    var self = this;
+    var amounts = [1, 5, 10, 50];
+    var sel = this.draft.amount;
+    var grid = amounts.map(function(v) {
+      var s = sel === v ? ' selected' : '';
+      var pop = v === 5 ? '<span class="wiz-pop-badge">Mais escolhido</span>' : '';
+      return '<div class="wiz-amount-tile' + s + '" onclick="Wizard.pickAmount(' + v + ')">' + pop + 'R$ ' + v + ',00</div>';
+    }).join('');
+    var inputVal = this.draft.customAmount || '';
+    var mult = this.draft.tier ? this.draft.tier.value : this.draft.modality.mult;
+    var prize = '';
+    if (sel || inputVal) {
+      var amt = sel || parseFloat(String(inputVal).replace(',', '.')) || 0;
+      var multNum = parseFloat(String(mult).replace(/\./g, '').replace(',', '.')) || 0;
+      var prizeVal = amt * multNum;
+      prize = '<div class="wiz-prize-row"><span class="wiz-prize-label">Prêmio estimado</span><span class="wiz-prize-value">' + Wallet.fmtBRL(prizeVal) + '</span></div>';
+    }
+    body.innerHTML = '<h2>Quanto quer apostar?</h2>' +
+      '<p class="wiz-sub">Mínimo R$ 0,10 — máximo R$ 5.000,00 por bilhete.</p>' +
+      '<div class="wiz-amount-grid">' + grid + '</div>' +
+      '<input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="wizAmountInput" value="' + (inputVal ? 'R$  ' + inputVal : '') + '" oninput="Wizard.amountInput(this)">' +
+      prize;
+    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.amountContinue()">Continuar</button>';
   },
-  confirm() {
-    const d = this.draft;
-    const mult = MODALITY[d.modality].mult;
-    const placedAt = nowIso();
-    const bet = {
+  pickAmount(v) {
+    this.draft.amount = v;
+    this.draft.customAmount = '';
+    this.render();
+  },
+  amountInput(el) {
+    Wallet.maskMoney(el);
+    var raw = el.value.replace(/\D/g, '');
+    var n = raw ? (parseInt(raw, 10) / 100) : 0;
+    this.draft.customAmount = n ? n.toFixed(2).replace('.', ',') : '';
+    this.draft.amount = n || null;
+    this.render();
+  },
+  amountContinue() {
+    if (!this.draft.amount || this.draft.amount <= 0) { toast('Escolha um valor válido.'); return; }
+    if (this.draft.amount > STATE.points) { toast('Saldo insuficiente. Deposite mais.'); return; }
+    this.step = 7;
+    this.render();
+  },
+
+  renderConfirm(body, footer) {
+    var d = this.draft;
+    var mult = d.tier ? d.tier.value : d.modality.mult;
+    var multNum = parseFloat(String(mult).replace(/\./g, '').replace(',', '.')) || 0;
+    var prize = d.amount * multNum;
+    body.innerHTML = '<h2>Confirme sua aposta</h2>' +
+      '<div class="wiz-confirm-card">' +
+      '<div class="wiz-confirm-row"><span>Modalidade</span><span>' + d.modality.name + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Sorteio</span><span>' + d.loteria.name + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Palpites (' + d.palpites.length + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Colocação</span><span>' + d.tier.label + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Divisão do valor</span><span>Cada Palpite</span></div>' +
+      '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(d.amount) + '</span></div>' +
+      '<div class="wiz-confirm-row total"><span>Prêmio estimado</span><span>' + Wallet.fmtBRL(prize) + '</span></div>' +
+      '</div>';
+    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.confirmBet()">Confirmar Aposta</button>';
+  },
+
+  confirmBet() {
+    var d = this.draft;
+    var mod = d.modality;
+    var isGroup = ['grupo','duque-grupo','terno-grupo'].includes(mod.id);
+    var animal = isGroup ? animalByGroup(parseInt(d.palpites[0]) || 1) : null;
+    var modKey = mod.id === 'grupo' || mod.id === 'duque-grupo' || mod.id === 'terno-grupo' ? 'grupo' : 'dezena';
+    var mult = parseFloat(String(d.tier ? d.tier.value : mod.mult).replace(/\./g, '').replace(',', '.')) || 0;
+    var placedAt = nowIso();
+    var bet = {
       id: uid(),
-      animal: d.animal,
-      modality: d.modality,
-      dezena: d.dezena || null,
+      animal: animal || animalByGroup(1),
+      modality: modKey,
+      dezena: isGroup ? null : d.palpites[0],
       amount: d.amount,
-      horario: d.horario,
-      placedAt,
+      horario: d.loteria.name,
+      placedAt: placedAt,
       resolveAt: new Date(Date.now() + 25000 + Math.random() * 20000).toISOString(),
       status: 'aguardando',
       payout: d.amount * mult,
@@ -774,23 +1067,45 @@ const Bet = {
     STATE.missionDoneToday = true;
     saveState();
     Achv.checkAll({ betPlacedAt: placedAt });
-    const modalidadeTxt = d.dezena ? `dezena ${d.dezena}` : 'grupo';
-    document.getElementById('successText').textContent =
-      `Você apostou 🪙 ${fmtPoints(d.amount)} pts no ${d.animal.emoji} ${d.animal.name} (${modalidadeTxt}). Boa sorte!`;
-    Bet.lastId = bet.id;
-    go('s-jogar-sucesso');
+    Wizard.lastId = bet.id;
+    this.step = 8;
+    this.render();
     Render.home();
   },
+
+  renderSuccess(body, footer) {
+    var d = this.draft;
+    var mult = parseFloat(String(d.tier ? d.tier.value : d.modality.mult).replace(/\./g, '').replace(',', '.')) || 0;
+    var prize = d.amount * mult;
+    body.innerHTML = '<div class="wiz-success">' +
+      '<div class="wiz-success-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+      '<h2>Aposta confirmada!</h2>' +
+      '<p>Boa sorte! Você verá o resultado em Minhas Apostas.</p>' +
+      '<div class="wiz-confirm-card">' +
+      '<div class="wiz-confirm-row"><span>Modalidade</span><span>' + d.modality.name + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Sorteio</span><span>' + d.loteria.name + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Palpites (' + d.palpites.length + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Colocação</span><span>' + d.tier.label + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(d.amount) + '</span></div>' +
+      '<div class="wiz-confirm-row total"><span>Prêmio estimado</span><span>' + Wallet.fmtBRL(prize) + '</span></div>' +
+      '</div></div>';
+    footer.innerHTML = '<button class="btn-primary" onclick="go(\'s-home\')">Voltar para o site</button>';
+  },
+};
+
+const Bet = {
+  start() { Wizard.start(); },
+  lastId: null,
   shareLast() {
-    const b = STATE.bets.find((x) => x.id === Bet.lastId);
+    var b = STATE.bets.find(function(x) { return x.id === Wizard.lastId; });
     if (!b) return;
     STATE.feed.unshift({
       id: uid(), from: 'Você', avatar: STATE.avatar || '🦊',
-      text: `apostou no ${b.animal.emoji} ${b.animal.name} (${MODALITY[b.modality].label}) — ${fmtPoints(b.amount)} pts`,
+      text: 'apostou no ' + b.animal.emoji + ' ' + b.animal.name + ' (' + MODALITY[b.modality].label + ') — ' + fmtPoints(b.amount) + ' pts',
       at: nowIso(),
     });
     saveState();
-    toast('Palpite compartilhado com seus amigos! 📣');
+    toast('Palpite compartilhado com seus amigos!');
   },
 };
 
@@ -1108,11 +1423,7 @@ const Render = {
     else if (id === 's-sacar') this.sacar();
     else if (id === 's-resultados') this.resultados();
     else if (id === 's-apostas') this.apostas();
-    else if (id === 's-jogar-bicho') this.animalGrid();
-    else if (id === 's-jogar-dezena') this.dezenaGrid();
-    else if (id === 's-jogar-horario') this.horarioList();
-    else if (id === 's-jogar-valor') this.betValor();
-    else if (id === 's-jogar-confirmar') this.betConfirm();
+    else if (id === 's-wizard') Wizard.render();
     else if (id === 's-perfil') this.perfil();
     else if (id === 's-conquistas') this.conquistas();
     else if (id === 's-amigos') this.amigos();
@@ -1338,52 +1649,7 @@ const Render = {
       + '</div>';
     list.innerHTML = filtered.length ? filtered.map((b) => betRowHtml(b)).join('') : emptyState('', emptyTitle, emptySub, gameButtons);
   },
-  animalGrid() {
-    const grid = document.getElementById('animalGrid');
-    grid.innerHTML = ANIMALS.map((a) => `
-      <div class="animal-tile" onclick="Bet.pickAnimal(${a.g})">
-        <span class="emoji">${a.emoji}</span>
-        <span class="name">${a.name}</span>
-        <span class="grp">Grupo ${pad2(a.g)}</span>
-      </div>`).join('');
-  },
-  dezenaGrid() {
-    const grid = document.getElementById('dezenaGrid');
-    const dzs = dezenasFor(Bet.draft.animal.g);
-    grid.innerHTML = dzs.map((dz) => `<div class="dezena-tile" onclick="Bet.pickDezena('${dz}')">${dz}</div>`).join('');
-  },
-  horarioList() {
-    const list = document.getElementById('horarioList');
-    list.innerHTML = DRAW_TIMES.map((h) => `
-      <button class="pick-row" onclick="Bet.pickHorario('${h.label}')">
-        <div><strong>${h.label}</strong></div><span class="row-link-arrow">›</span>
-      </button>`).join('');
-  },
-  betValor() {
-    const d = Bet.draft;
-    document.getElementById('betSummaryCard').innerHTML = `
-      <div class="bet-summary-row"><span>Bicho</span><strong>${d.animal.emoji} ${d.animal.name}</strong></div>
-      <div class="bet-summary-row"><span>Modalidade</span><strong>${MODALITY[d.modality].label}${d.dezena ? ' — ' + d.dezena : ''}</strong></div>
-      <div class="bet-summary-row"><span>Sorteio</span><strong>${d.horario || '—'}</strong></div>`;
-    const grid = document.getElementById('betAmounts');
-    grid.innerHTML = [20, 50, 100].map((v) => `<div class="amount-tile" onclick="Render.selectBetAmount(${v}, this)">🪙 ${v}</div>`).join('');
-    document.getElementById('betCustomAmount').value = '';
-  },
-  selectBetAmount(v, el) {
-    document.querySelectorAll('#betAmounts .amount-tile').forEach((t) => t.classList.remove('selected'));
-    el.classList.add('selected');
-    Bet.draft.amount = v;
-  },
-  betConfirm() {
-    const d = Bet.draft;
-    const mult = MODALITY[d.modality].mult;
-    document.getElementById('betConfirmCard').innerHTML = `
-      <div class="bet-summary-row"><span>Bicho</span><strong>${d.animal.emoji} ${d.animal.name}</strong></div>
-      <div class="bet-summary-row"><span>Modalidade</span><strong>${MODALITY[d.modality].label}${d.dezena ? ' — ' + d.dezena : ''}</strong></div>
-      <div class="bet-summary-row"><span>Sorteio</span><strong>${d.horario}</strong></div>
-      <div class="bet-summary-row"><span>Valor apostado</span><strong>🪙 ${fmtPoints(d.amount)}</strong></div>
-      <div class="bet-summary-row total"><span>Prêmio se ganhar</span><strong>🪙 ${fmtPoints(d.amount * mult)}</strong></div>`;
-  },
+  // old game render methods removed — Wizard handles the flow
   perfil() {
     const u = loadUsers()[CURRENT_EMAIL];
     const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');

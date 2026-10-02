@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=138">
+<link rel="stylesheet" href="styles.css?v=139">
 </head>
 <body>
 <div class="page">
@@ -592,88 +592,15 @@
       <div class="list" id="apostasList"></div>
     </section>
 
-    <!-- ======================= JOGAR (wizard) ======================= -->
-    <section class="screen" id="s-jogar-bicho">
-      <div class="topbar-simple">
-        <button class="icon-btn" onclick="go('s-home')">←</button>
-        <h2>Escolha seu bicho</h2>
-        <span class="spacer"></span>
+    <!-- ======================= JOGAR (wizard 8 passos) ======================= -->
+    <section class="screen" id="s-wizard">
+      <div class="wiz-header">
+        <div class="wiz-progress"><div class="wiz-progress-fill" id="wizProgressFill"></div></div>
+        <p class="wiz-step-label" id="wizStepLabel">PASSO 1 DE 8</p>
+        <button class="wiz-close" onclick="Wizard.close()">✕</button>
       </div>
-      <div class="animal-grid" id="animalGrid"></div>
-    </section>
-
-    <section class="screen" id="s-jogar-modalidade">
-      <div class="topbar-simple">
-        <button class="icon-btn" onclick="go('s-jogar-bicho')">←</button>
-        <h2>Modalidade</h2>
-        <span class="spacer"></span>
-      </div>
-      <div class="pick-list">
-        <button class="pick-row" onclick="Bet.pickModalidade('grupo')">
-          <div><strong>Grupo</strong><p>Aposte só no bicho. Prêmio x18.</p></div>
-          <span class="row-link-arrow">›</span>
-        </button>
-        <button class="pick-row" onclick="Bet.pickModalidade('dezena')">
-          <div><strong>Dezena</strong><p>Escolha um dos 4 números do bicho. Prêmio x60.</p></div>
-          <span class="row-link-arrow">›</span>
-        </button>
-      </div>
-    </section>
-
-    <section class="screen" id="s-jogar-dezena">
-      <div class="topbar-simple">
-        <button class="icon-btn" onclick="go('s-jogar-modalidade')">←</button>
-        <h2>Escolha a dezena</h2>
-        <span class="spacer"></span>
-      </div>
-      <div class="dezena-grid" id="dezenaGrid"></div>
-    </section>
-
-    <section class="screen" id="s-jogar-horario">
-      <div class="topbar-simple">
-        <button class="icon-btn" onclick="go('s-jogar-modalidade')">←</button>
-        <h2>Escolha o sorteio</h2>
-        <span class="spacer"></span>
-      </div>
-      <div class="pick-list" id="horarioList"></div>
-    </section>
-
-    <section class="screen" id="s-jogar-valor">
-      <div class="topbar-simple">
-        <button class="icon-btn" onclick="go('s-jogar-horario')">←</button>
-        <h2>Valor da aposta</h2>
-        <span class="spacer"></span>
-      </div>
-      <div class="card bet-summary" id="betSummaryCard"></div>
-      <div class="card">
-        <label class="field-label">Quantos pontos?</label>
-        <div class="amount-grid" id="betAmounts"></div>
-        <div class="field">
-          <label>Ou digite um valor</label>
-          <input type="number" id="betCustomAmount" min="1">
-        </div>
-        <button class="btn-primary" onclick="Bet.review()">Continuar</button>
-      </div>
-    </section>
-
-    <section class="screen" id="s-jogar-confirmar">
-      <div class="topbar-simple">
-        <button class="icon-btn" onclick="go('s-jogar-valor')">←</button>
-        <h2>Confirmar aposta</h2>
-        <span class="spacer"></span>
-      </div>
-      <div class="card bet-summary" id="betConfirmCard"></div>
-      <button class="btn-primary" onclick="Bet.confirm()">Confirmar aposta</button>
-    </section>
-
-    <section class="screen" id="s-jogar-sucesso">
-      <div class="success-screen">
-        <div class="mascot">🎉</div>
-        <h2>Aposta confirmada!</h2>
-        <p id="successText"></p>
-        <button class="btn-outline" onclick="Bet.shareLast()">Compartilhar palpite com amigos</button>
-        <button class="btn-primary" onclick="go('s-home')">Voltar para o início</button>
-      </div>
+      <div class="wiz-body" id="wizBody"></div>
+      <div class="wiz-footer" id="wizFooter"></div>
     </section>
 
     <!-- ======================= PERFIL ======================= -->
@@ -1082,6 +1009,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=106"></script>
+<script src="app.js?v=107"></script>
 </body>
 </html>
