@@ -2187,36 +2187,12 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .home-cotacao-arrow { font-size: 18px; }
 
 .cot-screen {
-  background: #fff !important;
   margin: -20px -16px -90px;
   width: calc(100% + 32px);
   gap: 0 !important;
-  padding: 0 !important;
+  padding: 0 16px !important;
 }
 .cot-screen.active { display: flex !important; flex-direction: column; }
-.cot-topbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
-}
-.cot-topbar h2 { color: var(--ink); font-size: 18px; margin: 0; font-weight: 800; }
-.cot-back {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: var(--bg);
-  color: var(--ink);
-  font-size: 18px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-}
-.cot-spacer { width: 36px; }
 .cot-list {
   display: flex;
   flex-direction: column;
