@@ -570,6 +570,60 @@ const Streak = {
   },
 };
 
+/* ---------------- resultados ---------------- */
+const Resultados = {
+  _cache: null,
+  generateDraws() {
+    if (this._cache) return this._cache;
+    var now = new Date();
+    var nowMin = now.getHours() * 60 + now.getMinutes();
+    var times = [
+      { id: 'ptm', label: 'PTM · 11h20', hour: 11, min: 20 },
+      { id: 'pt', label: 'PT · 14h20', hour: 14, min: 20 },
+      { id: 'ptv', label: 'PTV · 16h20', hour: 16, min: 20 },
+      { id: 'ptn', label: 'PTN · 20h20', hour: 20, min: 20 },
+      { id: 'coruja', label: 'Coruja · 21h20', hour: 21, min: 20 },
+    ];
+    var seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+    function rng(s) { s = (s * 9301 + 49297) % 233280; return s; }
+    function genPremios(s) {
+      var premios = [];
+      for (var p = 0; p < 5; p++) {
+        s = rng(s + p * 137);
+        var num = s % 10000;
+        var numStr = ('0000' + num).slice(-4);
+        var group = Math.floor((num % 100) / 4) + 1;
+        if (group > 25) group = 25;
+        var animal = ANIMALS[group - 1] ? ANIMALS[group - 1].name : ANIMALS[0].name;
+        premios.push({ num: numStr, animal: animal.toUpperCase() });
+      }
+      return premios;
+    }
+    var draws = [];
+    for (var t = 0; t < times.length; t++) {
+      var drawMin = times[t].hour * 60 + times[t].min;
+      if (nowMin < drawMin) {
+        draws.push({ label: times[t].label, pending: true });
+      } else {
+        draws.push({ label: times[t].label, pending: false, premios: genPremios(seed + t * 1000) });
+      }
+    }
+    if (draws.every(function(d) { return d.pending; })) {
+      draws[0] = { label: times[0].label, pending: false, premios: genPremios(seed) };
+      draws[1] = { label: times[1].label, pending: false, premios: genPremios(seed + 1000) };
+      draws[2] = { label: times[2].label, pending: false, premios: genPremios(seed + 2000) };
+    }
+    this._cache = draws;
+    return draws;
+  },
+  toggle(idx) {
+    var el = document.getElementById('resExtra' + idx);
+    var btn = el.previousElementSibling;
+    el.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+};
+
 /* ---------------- achievements ---------------- */
 const Achv = {
   unlock(id) {
@@ -1233,9 +1287,29 @@ const Render = {
     Wallet.selectPixType('cpf');
   },
   resultados() {
-    const list = document.getElementById('resultadosList');
-    const resolved = STATE.bets.filter((b) => b.status !== 'aguardando');
-    list.innerHTML = resolved.length ? resolved.map((b) => resultRowHtml(b)).join('') : emptyState('🎲', 'Ainda sem sorteios', 'Faça uma aposta para ver os resultados aqui.');
+    var dt = new Date();
+    var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+    var dateEl = document.getElementById('resDateText');
+    if (dateEl) dateEl.textContent = 'Hoje, ' + dt.getDate() + ' de ' + meses[dt.getMonth()] + ' de ' + dt.getFullYear();
+    var list = document.getElementById('resDrawsList');
+    if (!list) return;
+    var draws = Resultados.generateDraws();
+    list.innerHTML = draws.map(function(d, idx) {
+      if (d.pending) {
+        return '<div class="res-draw-block"><div class="res-draw-head"><span class="res-draw-time">' + d.label + '</span></div><span class="res-draw-pending">PENDENTE</span></div>';
+      }
+      var html = '<div class="res-draw-block"><div class="res-draw-head"><span class="res-draw-time">' + d.label + '</span></div>';
+      html += '<div class="res-premio-label">1º PRÊMIO</div>';
+      html += '<div class="res-premio-row"><span class="res-premio-num">' + d.premios[0].num + '</span><span class="res-premio-animal">' + d.premios[0].animal + '</span></div>';
+      html += '<button class="res-expand-btn" onclick="Resultados.toggle(' + idx + ')"><span>2º - 5º Prêmio</span><span class="arrow">▼</span></button>';
+      html += '<div class="res-extra-premios" id="resExtra' + idx + '">';
+      for (var i = 1; i < d.premios.length; i++) {
+        html += '<div class="res-premio-label">' + (i + 1) + 'º PRÊMIO</div>';
+        html += '<div class="res-premio-row"><span class="res-premio-num">' + d.premios[i].num + '</span><span class="res-premio-animal">' + d.premios[i].animal + '</span></div>';
+      }
+      html += '</div></div>';
+      return html;
+    }).join('');
   },
   apostas() {
     const tab = Apostas.currentTab;
