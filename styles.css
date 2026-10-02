@@ -963,6 +963,23 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   cursor: pointer; padding: 0; flex-shrink: 0;
 }
 
+.invite-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  padding: 14px;
+  margin: 16px 0 0;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.invite-btn:active { opacity: .85; }
+.invite-btn-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
 .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .stat-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
 .stat-box {

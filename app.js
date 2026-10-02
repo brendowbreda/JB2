@@ -262,6 +262,11 @@ function toast(msg) {
 
 /* ---------------- router ---------------- */
 let SCREEN_STACK = ['s-home'];
+function ShareInvite() {
+  var msg = encodeURIComponent('Vem jogar no Palpite Club comigo! Acesse: https://brendowbreda.github.io/JB2/');
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
 function go(id, opts = {}) {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
   const el = document.getElementById(id);
