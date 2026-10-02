@@ -2151,15 +2151,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 /* ---------- resultados ---------- */
 .res-subtitle { font-size: 13px; color: var(--ink-dim); margin: 0; }
-
-.res-date-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 16px;
-  background: var(--card);
-  border-radius: var(--radius-sm);
-}
-.res-date-icon { font-size: 18px; }
-.res-date-text { flex: 1; font-size: 14px; font-weight: 600; color: var(--ink); }
+.res-date-text { font-size: 14px; font-weight: 600; color: var(--ink); margin: 0; }
 
 .res-location-row {
   display: flex; align-items: center; gap: 10px;
@@ -2167,7 +2159,6 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   background: var(--card);
   border-radius: var(--radius-sm);
 }
-.res-loc-icon { font-size: 18px; }
 .res-loc-text { flex: 1; font-size: 14px; font-weight: 500; color: var(--ink); }
 .res-loc-arrow { font-size: 14px; color: var(--ink-faint); }
 
@@ -2191,13 +2182,13 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   letter-spacing: .5px;
 }
 
-.res-premio-label { font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; margin-bottom: 2px; letter-spacing: .5px; }
+.res-premio-label { font-size: 11px; color: var(--ink); font-weight: 400; text-transform: uppercase; margin-bottom: 2px; letter-spacing: .5px; }
 .res-premio-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .res-premio-num { font-size: 38px; font-weight: 900; color: var(--primary); letter-spacing: 2px; }
 .res-premio-animal {
   display: inline-block;
-  background: var(--accent-tint);
-  color: var(--accent);
+  background: var(--primary-tint);
+  color: var(--primary);
   font-size: 12px;
   font-weight: 700;
   padding: 5px 14px;
@@ -2206,7 +2197,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 
 .res-expand-btn {
-  background: none; border: none; color: var(--primary);
+  background: none; border: none; color: var(--ink);
   font-size: 13px; font-weight: 600; cursor: pointer;
   padding: 6px 0; display: flex; align-items: center; gap: 4px;
 }
@@ -2216,5 +2207,6 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 .res-extra-premios { display: none; padding-left: 12px; border-left: 2px solid var(--border); margin: 8px 0 0 4px; }
 .res-extra-premios.open { display: block; }
-.res-extra-premios .res-premio-label { margin-top: 12px; }
-.res-extra-premios .res-premio-num { font-size: 28px; }
+.res-extra-premios .res-premio-label { margin-top: 12px; color: var(--ink); font-weight: 400; }
+.res-extra-premios .res-premio-num { font-size: 28px; font-weight: 900; color: var(--ink); }
+.res-extra-premios .res-premio-animal { background: var(--bg); color: var(--ink); }
