@@ -57,7 +57,7 @@ const ACHIEVEMENTS = [
   { id: 'semana-de-jogo', name: 'Semana de Jogo', emoji: '📅', img: 'img/conquista-semana-de-jogo.png', desc: 'Jogue os 7 dias da semana.', obs: 'Cada aposta precisa ser de no mínimo R$ 1,00.' },
   { id: '10-apostas', name: '10 Apostas', emoji: '🏅', img: 'img/conquista-10-apostas.png', desc: 'Faça 10 apostas em uma única semana.', obs: '10 apostas durante 7 dias (mínimo R$ 1,00 cada aposta).' },
   { id: '10x10', name: '10x10', emoji: '💰', img: 'img/conquista-10x10.png', desc: 'Faça 10 apostas por semana durante 10 semanas seguidas.', obs: 'Prêmio: R$ 100,00!' },
-  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', desc: 'Ganhe 10 apostas em uma única semana. Sorte de verdade!' },
+  { id: 'semana-perfeita', name: 'Semana Perfeita', emoji: '⭐', img: 'img/conquista-semana-perfeita.png', desc: 'Ganhe 10 apostas em uma única semana.', obs: 'Sorte de verdade!' },
   { id: 'manha-da-sorte', name: 'Manhã da Sorte', emoji: '☀️', desc: 'Ganhe uma aposta feita no período da manhã (entre 6h e 12h).' },
   { id: 'velocidade-maxima', name: 'Velocidade Máxima', emoji: '⚡', desc: 'Consiga 3 vitórias no mesmo dia. Velocidade e sorte!' },
   { id: 'coruja-sortuda', name: 'Coruja Sortuda', emoji: '🦉', desc: 'Faça uma aposta entre 22h e 6h da manhã. A sorte não dorme!' },
