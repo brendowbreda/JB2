@@ -799,9 +799,12 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .wiz-mod-badge { font-size: 10px; font-weight: 700; background: var(--primary-tint); color: var(--primary-deep); padding: 3px 8px; border-radius: 6px; text-transform: uppercase; margin-left: 8px; }
 .wiz-mod-badge.gold { background: var(--streak-tint); color: var(--gold-deep); }
 .wiz-mod-mult { font-size: 15px; font-weight: 600; color: var(--ink-dim); }
+.wiz-mod-row.highlight { border-color: var(--primary); }
+.wiz-mod-row.highlight .wiz-mod-name { color: var(--primary-deep); }
+.wiz-mod-row.highlight .wiz-mod-mult { color: var(--primary-deep); }
+.wiz-mod-row.gold { border-color: var(--gold); }
 .wiz-mod-row.gold .wiz-mod-name { color: var(--gold-deep); }
 .wiz-mod-row.gold .wiz-mod-mult { color: var(--gold-deep); }
-.wiz-mod-row.gold { border-color: var(--gold); }
 
 .wiz-lot-list { display: flex; flex-direction: column; gap: 10px; }
 .wiz-lot-row {

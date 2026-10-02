@@ -816,7 +816,7 @@ const Wizard = {
     }
     if (!this.draft.date) this.draft.date = days[0].date;
     body.innerHTML = '<h2>Quando você quer apostar?</h2>' +
-      '<p class="wiz-sub">Escolha o dia do sorteio. Você pode agendar para os próximos dias.</p>' +
+      '<p class="wiz-sub">Escolha o dia do sorteio.<br>Você pode agendar para os próximos dias.</p>' +
       '<div class="wiz-date-grid">' + days.map(function(d) {
         return '<div class="wiz-date-tile' + (d.selected ? ' selected' : '') + '" onclick="Wizard.pickDate(\'' + d.date + '\')">' +
           '<span class="wiz-date-day">' + d.label + '</span>' +
@@ -831,14 +831,16 @@ const Wizard = {
     var grpMods = COTACOES.filter(function(c) { return ['grupo','duque-grupo','terno-grupo'].includes(c.id); });
     var html = '<h2>Escolha a modalidade</h2><p class="wiz-sub">Cada modalidade tem sua cotação e forma de jogar.</p><div class="wiz-mod-list">';
     numMods.forEach(function(c) {
+      var rowClass = c.id === 'milhar' ? ' highlight' : '';
       var badge = c.id === 'milhar' ? '<span class="wiz-mod-badge">Maior cotação</span>' : '';
-      html += '<button class="wiz-mod-row" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
+      html += '<button class="wiz-mod-row' + rowClass + '" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
         '<span><span class="wiz-mod-name">' + c.name + '</span>' + badge + '</span>' +
         '<span class="wiz-mod-mult">' + c.mult + '</span></button>';
     });
     grpMods.forEach(function(c) {
+      var rowClass = c.id === 'grupo' ? ' gold' : '';
       var badge = c.id === 'grupo' ? '<span class="wiz-mod-badge gold">Destaque</span>' : '';
-      html += '<button class="wiz-mod-row gold" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
+      html += '<button class="wiz-mod-row' + rowClass + '" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
         '<span><span class="wiz-mod-name">' + c.name + '</span>' + badge + '</span>' +
         '<span class="wiz-mod-mult">' + c.mult + '</span></button>';
     });
