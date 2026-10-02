@@ -827,16 +827,16 @@ const Wizard = {
   renderMod(body, footer) {
     var numMods = COTACOES.filter(function(c) { return !['grupo','duque-grupo','terno-grupo'].includes(c.id); });
     var grpMods = COTACOES.filter(function(c) { return ['grupo','duque-grupo','terno-grupo'].includes(c.id); });
-    var html = '<h2>Escolha a modalidade</h2><div class="wiz-mod-list">';
+    var html = '<h2>Escolha a modalidade</h2><p class="wiz-sub">Cada modalidade tem sua cotação e forma de jogar.</p><div class="wiz-mod-list">';
     numMods.forEach(function(c) {
-      var badge = c.id === 'milhar' ? '<span class="wiz-mod-badge">Mais apostada</span>' : '';
+      var badge = c.id === 'milhar' ? '<span class="wiz-mod-badge">Maior cotação</span>' : '';
       html += '<button class="wiz-mod-row" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
         '<span><span class="wiz-mod-name">' + c.name + '</span>' + badge + '</span>' +
         '<span class="wiz-mod-mult">' + c.mult + '</span></button>';
     });
     grpMods.forEach(function(c) {
       var badge = c.id === 'grupo' ? '<span class="wiz-mod-badge gold">Destaque</span>' : '';
-      html += '<button class="wiz-mod-row" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
+      html += '<button class="wiz-mod-row gold" onclick="Wizard.pickMod(\'' + c.id + '\')">' +
         '<span><span class="wiz-mod-name">' + c.name + '</span>' + badge + '</span>' +
         '<span class="wiz-mod-mult">' + c.mult + '</span></button>';
     });

@@ -796,10 +796,13 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   padding: 16px 18px; cursor: pointer; width: 100%; text-align: left; font-family: var(--font);
 }
 .wiz-mod-row:active { background: var(--primary-tint); }
-.wiz-mod-name { font-size: 15px; font-weight: 800; color: var(--ink); }
-.wiz-mod-badge { font-size: 10px; font-weight: 800; background: var(--primary-tint); color: var(--primary-deep); padding: 3px 8px; border-radius: 6px; text-transform: uppercase; margin-left: 8px; }
+.wiz-mod-name { font-size: 15px; font-weight: 500; color: var(--ink); }
+.wiz-mod-badge { font-size: 10px; font-weight: 700; background: var(--primary-tint); color: var(--primary-deep); padding: 3px 8px; border-radius: 6px; text-transform: uppercase; margin-left: 8px; }
 .wiz-mod-badge.gold { background: var(--streak-tint); color: var(--gold-deep); }
-.wiz-mod-mult { font-size: 15px; font-weight: 900; color: var(--ink); }
+.wiz-mod-mult { font-size: 15px; font-weight: 600; color: var(--ink-dim); }
+.wiz-mod-row.gold .wiz-mod-name { color: var(--gold-deep); }
+.wiz-mod-row.gold .wiz-mod-mult { color: var(--gold-deep); }
+.wiz-mod-row.gold { border-color: var(--gold); }
 
 .wiz-lot-list { display: flex; flex-direction: column; gap: 10px; }
 .wiz-lot-row {
