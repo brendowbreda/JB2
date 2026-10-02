@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=131">
+<link rel="stylesheet" href="styles.css?v=132">
 </head>
 <body>
 <div class="page">
@@ -729,13 +729,11 @@
         </div>
       </div>
 
-      <div class="section-head" id="perfilConquistasHead" style="display:none">
+      <div class="section-head perfil-conquistas-head" id="perfilConquistasHead" style="display:none" onclick="go('s-conquistas')">
         <h3>Conquistas</h3>
+        <span class="section-head-arrow">›</span>
       </div>
       <div class="achv-grid achv-grid--perfil" id="perfilConquistasGrid" style="margin-bottom:16px"></div>
-      <div style="text-align:center;margin-bottom:16px" id="perfilConquistasMore" class="hidden">
-        <button class="btn-secondary" onclick="go('s-conquistas')" style="font-size:13px;padding:8px 24px">Ver mais</button>
-      </div>
 
       <div class="section-head">
         <h3>Minhas apostas</h3>
@@ -1086,6 +1084,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=104"></script>
+<script src="app.js?v=105"></script>
 </body>
 </html>

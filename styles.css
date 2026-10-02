@@ -522,6 +522,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; }
 .section-head h3 { font-size: 15.5px; margin: 0; font-weight: 800; }
 .section-head a { font-size: 12.5px; color: var(--primary-deep); font-weight: 700; text-decoration: none; }
+.perfil-conquistas-head { cursor: pointer; align-items: center; }
+.section-head-arrow { font-size: 20px; font-weight: 700; color: var(--ink-dim); }
 
 .feed-preview { display: flex; flex-direction: column; gap: 10px; }
 
@@ -1061,6 +1063,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 /* ---------- achievements ---------- */
 .achv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.achv-grid--perfil { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.achv-tile--notext { padding: 4px 0; }
 .achv-grid.preview { display: flex; gap: 12px; }
 .achv-icon-only { font-size: 32px; cursor: pointer; }
 .achv-tile {
@@ -1072,6 +1076,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .achv-tile:active { transform: scale(0.93); }
 .achv-tile .emoji { font-size: 72px; display: block; height: 100px; line-height: 100px; }
 .achv-tile .achv-img { width: 100px; height: 100px; object-fit: contain; display: block; margin: 0 auto; }
+.achv-tile.achv-tile--notext .achv-img { width: 100%; max-width: 80px; height: auto; }
 .achv-tile .name { font-size: 11px; font-weight: 800; margin-top: 8px; display: block; line-height: 1.3; color: var(--ink); }
 .achv-tile.locked { opacity: 0.3; filter: grayscale(1); }
 .achv-tile.locked .name { color: var(--ink-dim); }

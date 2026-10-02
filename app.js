@@ -1414,16 +1414,16 @@ const Render = {
     if (pMedals) pMedals.textContent = unlocked.length;
     var pcHead = document.getElementById('perfilConquistasHead');
     var pcGrid = document.getElementById('perfilConquistasGrid');
-    var pcMore = document.getElementById('perfilConquistasMore');
     if (pcGrid) {
       if (unlocked.length > 0) {
         if (pcHead) pcHead.style.display = '';
-        pcGrid.innerHTML = unlocked.slice(0, 3).map(function(a) { return achvTileHtml(a, true); }).join('');
-        if (pcMore) pcMore.className = unlocked.length > 3 ? '' : 'hidden';
+        pcGrid.innerHTML = unlocked.slice(0, 4).map(function(a) {
+          var icon = a.img ? '<img class="achv-img" src="' + a.img + '" alt="' + a.name + '">' : '<span class="emoji">' + a.emoji + '</span>';
+          return '<div class="achv-tile achv-tile--notext" onclick="Achv.detail(\'' + a.id + '\')">' + icon + '</div>';
+        }).join('');
       } else {
         if (pcHead) pcHead.style.display = 'none';
         pcGrid.innerHTML = '';
-        if (pcMore) pcMore.className = 'hidden';
       }
     }
     const amigosList = document.getElementById('perfilAmigosList');
