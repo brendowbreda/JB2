@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=151">
+<link rel="stylesheet" href="styles.css?v=152">
 </head>
 <body>
 <div class="page">
@@ -267,25 +267,22 @@
         <img src="jogodobicho.png" alt="Jogo do Bicho" class="home-bicho-banner-img">
         <div class="home-banner-text">
           <span class="home-banner-title">Jogo do Bicho</span>
-          <span class="home-banner-desc">Apostou, ganhou, recebeu. Simples assim.</span>
           <span class="home-banner-cta">Clique aqui →</span>
         </div>
       </div>
 
-      <div class="home-loteria-banner" onclick="go('s-loteria')">
+      <div class="home-loteria-banner" onclick="Modal.open('loteriaMenuModal')">
         <img src="loteria.png" alt="Loteria Federal" class="home-loteria-banner-img">
         <div class="home-banner-text">
           <span class="home-banner-title">Loteria Federal</span>
-          <span class="home-banner-desc">Toda <b>quarta-feira</b> e <b>domingo</b>.</span>
           <span class="home-banner-cta">Clique aqui →</span>
         </div>
       </div>
 
-      <div class="home-roleta-banner" onclick="go('s-roleta')">
+      <div class="home-roleta-banner" onclick="Modal.open('roletaMenuModal')">
         <img src="roleta.png" alt="Roleta dos Bichos" class="home-roleta-banner-img">
         <div class="home-banner-text">
           <span class="home-banner-title">Roleta dos Bichos</span>
-          <span class="home-banner-desc">Escolha o bicho, gire a roleta, acertou? Recebeu.</span>
           <span class="home-banner-cta">Clique aqui →</span>
         </div>
       </div>
@@ -954,6 +951,21 @@
     <button class="btn-outline" style="width:100%;" onclick="Modal.close('bichoMenuModal');go('s-cotacoes')">Cotação</button>
   </div>
 
+  <div class="modal-backdrop" id="loteriaMenuModalBackdrop" onclick="Modal.close('loteriaMenuModal')"></div>
+  <div class="modal-card" id="loteriaMenuModal">
+    <h3>Loteria Federal</h3>
+    <p style="margin-bottom:16px;">Toda <b>quarta-feira</b> e <b>domingo</b>.</p>
+    <button class="btn-primary" style="width:100%;margin-bottom:10px;" onclick="Modal.close('loteriaMenuModal');Wizard.start('federal')">Jogar</button>
+    <button class="btn-outline" style="width:100%;" onclick="Modal.close('loteriaMenuModal');go('s-cotacoes')">Cotação</button>
+  </div>
+
+  <div class="modal-backdrop" id="roletaMenuModalBackdrop" onclick="Modal.close('roletaMenuModal')"></div>
+  <div class="modal-card" id="roletaMenuModal">
+    <h3>Roleta dos Bichos</h3>
+    <p class="modal-rules" style="margin-bottom:16px;text-align:left;">1. Escolha um bicho<br>2. Defina o valor da aposta<br>3. Clique em Girar a Roleta<br>4. Acertou o bicho, você ganha — direto na sua carteira</p>
+    <button class="btn-primary" style="width:100%;" onclick="Modal.close('roletaMenuModal');go('s-roleta')">Jogar</button>
+  </div>
+
   <div class="modal-backdrop" id="deleteModalBackdrop" onclick="Modal.close('deleteModal')"></div>
   <div class="modal-card modal-dark" id="deleteModal">
     <button class="modal-close-btn" onclick="Modal.close('deleteModal')">✕</button>
@@ -1021,6 +1033,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=116"></script>
+<script src="app.js?v=117"></script>
 </body>
 </html>

@@ -731,6 +731,7 @@ const LOTERIAS = [
   { id: 'go', name: 'Goiás' },
   { id: 'rn', name: 'Rio Grande do Norte' },
   { id: 'pb', name: 'Paraíba' },
+  { id: 'federal', name: 'Federal' },
 ];
 
 const ANIMAL_IMGS = [
@@ -749,17 +750,22 @@ const MOD_DIGITS = {
 const Wizard = {
   step: 1,
   draft: {},
+  mode: 'bicho',
   digits: [],
   palpites: [],
   selectedAnimals: [],
 
-  start() {
+  start(mode) {
     this.step = 1;
     this.draft = {};
     this.digits = [];
     this.palpites = [];
     this.selectedAnimals = [];
     this._presetMod = false;
+    this.mode = mode || 'bicho';
+    if (this.mode === 'federal') {
+      this.draft.loteria = LOTERIAS.find(function(l) { return l.id === 'federal'; });
+    }
     go('s-wizard');
   },
   startWithMod(id) {
@@ -786,12 +792,14 @@ const Wizard = {
     } else this.close();
   },
 
+  _totalSteps() { return this.mode === 'federal' ? 7 : 8; },
   render() {
-    var pct = (this.step / 8) * 100;
+    var total = this._totalSteps();
+    var pct = (this.step / total) * 100;
     document.getElementById('wizProgressFill').style.width = pct + '%';
-    document.getElementById('wizStepLabel').textContent = 'PASSO ' + this.step + ' DE 8';
+    document.getElementById('wizStepLabel').textContent = 'PASSO ' + this.step + ' DE ' + total;
     var backBtn = document.getElementById('wizBackBtn');
-    if (backBtn) backBtn.style.visibility = this.step <= 1 || this.step === 8 ? 'hidden' : 'visible';
+    if (backBtn) backBtn.style.visibility = this.step <= 1 || this.step === total ? 'hidden' : 'visible';
     var body = document.getElementById('wizBody');
     var footer = document.getElementById('wizFooter');
     footer.innerHTML = '';
@@ -801,22 +809,34 @@ const Wizard = {
     else if (this.step === 3) this.renderInput(body, footer);
     else if (this.step === 4) this.renderPlace(body, footer);
     else if (this.step === 5) this.renderAmount(body, footer);
-    else if (this.step === 6) this.renderLot(body, footer);
-    else if (this.step === 7) this.renderConfirm(body, footer);
+    else if (this.step === 6) {
+      if (this.mode === 'federal') this.renderConfirm(body, footer);
+      else this.renderLot(body, footer);
+    }
+    else if (this.step === 7) {
+      if (this.mode === 'federal') this.renderSuccess(body, footer);
+      else this.renderConfirm(body, footer);
+    }
     else if (this.step === 8) this.renderSuccess(body, footer);
   },
 
   renderDate(body, footer) {
     var days = [];
     var dayNames = ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
-    for (var i = 0; i < 6; i++) {
+    var isFederal = this.mode === 'federal';
+    for (var i = 0; i < (isFederal ? 30 : 6); i++) {
       var d = new Date(); d.setDate(d.getDate() + i);
+      if (isFederal && d.getDay() !== 0 && d.getDay() !== 3) continue;
       var label = i === 0 ? 'HOJE' : i === 1 ? 'AMANHÃ' : dayNames[d.getDay()];
-      days.push({ label: label, day: pad2(d.getDate()) + '/' + pad2(d.getMonth() + 1), date: d.toISOString().slice(0,10), selected: this.draft.date === d.toISOString().slice(0,10) || (i === 0 && !this.draft.date) });
+      days.push({ label: label, day: pad2(d.getDate()) + '/' + pad2(d.getMonth() + 1), date: d.toISOString().slice(0,10), selected: this.draft.date === d.toISOString().slice(0,10) || (!this.draft.date && days.length === 0) });
+      if (isFederal && days.length >= 4) break;
     }
     if (!this.draft.date) this.draft.date = days[0].date;
+    var sub = isFederal
+      ? 'Sorteios toda <b>quarta-feira</b> e <b>domingo</b>.'
+      : 'Escolha o dia do sorteio.<br>Você pode agendar para os próximos dias.';
     body.innerHTML = '<h2>Quando você quer apostar?</h2>' +
-      '<p class="wiz-sub">Escolha o dia do sorteio.<br>Você pode agendar para os próximos dias.</p>' +
+      '<p class="wiz-sub">' + sub + '</p>' +
       '<div class="wiz-date-grid">' + days.map(function(d) {
         return '<div class="wiz-date-tile' + (d.selected ? ' selected' : '') + '" onclick="Wizard.pickDate(\'' + d.date + '\')">' +
           '<span class="wiz-date-day">' + d.label + '</span>' +
