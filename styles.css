@@ -683,7 +683,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   background: var(--card); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 10px;
   border: 1px solid var(--border);
 }
-.bet-card-detail--ganhou { background: var(--primary-tint); }
+.bet-card-detail--ganhou { background: var(--card); }
 .bet-card-header {
   display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
 }
