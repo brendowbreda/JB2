@@ -814,13 +814,13 @@ const Wizard = {
     }
     if (!this.draft.date) this.draft.date = days[0].date;
     body.innerHTML = '<h2>Quando você quer apostar?</h2>' +
+      '<p class="wiz-sub">Escolha o dia do sorteio. Você pode agendar para os próximos dias.</p>' +
       '<div class="wiz-date-grid">' + days.map(function(d) {
         return '<div class="wiz-date-tile' + (d.selected ? ' selected' : '') + '" onclick="Wizard.pickDate(\'' + d.date + '\')">' +
           '<span class="wiz-date-day">' + d.label + '</span>' +
           '<span class="wiz-date-num">' + d.day + '</span></div>';
       }).join('') + '</div>';
-    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.next()">Continuar</button>' +
-      '<p class="wiz-note">Deixe agendado para os próximos dias e não perca nenhum sorteio.</p>';
+    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.next()">Continuar</button>';
   },
   pickDate(d) { this.draft.date = d; this.render(); },
 
