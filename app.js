@@ -1015,11 +1015,11 @@ const Wizard = {
       var perAll = (amt / numPalpites);
       splitHtml = '<p class="wiz-split-title">Como dividir o valor entre os ' + numPalpites + ' palpites?</p>' +
         '<div class="wiz-split-option' + selEach + '" onclick="Wizard.pickSplit(\'each\')">' +
-        '<strong>Cada Palpite</strong>' +
-        '<p>Você paga <strong>' + Wallet.fmtBRL(amt) + '</strong> em cada um dos seus <strong>' + numPalpites + '</strong> palpites. Total apostado <strong>' + Wallet.fmtBRL(totalEach) + '</strong>.</p></div>' +
+        '<span class="wiz-split-name">Cada Palpite</span>' +
+        '<span class="wiz-split-desc">Você paga <strong>' + Wallet.fmtBRL(amt) + '</strong> em cada um dos seus <strong>' + numPalpites + '</strong> palpites. Total apostado <strong>' + Wallet.fmtBRL(totalEach) + '</strong>.</span></div>' +
         '<div class="wiz-split-option' + selAll + '" onclick="Wizard.pickSplit(\'all\')">' +
-        '<strong>Todos os Palpites</strong>' +
-        '<p>Os <strong>' + Wallet.fmtBRL(amt) + '</strong> são divididos entre os <strong>' + numPalpites + '</strong> palpites — <strong>' + Wallet.fmtBRL(perAll) + '</strong> para cada palpite. Total apostado <strong>' + Wallet.fmtBRL(amt) + '</strong>.</p></div>';
+        '<span class="wiz-split-name">Todos os Palpites</span>' +
+        '<span class="wiz-split-desc">Os <strong>' + Wallet.fmtBRL(amt) + '</strong> são divididos entre os <strong>' + numPalpites + '</strong> palpites — <strong>' + Wallet.fmtBRL(perAll) + '</strong> para cada palpite. Total apostado <strong>' + Wallet.fmtBRL(amt) + '</strong>.</span></div>';
     }
 
     var prizeAmt = numPalpites > 1 && this.draft.splitMode === 'all' ? amt / numPalpites : amt;
