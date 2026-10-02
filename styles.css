@@ -890,7 +890,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   padding: 14px 18px; margin-top: 12px;
 }
 .wiz-prize-label { font-size: 12px; font-weight: 700; color: var(--ink-dim); text-transform: uppercase; }
-.wiz-prize-value { font-size: 18px; font-weight: 900; color: var(--primary-deep); }
+.wiz-prize-value { font-size: 18px; font-weight: 600; color: var(--primary-deep); }
 
 .wiz-confirm-card {
   background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-md);
@@ -900,8 +900,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .wiz-confirm-row:last-child { border-bottom: none; }
 .wiz-confirm-row span:first-child { color: var(--ink-dim); }
 .wiz-confirm-row span:last-child { font-weight: 700; color: var(--ink); }
-.wiz-confirm-row.total span:first-child { font-weight: 800; color: var(--ink); }
-.wiz-confirm-row.total span:last-child { font-weight: 900; color: var(--primary-deep); font-size: 16px; }
+.wiz-confirm-row.total span:first-child { font-weight: 600; color: var(--ink); }
+.wiz-confirm-row.total span:last-child { font-weight: 600; color: var(--primary-deep); font-size: 15px; }
 
 .wiz-success { text-align: center; padding: 30px 0; }
 .wiz-success-icon { width: 64px; height: 64px; border: 3px solid var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px; }

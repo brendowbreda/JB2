@@ -892,9 +892,9 @@ const Wizard = {
     var desc = mod.name;
     var sub = '';
     if (mod.id === 'milhar-centena') {
-      sub = 'Vá digitando os números. A cada ' + numDigits + ' dígitos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.<br><br>Acertando os 4 números, você ganha a Milhar e a Centena juntas. Acertando só os 3 últimos, ganha a Centena.';
+      sub = 'A cada ' + numDigits + ' dígitos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.<br><br>Acertando os 4 números, você ganha a Milhar e a Centena juntas. Acertando só os 3 últimos, ganha a Centena.';
     } else {
-      sub = 'Vá digitando os números. A cada ' + numDigits + ' dígitos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.';
+      sub = 'A cada ' + numDigits + ' dígitos, um novo palpite é adicionado — você pode colocar até 10 palpites no mesmo bilhete.';
     }
     body.innerHTML = '<h2>' + desc + '</h2><p class="wiz-sub">' + sub + '</p>' +
       '<div class="wiz-palpites-label"><span>SEUS PALPITES</span><span>' + this.palpites.length + ' de 10</span></div>' +
@@ -1034,7 +1034,7 @@ const Wizard = {
     body.innerHTML = '<h2>Quanto quer apostar?</h2>' +
       '<p class="wiz-sub">Mínimo R$ 0,10 — máximo R$ 5.000,00 por bilhete.</p>' +
       '<div class="wiz-amount-grid">' + grid + '</div>' +
-      '<input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="wizAmountInput" value="' + (inputVal ? 'R$  ' + inputVal : '') + '" oninput="Wizard.amountInput(this)">' +
+      '<input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="wizAmountInput" value="' + (amt > 0 ? 'R$  ' + amt.toFixed(2).replace('.', ',') : (inputVal ? 'R$  ' + inputVal : '')) + '" oninput="Wizard.amountInput(this)">' +
       splitHtml + prize;
     footer.innerHTML = '<button class="btn-primary" onclick="Wizard.amountContinue()">Continuar</button>';
   },
@@ -1076,7 +1076,7 @@ const Wizard = {
       '<div class="wiz-confirm-card">' +
       '<div class="wiz-confirm-row"><span>Modalidade</span><span>' + d.modality.name + '</span></div>' +
       '<div class="wiz-confirm-row"><span>Sorteio</span><span>' + d.loteria.name + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Palpites (' + numP + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Palpites (' + numP + ')</span><span>' + (numP <= 3 ? d.palpites.join(', ') : d.palpites.slice(0,3).join(', ') + ' (+' + (numP - 3) + ')') + '</span></div>' +
       '<div class="wiz-confirm-row"><span>Colocação</span><span>' + (d.tier ? d.tier.label : '—') + '</span></div>' +
       (numP > 1 ? '<div class="wiz-confirm-row"><span>Divisão do valor</span><span>' + splitLabel + '</span></div>' : '') +
       '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(totalBet) + '</span></div>' +
@@ -1138,7 +1138,7 @@ const Wizard = {
       '<div class="wiz-confirm-card">' +
       '<div class="wiz-confirm-row"><span>Modalidade</span><span>' + d.modality.name + '</span></div>' +
       '<div class="wiz-confirm-row"><span>Sorteio</span><span>' + d.loteria.name + '</span></div>' +
-      '<div class="wiz-confirm-row"><span>Palpites (' + numP + ')</span><span>' + d.palpites.join(', ') + '</span></div>' +
+      '<div class="wiz-confirm-row"><span>Palpites (' + numP + ')</span><span>' + (numP <= 3 ? d.palpites.join(', ') : d.palpites.slice(0,3).join(', ') + ' (+' + (numP - 3) + ')') + '</span></div>' +
       '<div class="wiz-confirm-row"><span>Colocação</span><span>' + (d.tier ? d.tier.label : '—') + '</span></div>' +
       '<div class="wiz-confirm-row"><span>Valor total apostado</span><span>' + Wallet.fmtBRL(totalBet) + '</span></div>' +
       '<div class="wiz-confirm-row total"><span>Prêmio estimado (por palpite)</span><span>' + Wallet.fmtBRL(prize) + '</span></div>' +
