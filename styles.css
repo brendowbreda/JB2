@@ -762,7 +762,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .dezena-tile.selected { border-color: var(--primary); background: var(--primary-tint); color: var(--primary-deep); }
 
 /* ---------- wizard ---------- */
-#s-wizard { display: flex; flex-direction: column; min-height: 100vh; padding: 0 16px 16px; }
+#s-wizard { flex-direction: column; min-height: 100vh; padding: 0 16px 16px; }
+#s-wizard.active { display: flex; }
 .wiz-header { position: relative; padding: 16px 0 0; }
 .wiz-progress { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .wiz-progress-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: width .3s; }
@@ -2152,6 +2153,23 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 
 /* Cotações screen */
+.home-cotacao-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--primary-tint);
+  border: 1px solid var(--primary);
+  border-radius: 14px;
+  color: var(--primary-deep);
+  font-weight: 700;
+  font-size: 14px;
+  font-family: var(--font);
+  cursor: pointer;
+}
+.home-cotacao-arrow { font-size: 18px; }
+
 .cot-screen {
   background: #fff !important;
   margin: -20px -16px -90px;

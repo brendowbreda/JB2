@@ -759,13 +759,31 @@ const Wizard = {
     this.digits = [];
     this.palpites = [];
     this.selectedAnimals = [];
+    this._presetMod = false;
+    go('s-wizard');
+  },
+  startWithMod(id) {
+    this.step = 1;
+    this.draft = {};
+    this.digits = [];
+    this.palpites = [];
+    this.selectedAnimals = [];
+    this._presetMod = true;
+    this.draft.modality = COTACOES.find(function(c) { return c.id === id; });
     go('s-wizard');
   },
   close() { go('s-home'); },
-  next() { this.step++; this.render(); },
+  next() {
+    this.step++;
+    if (this.step === 2 && this.draft.modality) this.step = 3;
+    this.render();
+  },
   back() {
-    if (this.step > 1) { this.step--; this.render(); }
-    else this.close();
+    if (this.step > 1) {
+      this.step--;
+      if (this.step === 2 && this._presetMod) this.step = 1;
+      this.render();
+    } else this.close();
   },
 
   render() {
@@ -1826,7 +1844,7 @@ const Render = {
       }).join('');
       return '<div class="cot-card' + (isGold ? ' gold' : '') + '">' +
         '<div class="cot-card-header"><div><h3 class="cot-card-title">' + c.name + '</h3><div class="cot-card-mult">' + c.mult + '</div></div>' +
-        '<button class="cot-jogar" onclick="go(\'s-register\')">&#9654; JOGAR</button></div>' +
+        '<button class="cot-jogar" onclick="Cotacoes.jogar(\'' + c.id + '\')">&#9654; JOGAR</button></div>' +
         '<button class="cot-toggle" onclick="Cotacoes.toggle(this)">Entenda como jogar <span class="cot-toggle-arrow">&#9650;</span></button>' +
         '<div class="cot-details" id="cot-' + c.id + '">' +
         '<p class="cot-desc">' + c.desc + '</p>' +
@@ -2246,6 +2264,13 @@ var Cotacoes = {
     var details = btn.nextElementSibling;
     btn.classList.toggle('open');
     details.classList.toggle('open');
+  },
+  jogar: function(modId) {
+    if (CURRENT_EMAIL) {
+      Wizard.startWithMod(modId);
+    } else {
+      go('s-register');
+    }
   }
 };
 

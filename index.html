@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=139">
+<link rel="stylesheet" href="styles.css?v=141">
 </head>
 <body>
 <div class="page">
@@ -198,7 +198,7 @@
     <!-- ======================= COTAÇÕES ======================= -->
     <section class="screen cot-screen" id="s-cotacoes">
       <div class="cot-topbar">
-        <button class="cot-back" onclick="go('s-landing')">←</button>
+        <button class="cot-back" onclick="go(CURRENT_EMAIL?'s-home':'s-landing')">←</button>
         <h2>Cotação</h2>
         <span class="cot-spacer"></span>
       </div>
@@ -290,6 +290,11 @@
         </div>
       </div>
 
+
+      <button class="home-cotacao-link" onclick="go('s-cotacoes')">
+        <span>Ver cotações e como jogar</span>
+        <span class="home-cotacao-arrow">→</span>
+      </button>
 
       <div class="home-bichos-track">
         <div class="roleta-track-wrap">
@@ -1009,6 +1014,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=107"></script>
+<script src="app.js?v=108"></script>
 </body>
 </html>
