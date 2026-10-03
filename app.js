@@ -2298,11 +2298,11 @@ var Roleta = {
     var self = this;
     var overlay = document.createElement('div');
     overlay.className = 'rw-img-overlay';
-    overlay.innerHTML = '<img src="' + img + '" alt="">' +
-      (caption ? '<p>' + caption + '</p>' : '');
-    document.body.appendChild(overlay);
-    requestAnimationFrame(function() { overlay.classList.add('show'); });
-    setTimeout(function() {
+    var dismissed = false;
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      clearTimeout(timer);
       overlay.classList.remove('show');
       overlay.classList.add('hide');
       setTimeout(function() {
@@ -2310,7 +2310,14 @@ var Roleta = {
         if (!self.spinning && self.freeSpinsLeft <= 0) self.restoreIdle();
         if (cb) cb();
       }, 400);
-    }, duration);
+    }
+    overlay.innerHTML = '<img src="' + img + '" alt="">' +
+      (caption ? '<p>' + caption + '</p>' : '') +
+      '<button class="rw-img-close">Fechar</button>';
+    overlay.querySelector('.rw-img-close').onclick = dismiss;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function() { overlay.classList.add('show'); });
+    var timer = setTimeout(dismiss, duration);
   },
   showResultOverlay: function(msg, color, cb) {
     var suffix = this._lastSpinSuffix || '';

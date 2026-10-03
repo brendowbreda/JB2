@@ -1842,6 +1842,12 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   color: #fff; text-align: center;
   text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
+.rw-img-close {
+  margin-top: 16px; padding: 10px 32px; border: 2px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.15); color: #fff; font-size: 14px; font-weight: 700;
+  border-radius: 10px; cursor: pointer; backdrop-filter: blur(4px);
+}
+.rw-img-close:active { background: rgba(255,255,255,0.3); }
 @keyframes rw-img-pop {
   from { transform: scale(0.5); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
