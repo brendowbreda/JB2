@@ -1504,6 +1504,7 @@ const Render = {
     else if (id === 's-adicionar-amigos') this.buscaAmigos();
     else if (id === 's-cotacoes') this.cotacoes();
     else if (id === 's-roleta') this.roleta();
+    else if (id === 's-transparencia') Transparencia.render();
     else if (id === 's-register') RegWizard.reset();
     else if (id === 's-suporte') this.suporte();
   },
@@ -2345,6 +2346,81 @@ var Roleta = {
       var val = parseFloat(btn.textContent.replace('R$', '').replace(',', '.'));
       btn.classList.toggle('selected', val === self.valor);
     });
+  }
+};
+
+var Transparencia = {
+  _baseDate: new Date('2026-10-03'),
+  _base: {
+    totalPago: 7818589.40,
+    cadastrados: 142733,
+    apostas: 861457,
+    depositos: 215836,
+    saques: 27596
+  },
+  _seed: function(day) {
+    var x = Math.sin(day * 9301 + 49297) * 49297;
+    return x - Math.floor(x);
+  },
+  _range: function(seed, min, max) {
+    return min + seed * (max - min);
+  },
+  _isFederal: function(d) {
+    return d.getDay() === 0 || d.getDay() === 3;
+  },
+  _daysBetween: function(a, b) {
+    return Math.floor((b - a) / 86400000);
+  },
+  compute: function() {
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var days = this._daysBetween(this._baseDate, today);
+    if (days < 0) days = 0;
+    var totalPago = this._base.totalPago;
+    var cadastrados = this._base.cadastrados;
+    var apostas = this._base.apostas;
+    var depositos = this._base.depositos;
+    var saques = this._base.saques;
+    for (var i = 1; i <= days; i++) {
+      var d = new Date(this._baseDate); d.setDate(d.getDate() + i);
+      var s = this._seed(i);
+      var fed = this._isFederal(d);
+      totalPago += fed ? this._range(s, 45852.50, 63851.93) : this._range(s, 15897.50, 25050.50);
+      cadastrados += Math.round(this._range(this._seed(i + 1000), 78, 130));
+      apostas += Math.round(this._range(this._seed(i + 2000), 1240, 3879));
+      depositos += Math.round(this._range(this._seed(i + 3000), 152, 472));
+      saques += Math.round(this._range(this._seed(i + 4000), 30, 75));
+    }
+    var s0 = this._seed(days + 5000);
+    var fed = this._isFederal(today);
+    var premioHoje = fed ? this._range(s0, 45852.50, 63851.93) : this._range(s0, 15897.50, 25050.50);
+    var caixa = this._range(this._seed(days + 6000), 973947.50, 2683183.50);
+    return {
+      caixa: caixa,
+      totalPago: totalPago,
+      premioHoje: premioHoje,
+      cadastrados: cadastrados,
+      apostas: apostas,
+      depositos: depositos,
+      saques: saques
+    };
+  },
+  fmtBRL: function(v) {
+    return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  },
+  fmtNum: function(v) {
+    return v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  },
+  render: function() {
+    var d = this.compute();
+    var el;
+    el = document.getElementById('tpCaixa'); if (el) el.textContent = this.fmtBRL(d.caixa);
+    el = document.getElementById('tpTotalPago'); if (el) el.textContent = this.fmtBRL(d.totalPago);
+    el = document.getElementById('tpHoje'); if (el) el.textContent = this.fmtBRL(d.premioHoje);
+    el = document.getElementById('tpCadastrados'); if (el) el.textContent = this.fmtNum(d.cadastrados);
+    el = document.getElementById('tpApostas'); if (el) el.textContent = this.fmtNum(d.apostas);
+    el = document.getElementById('tpDepositos'); if (el) el.textContent = this.fmtNum(d.depositos);
+    el = document.getElementById('tpSaques'); if (el) el.textContent = this.fmtNum(d.saques);
   }
 };
 

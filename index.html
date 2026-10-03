@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=153">
+<link rel="stylesheet" href="styles.css?v=154">
 </head>
 <body>
 <div class="page">
@@ -817,33 +817,35 @@
     </section>
 
     <section class="screen" id="s-transparencia">
-      <div class="topbar-simple tp-dark">
+      <div class="topbar-simple">
         <button class="icon-btn" onclick="Menu.backToPrevious()">←</button>
         <h2>Portal Transparência</h2>
-        <button class="icon-btn" onclick="go('s-home')">✕</button>
+        <span class="spacer"></span>
       </div>
-      <p class="tp-sub">Números da plataforma, atualizados em tempo real.</p>
-      <div class="tp-card">
-        <span class="tp-label">VALOR TOTAL NO CAIXA</span>
-        <span class="tp-verified">✓ Verificado</span>
-        <strong class="tp-value" id="tpCaixa">R$ 1.170.445,00</strong>
-        <span class="tp-hint">Atualizado em tempo real</span>
-      </div>
-      <div class="tp-card">
-        <span class="tp-label">TOTAL PAGO ATÉ HOJE</span>
-        <strong class="tp-value">R$ 7.818.589,40</strong>
-        <span class="tp-hint">Desde o lançamento da plataforma</span>
-      </div>
-      <div class="tp-card">
-        <span class="tp-label">PRÊMIOS PAGOS HOJE</span>
-        <strong class="tp-value tp-green" id="tpHoje">R$ 47.260,00</strong>
-        <span class="tp-hint">Reinicia à meia-noite</span>
-      </div>
-      <div class="tp-stats">
-        <div class="tp-stat"><strong id="tpCadastrados">142.733</strong><span>CADASTRADOS</span></div>
-        <div class="tp-stat"><strong id="tpApostas">861.457</strong><span>APOSTAS</span></div>
-        <div class="tp-stat"><strong id="tpDepositos">215.836</strong><span>DEPÓSITOS</span></div>
-        <div class="tp-stat"><strong id="tpSaques">27.596</strong><span>SAQUES</span></div>
+      <div class="screen-content" style="padding:16px">
+        <p class="tp-sub">Números da plataforma, atualizados em tempo real.</p>
+        <div class="tp-card">
+          <span class="tp-label">VALOR TOTAL NO CAIXA</span>
+          <span class="tp-verified">Verificado</span>
+          <strong class="tp-value" id="tpCaixa">R$ 1.170.445,00</strong>
+          <span class="tp-hint">Atualizado em tempo real</span>
+        </div>
+        <div class="tp-card">
+          <span class="tp-label">TOTAL PAGO ATÉ HOJE</span>
+          <strong class="tp-value tp-highlight" id="tpTotalPago">R$ 7.818.589,40</strong>
+          <span class="tp-hint">Desde o lançamento da plataforma</span>
+        </div>
+        <div class="tp-card">
+          <span class="tp-label">PRÊMIOS PAGOS HOJE</span>
+          <strong class="tp-value tp-green" id="tpHoje">R$ 47.260,00</strong>
+          <span class="tp-hint">Reinicia à meia-noite</span>
+        </div>
+        <div class="tp-stats">
+          <div class="tp-stat"><strong id="tpCadastrados">142.733</strong><span>CADASTRADOS</span></div>
+          <div class="tp-stat"><strong id="tpApostas">861.457</strong><span>APOSTAS</span></div>
+          <div class="tp-stat"><strong id="tpDepositos">215.836</strong><span>DEPÓSITOS</span></div>
+          <div class="tp-stat"><strong id="tpSaques">27.596</strong><span>SAQUES</span></div>
+        </div>
       </div>
     </section>
 
@@ -1031,6 +1033,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=120"></script>
+<script src="app.js?v=121"></script>
 </body>
 </html>
