@@ -829,7 +829,7 @@ const Wizard = {
       if (isFederal && d.getDay() !== 0 && d.getDay() !== 3) continue;
       var label = i === 0 ? 'HOJE' : i === 1 ? 'AMANHÃ' : dayNames[d.getDay()];
       days.push({ label: label, day: pad2(d.getDate()) + '/' + pad2(d.getMonth() + 1), date: d.toISOString().slice(0,10), selected: this.draft.date === d.toISOString().slice(0,10) || (!this.draft.date && days.length === 0) });
-      if (isFederal && days.length >= 4) break;
+      if (isFederal && days.length >= 2) break;
     }
     if (!this.draft.date) this.draft.date = days[0].date;
     var sub = isFederal
