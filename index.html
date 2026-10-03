@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=152">
+<link rel="stylesheet" href="styles.css?v=153">
 </head>
 <body>
 <div class="page">
@@ -309,14 +309,9 @@
       <div class="topbar-simple">
         <button class="icon-btn" onclick="go('s-home')">←</button>
         <h2>Roleta dos Bichos</h2>
+        <span class="spacer"></span>
       </div>
       <div class="screen-content" style="padding:16px">
-        <div class="home-roleta-steps">
-          <div class="home-roleta-step"><strong>1.</strong> Escolha um bicho</div>
-          <div class="home-roleta-step"><strong>2.</strong> Defina o valor da aposta</div>
-          <div class="home-roleta-step"><strong>3.</strong> Clique em Girar a Roleta</div>
-          <div class="home-roleta-step"><strong>4.</strong> Acertou o bicho, você ganha — direto na sua carteira</div>
-        </div>
 
         <p class="home-roleta-label">Escolha um bicho:</p>
         <div class="rb-picker-carousel home-rb-picker" id="rbPickerCarousel2">
@@ -330,33 +325,29 @@
 
         <p class="home-roleta-label">Defina o valor da aposta:</p>
         <div class="home-roleta-valor">
-          <div class="rb-valor">
-            <button class="rb-val-btn home-rb-val-btn" onclick="Roleta.changeVal(-1)">−</button>
-            <span class="rb-val-display home-rb-val-display" id="rbValDisplay2">R$ 1,00</span>
-            <button class="rb-val-btn home-rb-val-btn" onclick="Roleta.changeVal(1)">+</button>
-          </div>
           <div class="rb-presets home-rb-presets" id="rbPresetsHome">
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(5)">R$5,00</button>
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(10)">R$10,00</button>
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(20)">R$20,00</button>
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(50)">R$50,00</button>
           </div>
-          <p class="rb-ganhos home-rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 18,00</strong></p>
+          <input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="roletaCustomAmount" value="" oninput="Roleta.customInput(this)" style="margin-top:8px">
+          <p class="rb-ganhos home-rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 90,00</strong></p>
         </div>
+
+        <button class="landing-btn-green home-rb-spin" id="rwSpinBtn2" onclick="Roleta.spin()">GIRAR ROLETA</button>
 
         <div class="home-roleta-wheel">
           <div class="rw-container">
             <div class="rw-pointer"></div>
             <div class="rw-ring"></div>
-            <div class="rw-wheel-wrap" id="rwWheelWrap2">
+            <div class="rw-wheel-wrap idle-spin" id="rwWheelWrap2">
               <div class="rw-wheel" id="rwWheel2"></div>
               <div class="rw-pins" id="rwPins2"></div>
             </div>
           </div>
           <p class="rw-result" id="rwResult2"></p>
         </div>
-
-        <button class="landing-btn-green home-rb-spin" id="rwSpinBtn2" onclick="Roleta.spin()">GIRAR ROLETA</button>
       </div>
     </section>
 
@@ -962,8 +953,15 @@
   <div class="modal-backdrop" id="roletaMenuModalBackdrop" onclick="Modal.close('roletaMenuModal')"></div>
   <div class="modal-card" id="roletaMenuModal">
     <h3>Roleta dos Bichos</h3>
-    <p class="modal-rules" style="margin-bottom:16px;text-align:left;">1. Escolha um bicho<br>2. Defina o valor da aposta<br>3. Clique em Girar a Roleta<br>4. Acertou o bicho, você ganha — direto na sua carteira</p>
+    <p style="margin-bottom:16px;">Cotação: <b>18x</b> — aposte R$ 10,00 e ganhe <b>R$ 180,00</b></p>
     <button class="btn-primary" style="width:100%;" onclick="Modal.close('roletaMenuModal');go('s-roleta')">Jogar</button>
+  </div>
+
+  <div class="modal-backdrop" id="trevoModalBackdrop" onclick="Modal.close('trevoModal')"></div>
+  <div class="modal-card" id="trevoModal">
+    <h3>Trevo da Sorte!</h3>
+    <p style="margin-bottom:16px;">Você acabou de aumentar a sua chance! Você ganhou <b>3 giros grátis</b>.<br><br>Escolha seu bicho e boa sorte!</p>
+    <button class="btn-primary" style="width:100%;" onclick="Modal.close('trevoModal');Roleta.startFreeSpins()">Jogar</button>
   </div>
 
   <div class="modal-backdrop" id="deleteModalBackdrop" onclick="Modal.close('deleteModal')"></div>
@@ -1033,6 +1031,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=119"></script>
+<script src="app.js?v=120"></script>
 </body>
 </html>

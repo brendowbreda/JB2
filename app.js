@@ -1564,6 +1564,7 @@ const Render = {
         Roleta.buildPicker('2');
         Roleta.initPickerSwipe('2');
         Roleta.buildWheel('2');
+        Roleta.valor = 5;
         Roleta.updateValor();
         Roleta.pickerCenterOn(Roleta.selectedAnimal, false, '2');
         Roleta._home2Init = true;
@@ -1942,7 +1943,7 @@ var ROLETA_ANIMALS = [
 ];
 
 var Roleta = {
-  valor: 1,
+  valor: 5,
   mult: 18,
   spinning: false,
   freeSpinsLeft: 0,
@@ -2168,7 +2169,7 @@ var Roleta = {
       pins.innerHTML = pinHtml;
     }
     var wrapEl = document.getElementById('rwWheelWrap' + suffix);
-    if (wrapEl && suffix === '') wrapEl.classList.add('idle-spin');
+    if (wrapEl) wrapEl.classList.add('idle-spin');
   },
   spin: function() {
     if (this.spinning) return;
@@ -2203,13 +2204,12 @@ var Roleta = {
       var animal = ROLETA_ANIMALS[winIdx];
       if (animal.free) {
         self.freeSpinsLeft = 3;
-        self.showResultOverlay('🍀 Trevo da sorte! 3 giros grátis', '#22c55e', function() {
+        self.showResultOverlay('3x grátis', '#e6a817', function() {
           self.spinning = false;
-          self.reroll = true;
-          self.spin();
+          if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
+          Modal.open('trevoModal');
         });
       } else {
-        var chosen = ROLETA_ANIMALS[self.selectedAnimal];
         var won = winIdx === self.selectedAnimal;
         var hiColor = won ? '#1a6b3a' : '#8b1a1a';
         self.applyGradient(wheel, n, seg, winIdx, hiColor);
@@ -2223,22 +2223,28 @@ var Roleta = {
             self.applyGradient(wheel, n, seg, -1, null);
           }
         }, 300);
+        var prize = self.valor * self.mult;
         if (self.freeSpinsLeft > 0) {
           self.freeSpinsLeft--;
           var msg = won
-            ? 'Parabéns, você está com sorte!'
+            ? 'Parabéns! Ganhou ' + self.fmtBRL(prize)
             : 'Não foi dessa vez!';
           var color = won ? '#22c55e' : '#ef4444';
           self.showResultOverlay(msg, color, function() {
-            self.spinning = false;
-            self.reroll = true;
-            self.spin();
+            if (self.freeSpinsLeft > 0) {
+              self.spinning = false;
+              self.reroll = true;
+              self.spin();
+            } else {
+              self.spinning = false;
+              if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
+            }
           });
         } else {
           self.spinning = false;
           if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
           if (won) {
-            self.showResultOverlay('Parabéns, você está com sorte!', '#22c55e', null);
+            self.showResultOverlay('Parabéns! Ganhou ' + self.fmtBRL(prize), '#22c55e', null);
           } else {
             self.showResultOverlay('Não foi dessa vez!', '#ef4444', null);
           }
@@ -2258,14 +2264,40 @@ var Roleta = {
   },
   setVal: function(v) {
     this.valor = v;
+    var input = document.getElementById('roletaCustomAmount');
+    if (input) input.value = '';
     this.updateValor();
+  },
+  customInput: function(el) {
+    Wallet.maskMoney(el);
+    var raw = el.value.replace(/\D/g, '');
+    var n = raw ? (parseInt(raw, 10) / 100) : 0;
+    if (n > 0) {
+      this.valor = n;
+      this.updateValor();
+    }
+  },
+  startFreeSpins: function() {
+    this.reroll = true;
+    this.spin();
   },
   fmtBRL: function(v) {
     return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   },
+  restoreIdle: function() {
+    var suffix = this._lastSpinSuffix || '';
+    var wrap = document.getElementById('rwWheelWrap' + suffix);
+    if (wrap) {
+      wrap.style.transition = 'none';
+      wrap.style.transform = 'rotate(0deg)';
+      wrap.offsetHeight;
+      wrap.classList.add('idle-spin');
+    }
+  },
   showResultOverlay: function(msg, color, cb) {
     var suffix = this._lastSpinSuffix || '';
     var result = document.getElementById('rwResult' + suffix);
+    var self = this;
     if (result) {
       var text = msg.replace('\n', ' ');
       result.textContent = text;
@@ -2273,6 +2305,7 @@ var Roleta = {
       result.classList.add('rw-result-show');
       setTimeout(function() {
         result.classList.remove('rw-result-show');
+        if (!self.spinning && self.freeSpinsLeft <= 0) self.restoreIdle();
         if (cb) cb();
       }, 2500);
     } else {
