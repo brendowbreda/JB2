@@ -1054,7 +1054,7 @@ const Wizard = {
     body.innerHTML = '<h2>Quanto quer apostar?</h2>' +
       '<p class="wiz-sub">Mínimo R$ 0,10 — máximo R$ 5.000,00 por bilhete.</p>' +
       '<div class="wiz-amount-grid">' + grid + '</div>' +
-      '<input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="wizAmountInput" value="' + (amt > 0 ? 'R$  ' + amt.toFixed(2).replace('.', ',') : (inputVal ? 'R$  ' + inputVal : '')) + '" oninput="Wizard.amountInput(this)">' +
+      '<input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="wizAmountInput" value="' + (amt > 0 ? 'R$  ' + amt.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.') : (inputVal ? 'R$  ' + inputVal : '')) + '" oninput="Wizard.amountInput(this)">' +
       splitHtml + prize;
     footer.innerHTML = '<button class="btn-primary" onclick="Wizard.amountContinue()">Continuar</button>';
   },
@@ -1444,7 +1444,7 @@ const Account = {
     toast('Telefone alterado com sucesso!');
   },
   confirmDelete() {
-    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     const el = document.getElementById('deleteModalSaldo');
     if (el) el.textContent = fmtBRL(STATE.points);
     const ap = document.getElementById('deleteModalApostas');
@@ -1515,7 +1515,7 @@ const Render = {
     const initials = u.name.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase() || '?';
     ['homeName', 'drawerName'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = u.name; });
     ['homeAvatar', 'drawerAvatar', 'perfilAvatar'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = initials; });
-    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     ['homeBalance', 'drawerBalance'].forEach((id) => { const el = document.getElementById(id); if (el) el.textContent = fmtBRL(STATE.points); });
     const carteiraSaldoEl = document.getElementById('carteiraSaldo'); if (carteiraSaldoEl) carteiraSaldoEl.textContent = fmtBRL(STATE.points);
     const tierChip = document.getElementById('homeTierChip');
@@ -1536,9 +1536,9 @@ const Render = {
       dateEl.textContent = 'hoje - dia ' + pad + ' (' + dias[now.getDay()] + ') de ' + meses[now.getMonth()] + ' de ' + now.getFullYear() + '.';
     }
     var walletEl = document.getElementById('homeWalletVal');
-    if (walletEl) walletEl.textContent = 'R$ ' + Number(STATE.points).toFixed(2).replace('.', ',');
+    if (walletEl) walletEl.textContent = 'R$ ' + Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     var homeSaque = document.getElementById('homeSaqueVal');
-    if (homeSaque) homeSaque.textContent = Number(STATE.points).toFixed(2).replace('.', ',');
+    if (homeSaque) homeSaque.textContent = Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     document.getElementById('streakCount').textContent = STATE.streak;
     const betsEl = document.getElementById('homeTotalWins');
     if (betsEl) betsEl.textContent = STATE.bets.filter(b => b.status === 'ganhou').length;
@@ -1726,12 +1726,12 @@ const Render = {
   // old game render methods removed — Wizard handles the flow
   perfil() {
     const u = loadUsers()[CURRENT_EMAIL];
-    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+    const fmtBRL = (v) => 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     document.getElementById('perfilNome').textContent = u.name;
     const saldo = document.getElementById('perfilSaldo');
     if (saldo) saldo.textContent = fmtBRL(STATE.points);
     const saqueEl = document.getElementById('perfilSaque');
-    if (saqueEl) saqueEl.textContent = Number(STATE.points).toFixed(2).replace('.', ',');
+    if (saqueEl) saqueEl.textContent = Number(STATE.points).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     const cpfEl = document.getElementById('perfilCpf');
     if (cpfEl && u.cpf) {
       const c = u.cpf.replace(/\D/g, '');
@@ -2261,7 +2261,7 @@ var Roleta = {
     this.updateValor();
   },
   fmtBRL: function(v) {
-    return 'R$ ' + v.toFixed(2).replace('.', ',');
+    return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   },
   showResultOverlay: function(msg, color, cb) {
     var suffix = this._lastSpinSuffix || '';
