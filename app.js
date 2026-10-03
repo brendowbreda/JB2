@@ -2230,11 +2230,9 @@ var Roleta = {
         var prize = self.valor * self.mult;
         if (self.freeSpinsLeft > 0) {
           self.freeSpinsLeft--;
-          var msg = won
-            ? 'Parabéns! Ganhou ' + self.fmtBRL(prize)
-            : 'Não foi dessa vez!';
-          var color = won ? '#22c55e' : '#ef4444';
-          self.showResultOverlay(msg, color, function() {
+          var imgSrc = won ? 'parabens.webp' : 'nao-foi-dessa-vez.webp';
+          var caption = won ? 'Ganhou ' + self.fmtBRL(prize) : '';
+          self.showImageOverlay(imgSrc, caption, 3000, function() {
             if (self.freeSpinsLeft > 0) {
               self.spinning = false;
               self.reroll = true;
@@ -2247,11 +2245,9 @@ var Roleta = {
         } else {
           self.spinning = false;
           if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
-          if (won) {
-            self.showResultOverlay('Parabéns! Ganhou ' + self.fmtBRL(prize), '#22c55e', null);
-          } else {
-            self.showResultOverlay('Não foi dessa vez!', '#ef4444', null);
-          }
+          var imgSrc = won ? 'parabens.webp' : 'nao-foi-dessa-vez.webp';
+          var caption = won ? 'Ganhou ' + self.fmtBRL(prize) : '';
+          self.showImageOverlay(imgSrc, caption, 5000, null);
         }
       }
     }, 4300);
@@ -2297,6 +2293,24 @@ var Roleta = {
       wrap.offsetHeight;
       wrap.classList.add('idle-spin');
     }
+  },
+  showImageOverlay: function(img, caption, duration, cb) {
+    var self = this;
+    var overlay = document.createElement('div');
+    overlay.className = 'rw-img-overlay';
+    overlay.innerHTML = '<img src="' + img + '" alt="">' +
+      (caption ? '<p>' + caption + '</p>' : '');
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function() { overlay.classList.add('show'); });
+    setTimeout(function() {
+      overlay.classList.remove('show');
+      overlay.classList.add('hide');
+      setTimeout(function() {
+        overlay.remove();
+        if (!self.spinning && self.freeSpinsLeft <= 0) self.restoreIdle();
+        if (cb) cb();
+      }, 400);
+    }, duration);
   },
   showResultOverlay: function(msg, color, cb) {
     var suffix = this._lastSpinSuffix || '';
