@@ -1839,7 +1839,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .rw-img-overlay p {
   margin-top: 12px; font-size: 20px; font-weight: 800;
-  color: #fff; text-align: center;
+  color: #22C08C; text-align: center;
   text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 .rw-img-close {

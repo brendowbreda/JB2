@@ -2208,7 +2208,7 @@ var Roleta = {
       var animal = ROLETA_ANIMALS[winIdx];
       if (animal.free) {
         self.freeSpinsLeft = 3;
-        self.showResultOverlay('3x grátis', '#e6a817', function() {
+        self.showImageOverlay('3x-gratis.webp', '', 5000, function() {
           self.spinning = false;
           if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
           Modal.open('trevoModal');
