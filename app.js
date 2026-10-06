@@ -1569,6 +1569,7 @@ const Render = {
     }
     requestAnimationFrame(function() {
       Roleta.pickerCenterOn(Roleta.selectedAnimal, false, '2');
+      Roleta.scaleWheel();
     });
     var input = document.getElementById('roletaCustomAmount');
     if (input && !input.value) {
@@ -2187,6 +2188,21 @@ var Roleta = {
     }
     var wrapEl = document.getElementById('rwWheelWrap' + suffix);
     if (wrapEl) wrapEl.classList.add('idle-spin');
+    if (suffix === '2') this.scaleWheel();
+  },
+  scaleWheel: function() {
+    var container = document.querySelector('.roleta-wheel-area .rw-container');
+    if (!container) return;
+    var vw = window.innerWidth;
+    var s = vw / 900;
+    container.style.width = '900px';
+    container.style.height = '900px';
+    container.style.position = 'absolute';
+    container.style.left = '50%';
+    container.style.marginLeft = '-450px';
+    container.style.top = '0';
+    container.style.transform = 'scale(' + s + ')';
+    container.style.transformOrigin = 'center top';
   },
   spin: function() {
     if (this.spinning) return;
