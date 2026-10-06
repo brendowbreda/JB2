@@ -763,17 +763,17 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .dezena-tile.selected { border-color: var(--primary); background: var(--primary-tint); color: var(--primary-deep); }
 
 /* ---------- wizard ---------- */
-#s-wizard { flex-direction: column; min-height: 100vh; padding: 0 16px 16px; }
+#s-wizard { flex-direction: column; height: 100vh; height: 100dvh; padding: 0 16px; overflow: hidden; }
 #s-wizard.active { display: flex; }
-.wiz-header { padding: 16px 0 0; }
+.wiz-header { padding: 16px 0 0; flex-shrink: 0; }
 .wiz-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .wiz-step-label { font-size: 11px; font-weight: 700; color: var(--ink-faint); letter-spacing: .5px; text-transform: uppercase; }
 .wiz-progress { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .wiz-progress-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: width .3s; }
-.wiz-body { flex: 1; overflow-y: auto; padding: 8px 0 16px; }
+.wiz-body { flex: 1; overflow-y: auto; padding: 8px 0 16px; min-height: 0; }
 .wiz-body h2 { font-size: 18px; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
 .wiz-body .wiz-sub { font-size: 13px; color: var(--ink-dim); margin: 0 0 16px; line-height: 1.5; }
-.wiz-footer { padding: 8px 0 0; }
+.wiz-footer { padding: 8px 0 16px; flex-shrink: 0; }
 .wiz-footer .btn-primary { width: 100%; }
 .wiz-footer .wiz-note { font-size: 11px; color: var(--ink-faint); text-align: center; margin: 10px 0 0; }
 

@@ -842,9 +842,8 @@ const Wizard = {
           '<span class="wiz-date-day">' + d.label + '</span>' +
           '<span class="wiz-date-num">' + d.day + '</span></div>';
       }).join('') + '</div>';
-    footer.innerHTML = '<button class="btn-primary" onclick="Wizard.next()">Continuar</button>';
   },
-  pickDate(d) { this.draft.date = d; this.render(); },
+  pickDate(d) { this.draft.date = d; this.next(); },
 
   renderMod(body, footer) {
     var numMods = COTACOES.filter(function(c) { return !['grupo','duque-grupo','terno-grupo'].includes(c.id); });
