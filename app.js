@@ -2193,7 +2193,8 @@ var Roleta = {
   scaleWheel: function() {
     var container = document.querySelector('.roleta-wheel-area .rw-container');
     if (!container) return;
-    var vw = window.innerWidth;
+    var area = document.querySelector('.roleta-wheel-area');
+    var vw = area ? area.offsetWidth : window.innerWidth;
     var s = (vw * 2.2) / 900;
     container.style.width = '900px';
     container.style.height = '900px';

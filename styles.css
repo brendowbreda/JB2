@@ -468,7 +468,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 #s-roleta {
   height: 100vh; height: 100dvh; overflow: hidden; gap: 0; padding: 0;
-  width: 100vw; margin: -20px -16px 0; position: relative;
+  width: calc(100% + 32px); margin: -20px -16px 0; position: relative;
 }
 #s-roleta .topbar-simple { flex-shrink: 0; padding: 12px 16px 4px; }
 .roleta-top { flex-shrink: 0; padding: 0 16px; }
