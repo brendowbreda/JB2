@@ -467,14 +467,13 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   transform: scale(1.15);
 }
 #s-roleta {
-  height: 100vh; height: 100dvh; overflow: hidden; gap: 0; padding: 0;
-  width: calc(100% + 32px); margin: -20px -16px 0; position: relative;
+  height: 100vh; height: 100dvh; overflow: hidden; gap: 0; padding: 0 16px;
 }
-#s-roleta .topbar-simple { flex-shrink: 0; padding: 12px 16px 4px; }
-.roleta-top { flex-shrink: 0; padding: 0 16px; }
+#s-roleta .topbar-simple { flex-shrink: 0; padding: 12px 0 4px; }
+.roleta-top { flex-shrink: 0; }
 .roleta-wheel-area {
   flex: 1; min-height: 0; overflow: hidden;
-  width: 100%; position: relative;
+  width: calc(100% + 32px); margin-left: -16px; position: relative;
 }
 .roleta-wheel-area .rw-container {
   background: transparent;
