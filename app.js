@@ -2004,6 +2004,18 @@ var Roleta = {
       el.classList.toggle('selected', parseInt(el.dataset.idx) === idx);
     });
   },
+  pickerStep: function(dir, suffix) {
+    if (this.spinning) return;
+    var items = [];
+    for (var i = 0; i < ROLETA_ANIMALS.length; i++) {
+      if (!ROLETA_ANIMALS[i].free) items.push(i);
+    }
+    var cur = items.indexOf(this.selectedAnimal);
+    if (cur === -1) cur = 0;
+    cur = (cur + dir + items.length) % items.length;
+    this.pickAnimal(items[cur]);
+    this.pickerCenterOn(items[cur], true, suffix);
+  },
   applyGradient: function(wheel, n, seg, highlightIdx, color) {
     var c1 = '#2D2757', c2 = '#3A3170', cFree = '#2e8b3e';
     var parts = [];

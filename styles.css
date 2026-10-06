@@ -1667,6 +1667,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   color: rgba(255,255,255,0.4);
   font-size: 22px;
   font-weight: 900;
+  cursor: pointer;
   animation: hint-bounce 1.5s ease-in-out infinite;
 }
 .rb-picker-hint-arrow:last-child { animation-delay: 0.75s; }
@@ -2064,15 +2065,15 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 
 .landing-footer-dark {
   text-align: center;
-  padding: 24px 24px 36px;
+  padding: 16px 24px 20px;
   background: #fff;
   border-top: 1px solid var(--border);
 }
 .landing-footer-aviso-dark {
   color: var(--ink-faint);
-  font-size: 12px;
-  margin: 0 0 4px;
-  line-height: 1.5;
+  font-size: 11px;
+  margin: 0 0 2px;
+  line-height: 1.4;
 }
 
 /* Register wizard */
