@@ -1616,6 +1616,7 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .rb-picker-carousel {
   overflow: hidden;
   margin: 0 -24px;
+  padding: 14px 0;
   cursor: grab;
   touch-action: pan-y;
   -webkit-user-select: none;
