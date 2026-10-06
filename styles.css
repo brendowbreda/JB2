@@ -1639,12 +1639,16 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   padding: 5px;
   cursor: pointer;
   border: 3px solid transparent;
-  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  transition: border-color 0.2s, transform 0.3s ease, background 0.2s, opacity 0.3s ease;
+  opacity: 0.5;
+  transform: scale(0.85);
 }
 .rb-picker-item.selected {
-  border-color: var(--gold);
-  transform: scale(1.15);
-  background: var(--gold);
+  border-color: var(--primary);
+  transform: scale(1.2);
+  background: var(--primary-tint);
+  opacity: 1;
+  box-shadow: 0 4px 16px rgba(34,192,140,0.35);
 }
 .rb-picker-item img {
   width: 100%;

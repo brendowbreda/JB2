@@ -1565,10 +1565,12 @@ const Render = {
         Roleta.buildPicker('2');
         Roleta.initPickerSwipe('2');
         Roleta.buildWheel('2');
-        Roleta.pickerCenterOn(Roleta.selectedAnimal, false, '2');
         Roleta._home2Init = true;
       }
     }
+    requestAnimationFrame(function() {
+      Roleta.pickerCenterOn(Roleta.selectedAnimal, false, '2');
+    });
     var input = document.getElementById('roletaCustomAmount');
     if (input && !input.value) {
       input.value = 'R$  ' + Roleta.valor.toFixed(2).replace('.', ',');
@@ -1947,7 +1949,7 @@ var ROLETA_ANIMALS = [
 ];
 
 var Roleta = {
-  valor: 5,
+  valor: 1,
   mult: 18,
   spinning: false,
   freeSpinsLeft: 0,

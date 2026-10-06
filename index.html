@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=158">
+<link rel="stylesheet" href="styles.css?v=159">
 </head>
 <body>
 <div class="page">
@@ -326,10 +326,10 @@
         <p class="home-roleta-label">Defina o valor da aposta:</p>
         <div class="home-roleta-valor">
           <div class="rb-presets home-rb-presets" id="rbPresetsHome">
+            <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(1)">R$1,00</button>
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(5)">R$5,00</button>
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(10)">R$10,00</button>
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(20)">R$20,00</button>
-            <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(50)">R$50,00</button>
           </div>
           <input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="roletaCustomAmount" value="" oninput="Roleta.customInput(this)" style="margin-top:8px">
           <p class="rb-ganhos home-rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 90,00</strong></p>
@@ -1033,6 +1033,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="app.js?v=125"></script>
+<script src="app.js?v=126"></script>
 </body>
 </html>
