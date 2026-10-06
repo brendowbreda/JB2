@@ -472,7 +472,8 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 .roleta-wheel-area { flex: 1; min-height: 0; overflow: hidden; position: relative; }
 .roleta-wheel-area .rw-container {
   background: transparent;
-  width: calc(100% + 32px); margin: 0 -16px;
+  width: 100vw; margin: 0; left: 50%; transform: translateX(-50%);
+  height: 100%;
 }
 .roleta-wheel-area .rw-pointer {
   filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
