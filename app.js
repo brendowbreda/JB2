@@ -1920,11 +1920,11 @@ const Render = {
 };
 
 var ROLETA_ANIMALS = [
-  { file: '01-avestruz.png', name: 'Avestruz' },
-  { file: '02-aguia.png', name: 'Águia' },
-  { file: '03-burro.png', name: 'Burro' },
-  { file: '04-borboleta.png', name: 'Borboleta' },
-  { file: '05-cachorro.png', name: 'Cachorro' },
+  { file: '01-avestruz.png', name: 'Avestruz', lose: 'bichos-lose/01-avestruz.webp' },
+  { file: '02-aguia.png', name: 'Águia', lose: 'bichos-lose/02-aguia.webp' },
+  { file: '03-burro.png', name: 'Burro', lose: 'bichos-lose/03-burro.webp' },
+  { file: '04-borboleta.png', name: 'Borboleta', lose: 'bichos-lose/04-borboleta.webp' },
+  { file: '05-cachorro.png', name: 'Cachorro', lose: 'bichos-lose/05-cachorro.webp' },
   { file: '06-cabra.png', name: 'Cabra' },
   { file: '07-carneiro.png', name: 'Carneiro' },
   { file: '08-camelo.png', name: 'Camelo' },
@@ -2230,9 +2230,11 @@ var Roleta = {
           }
         }, 300);
         var prize = self.valor * self.mult;
+        var selectedA = ROLETA_ANIMALS[self.selectedAnimal];
+        var loseImg = selectedA.lose || 'nao-foi-dessa-vez.webp';
         if (self.freeSpinsLeft > 0) {
           self.freeSpinsLeft--;
-          var imgSrc = won ? 'parabens.webp' : 'nao-foi-dessa-vez.webp';
+          var imgSrc = won ? 'parabens.webp' : loseImg;
           var caption = won ? 'Ganhou ' + self.fmtBRL(prize) : '';
           self.showImageOverlay(imgSrc, caption, 3000, function() {
             if (self.freeSpinsLeft > 0) {
@@ -2247,7 +2249,7 @@ var Roleta = {
         } else {
           self.spinning = false;
           if (btn) { btn.disabled = false; btn.textContent = 'GIRAR ROLETA'; }
-          var imgSrc = won ? 'parabens.webp' : 'nao-foi-dessa-vez.webp';
+          var imgSrc = won ? 'parabens.webp' : loseImg;
           var caption = won ? 'Ganhou ' + self.fmtBRL(prize) : '';
           self.showImageOverlay(imgSrc, caption, 5000, null);
         }
