@@ -6,7 +6,7 @@
 <title>Palpite Club — Jogo social de palpites</title>
 <meta name="theme-color" content="#22C08C">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css?v=162">
+<link rel="stylesheet" href="styles.css?v=163">
 </head>
 <body>
 <div class="page">
@@ -311,8 +311,7 @@
         <h2>Roleta dos Bichos</h2>
         <span class="spacer"></span>
       </div>
-      <div class="screen-content" style="padding:16px">
-
+      <div class="roleta-top">
         <p class="home-roleta-label">Escolha um bicho:</p>
         <div class="rb-picker-carousel home-rb-picker" id="rbPickerCarousel2">
           <div class="rb-picker-strip" id="rbPickerStrip2"></div>
@@ -331,23 +330,22 @@
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(10)">R$10,00</button>
             <button class="rb-preset home-rb-preset" onclick="Roleta.setVal(20)">R$20,00</button>
           </div>
-          <input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="roletaCustomAmount" value="" oninput="Roleta.customInput(this)" style="margin-top:8px">
+          <input class="wiz-amount-input" type="text" placeholder="R$  0,00" inputmode="decimal" id="roletaCustomAmount" value="" oninput="Roleta.customInput(this)" style="margin-top:4px">
           <p class="rb-ganhos home-rb-ganhos">Previsão de Ganhos: <strong id="rbGanhos2">R$ 90,00</strong></p>
         </div>
 
         <button class="landing-btn-green home-rb-spin" id="rwSpinBtn2" onclick="Roleta.spin()">GIRAR ROLETA</button>
-
-        <div class="home-roleta-wheel">
-          <div class="rw-container">
-            <div class="rw-pointer"></div>
-            <div class="rw-ring"></div>
-            <div class="rw-wheel-wrap idle-spin" id="rwWheelWrap2">
-              <div class="rw-wheel" id="rwWheel2"></div>
-              <div class="rw-pins" id="rwPins2"></div>
-            </div>
+      </div>
+      <div class="roleta-wheel-area">
+        <div class="rw-container">
+          <div class="rw-pointer"></div>
+          <div class="rw-ring"></div>
+          <div class="rw-wheel-wrap idle-spin" id="rwWheelWrap2">
+            <div class="rw-wheel" id="rwWheel2"></div>
+            <div class="rw-pins" id="rwPins2"></div>
           </div>
-          <p class="rw-result" id="rwResult2"></p>
         </div>
+        <p class="rw-result" id="rwResult2"></p>
       </div>
     </section>
 

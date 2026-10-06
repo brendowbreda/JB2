@@ -448,11 +448,11 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
 }
 .home-roleta-step strong { color: var(--ink); }
 .home-roleta-label {
-  font-size: 16px; font-weight: 800; color: var(--ink);
-  margin: 10px 0 6px; text-align: left;
+  font-size: 14px; font-weight: 800; color: var(--ink);
+  margin: 4px 0 2px; text-align: left;
 }
-.home-rb-picker { margin: 0; padding: 8px 0; }
-.home-rb-arrows { justify-content: center; margin-bottom: 4px; gap: 8px; margin-top: -4px; }
+.home-rb-picker { margin: 0; padding: 4px 0; }
+.home-rb-arrows { justify-content: center; margin-bottom: 0; gap: 8px; margin-top: -4px; }
 .home-rb-arrows .rb-picker-hint-arrow {
   color: var(--ink-dim); font-size: 16px; font-weight: 400;
 }
@@ -466,25 +466,32 @@ body { margin: 0; font-family: var(--font); color: var(--ink); }
   background: #e8f5e9; border-color: #8bc34a;
   transform: scale(1.15);
 }
-.home-roleta-wheel { margin: 12px 0; }
-.home-roleta-wheel .rw-container { background: transparent; }
-.home-roleta-wheel .rw-pointer {
+#s-roleta { height: 100vh; height: 100dvh; overflow: hidden; gap: 0; padding: 0 16px; }
+#s-roleta .topbar-simple { flex-shrink: 0; padding: 12px 0 4px; }
+.roleta-top { flex-shrink: 0; }
+.roleta-wheel-area { flex: 1; min-height: 0; overflow: hidden; position: relative; }
+.roleta-wheel-area .rw-container {
+  background: transparent;
+  width: calc(100% + 32px); margin: 0 -16px;
+}
+.roleta-wheel-area .rw-pointer {
   filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
 }
-.home-roleta-valor { text-align: center; margin-top: 8px; }
+.home-roleta-valor { text-align: center; margin-top: 4px; }
 .home-roleta-valor .rb-presets {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;
 }
 .home-roleta-valor .rb-preset {
   background: var(--card); color: var(--ink); border: 1.5px solid var(--border);
-  border-radius: 12px; padding: 12px 0; font-size: 15px; font-weight: 700;
+  border-radius: 10px; padding: 8px 0; font-size: 13px; font-weight: 700;
   cursor: pointer; text-align: center;
 }
 .home-roleta-valor .rb-preset.selected { background: var(--primary-tint); color: var(--primary-deep); border-color: var(--primary); }
-.home-roleta-valor .rb-ganhos { color: var(--ink-dim); margin-top: 8px; }
+.home-roleta-valor .wiz-amount-input { padding: 10px 14px; font-size: 15px; margin-top: 4px; }
+.home-roleta-valor .rb-ganhos { color: var(--ink-dim); margin-top: 4px; font-size: 13px; }
 .home-roleta-valor .rb-ganhos strong { color: var(--primary-deep); }
 .home-rb-spin {
-  width: 100%; margin-top: 14px; border-radius: 14px; padding: 14px;
+  width: 100%; margin-top: 8px; border-radius: 14px; padding: 12px;
   font-size: 15px;
 }
 
