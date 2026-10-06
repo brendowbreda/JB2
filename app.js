@@ -2194,7 +2194,7 @@ var Roleta = {
     var container = document.querySelector('.roleta-wheel-area .rw-container');
     if (!container) return;
     var vw = window.innerWidth;
-    var s = vw / 900;
+    var s = (vw * 2.2) / 900;
     container.style.width = '900px';
     container.style.height = '900px';
     container.style.position = 'absolute';
