@@ -1940,11 +1940,11 @@ var ROLETA_ANIMALS = [
   { file: '18-porco.png', name: 'Porco', lose: 'bichos-lose/18-porco.webp' },
   { file: '19-pavao.png', name: 'Pavão', lose: 'bichos-lose/19-pavao.webp' },
   { file: '20-peru.png', name: 'Peru', lose: 'bichos-lose/20-peru.webp' },
-  { file: '21-touro.png', name: 'Touro' },
-  { file: '22-tigre.png', name: 'Tigre' },
-  { file: '23-urso.png', name: 'Urso' },
-  { file: '24-veado.png', name: 'Veado' },
-  { file: '25-vaca.png', name: 'Vaca' },
+  { file: '21-touro.png', name: 'Touro', lose: 'bichos-lose/21-touro.webp' },
+  { file: '22-tigre.png', name: 'Tigre', lose: 'bichos-lose/22-tigre.webp' },
+  { file: '23-urso.png', name: 'Urso', lose: 'bichos-lose/23-urso.webp' },
+  { file: '24-veado.png', name: 'Veado', lose: 'bichos-lose/24-veado.webp' },
+  { file: '25-vaca.png', name: 'Vaca', lose: 'bichos-lose/25-vaca.webp' },
   { file: null, name: 'Giro Grátis', free: true },
 ];
 
